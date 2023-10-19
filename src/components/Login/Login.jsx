@@ -100,7 +100,6 @@ export const Login = () => {
                 </form>
                 {loggeado&&<button onClick={()=>desloggear()} className="btn btn-primary">Cerrar Sesion</button>}
                 {loggeado&&<Link to="/"><button>Volver a Inicio</button></Link>}
-                {/*!loggeado&&<Link to="/password"><button>Olvide Mi contraseña</button></Link>*/}
             </div>
         </>):<Mensaje msj={mensaje} />
         }
