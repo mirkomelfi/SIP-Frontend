@@ -13,6 +13,11 @@ import { SectorPut } from './Sector/SectorPUT';
 import { SectorPost } from './Sector/SectorPOST';
 import { ContainerPut } from './Container/ContainerPUT';
 import { ItemPut } from './Item/ItemPUT';
+import { Home } from './Home/Home';
+import { Container } from './Container/Container';
+import ItemListContainer from './ItemListContainer/ItemListContainer';
+import { Sector } from "./Sector/Sector";
+
 
 
 export const App = () => {
@@ -26,14 +31,19 @@ export const App = () => {
           <Route path='/' element={<Home />} />
           <Route path="/users" element={<UserListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/sectors" element={<SectorListContainer greeting="Listado de Sectores"/>}/>
-          <Route path="/sectors/:id/containers" element={<ContainerListContainer greeting="Listado de Unidades del Edificio seleccionado"/>}/>
-          <Route path="/containers/:id/items/:id" element={<Item />}/> 
-          <Route path="/users/:dni" element={<User/>}/> 
-          <Route path="/updateUser/:dni" element={<UserPut />}/> 
-          <Route path="/updateSector/:id" element={<SectorPut />}/>
+          <Route path="/sectors/:idSec" element={<Sector /> }/>
+          <Route path="/sectors/:idSec/containers" element={<ContainerListContainer greeting="Listado de Contenedores del Sector seleccionado"/>}/>
+          <Route path="/sectors/:idSec/containers/:idCont" element={<Container /> }/>
+          <Route path="/sectors/:idSec/containers/:idCont/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado"/>}/>
+          <Route path="/sectors/:idSec/containers/:idCont/items/:idItem" element={<Item />}/> 
+          <Route path="/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado"/>}/>
+          <Route path="/items/:idItem" element={<Item />}/> 
+          <Route path="/users/:idUser" element={<User/>}/> 
+          <Route path="/updateUser/:idUser" element={<UserPut />}/> 
+          <Route path="/updateSector/:idSec" element={<SectorPut />}/>
           <Route path="/addSector" element={<SectorPost />}/>
-          <Route path="/updateItem/:id" element={<ItemPut />}/>
-          <Route path="/updateContainer/:id" element={<ContainerPut />}/>
+          <Route path="/updateItem/:idItem" element={<ItemPut />}/>
+          <Route path="/updateContainer/:idCont" element={<ContainerPut />}/>
           <Route path="/user/current" element={<User />}/> 
           <Route path="/updateUser" element={<UserPut />}/>
           <Route path='*' element={<h1>404 Not Found</h1>} />

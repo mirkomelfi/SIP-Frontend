@@ -9,7 +9,7 @@ import { Mensaje } from "../Mensaje/Mensaje";
 
 const UserListContainer = ({greeting}) =>{
 
-    const {id}= useParams();
+    const {idUser}= useParams();
 
     const [listaUsers,setListaUsers]= useState([]);
     const [loading,setLoading]= useState(true);
@@ -45,7 +45,7 @@ const UserListContainer = ({greeting}) =>{
           ?
           <>
           <h1 className="greeting">{greeting}</h1>
-          {loading ? <p>Cargando...</p> : <UserList pid={id} listaUsers={listaUsers}/>}
+          {loading ? <p>Cargando...</p> : <UserList pid={idUser} listaUsers={listaUsers}/>}
           <Link to={`/`}>Volver</Link>
           </>
           : <Mensaje msj={mensaje}/>

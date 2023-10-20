@@ -6,8 +6,8 @@ import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 const User =()=>{
-    const {dni}= useParams();
-    console.log("Userdni",dni)
+    const {idUser}= useParams();
+    console.log("Userdni",idUser)
     const [user,setUser]= useState([]);
     console.log(user)
     const [loading,setLoading]= useState(true);
@@ -16,8 +16,7 @@ const User =()=>{
     const [mensaje,setMensaje]=useState(null)
 
     const eliminar=async()=>{
-        console.log(dni)
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${dni}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${idUser}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -33,8 +32,8 @@ const User =()=>{
 
     useEffect(() => { 
         var url=``;
-        if (dni){
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${dni}`
+        if (idUser){
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${idUser}`
         }else{
             url=`${process.env.REACT_APP_DOMINIO_BACK}/myProfile`
         }
@@ -60,14 +59,14 @@ const User =()=>{
     return(
         <>
             {!mensaje?(<div className="tarjetaProducto">
-            <h1>DNI: {user.dni}</h1>
-                <h2>Nombre de user: {user.username}</h2>
-                <h2>Nombre: {user.nombre}</h2>
+            <h1>Numero de usuario: {user.id}</h1>
+                <h2>Nombre de usuario: {user.username}</h2>
+                <h2>Nombre: {user.name}</h2>
                 <h2>Apellido: {user.apellido}</h2>
-                {dni?<Link to={`/updateUser/${dni}`}>Modificar</Link>:<Link to={`/updateUser`}>Modificar</Link>}
-                {dni&&<button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>}
+                {idUser?<Link to={`/updateUser/${idUser}`}>Modificar</Link>:<Link to={`/updateUser`}>Modificar</Link>}
+                {idUser&&<button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>}
             </div>):(<Mensaje msj={mensaje} />)}
-            {dni?<Link to={`/users`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
+            {idUser?<Link to={`/users`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
         </>
     )
 }

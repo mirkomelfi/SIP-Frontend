@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const UserPut = () => {
 
-    const {dni}= useParams();
+    const {idUser}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -25,8 +25,8 @@ export const UserPut = () => {
         if (!cliente.nombre&&!cliente.apellido&&!cliente.username&&!cliente.password){ setMensaje("No se ingresaron valores para actualizar")}
         else{
             var url=``;
-            if (dni){
-                url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${dni}`
+            if (idUser){
+                url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${idUser}`
             }else{
                 url=`${process.env.REACT_APP_DOMINIO_BACK}/updateProfile`
             }
@@ -79,7 +79,7 @@ export const UserPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        {dni?<Link to={`/users`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
+        {idUser?<Link to={`/users`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
         </div>
         
     )

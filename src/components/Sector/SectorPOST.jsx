@@ -47,12 +47,12 @@ export const SectorPost = () => {
                     <form onSubmit={consultarForm} ref={datForm}>
 
                         <div className="mb-3">
-                            <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="nombre" required />
+                            <label htmlFor="name" className="form-label">Nombre</label>
+                            <input type="text" className="form-control" name="name" required />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="descripcion" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="descripcion" required/>
+                            <label htmlFor="description" className="form-label">Descripcion</label>
+                            <input type="text" className="form-control" name="description" required/>
                         </div>
 
                         <button type="submit" className="btn btn-primary">Crear</button>

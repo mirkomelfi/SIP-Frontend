@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const ItemPut = () => {
 
-    const {id}= useParams();
+    const {idItem}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -19,11 +19,11 @@ export const ItemPut = () => {
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const item = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
         
-        if (item.descripcion==""){item.descripcion=null;}
-        if (item.nombre==""){item.nombre=null;}
-        if (!item.descripcion&&!item.nombre){ setMensaje("No se ingresaron valores para actualizar")}
+        if (item.description==""){item.description=null;}
+        if (item.name==""){item.name=null;}
+        if (!item.description&&!item.name){ setMensaje("No se ingresaron valores para actualizar")}
         else{
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/items/${id}`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -50,12 +50,12 @@ export const ItemPut = () => {
                     <h3>Ingrese solo los campos que desea modificar</h3>
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
-                            <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="nombre" />
+                            <label htmlFor="name" className="form-label">Nombre</label>
+                            <input type="text" className="form-control" name="name" />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="descripcion" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="descripcion" />
+                            <label htmlFor="description" className="form-label">Descripcion</label>
+                            <input type="text" className="form-control" name="description" />
                         </div>
 
                         <button type="submit" className="btn btn-primary">Actualizar</button>
@@ -65,7 +65,7 @@ export const ItemPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/containers`}>Volver</Link>
+        <Link to={`/items/${idItem}`}>Volver</Link>
         </div>
         
     )

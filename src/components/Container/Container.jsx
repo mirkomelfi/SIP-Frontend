@@ -6,7 +6,7 @@ import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 const Container =()=>{
-    const {id}= useParams();
+    const {idCont}= useParams();
 
     const [container,setContainer]= useState([]);
     console.log(container)
@@ -14,7 +14,7 @@ const Container =()=>{
     const [mensaje,setMensaje]=useState(null);
 
     const eliminar=async()=>{
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/containers/${id}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/containers/${idCont}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -31,7 +31,7 @@ const Container =()=>{
     }
 
     useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/containers/${id}`, {
+        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -55,12 +55,10 @@ const Container =()=>{
             {<div className="tarjetaProducto">
                 <h1>Container N°{container.id}</h1>
                 {!mensaje?(<>
-                <h2>Nombre: {container.nombre}</h2>
-                <h2>piso {container.piso}</h2>
-                <h2>numero {container.numero}</h2>
-                <h2>estado {container.estado}</h2>
-                <Link to={`${container.id}/items`}>Ver items</Link> 
-                <Link to={`/updateContainer/${id}`}>Modificar</Link>
+                <h2>Nombre: {container.name}</h2>
+                <h2>Descripcion: {container.description}</h2>
+                <Link to={`items`}>Ver items</Link> 
+                <Link to={`/updateContainer/${idCont}`}>Modificar</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 </>
                 

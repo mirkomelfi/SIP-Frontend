@@ -10,7 +10,7 @@ import { Mensaje } from "../Mensaje/Mensaje";
 
 const ContainerListContainer = ({greeting}) =>{
 
-    const {id}= useParams();
+    const {idSec}= useParams();
 
     const [listaContainers,setListaContainers]= useState([]);
     const [loading,setLoading]= useState(true);
@@ -23,7 +23,7 @@ const ContainerListContainer = ({greeting}) =>{
     }
 
     useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${id}`, {
+        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${idSec}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -61,12 +61,12 @@ const ContainerListContainer = ({greeting}) =>{
           (!mensaje?<>
             <h1 className="greeting">{greeting}</h1>
             <button onClick={()=>agregar()} className="btn btn-primary">Agregar contenedor</button>
-            <ContainerList pid={id} listaContainers={listaContainers} isAdmin={true}/>
+            <ContainerList listaContainers={listaContainers} isAdmin={true}/>
           </>:<Mensaje msj={mensaje}/>)
           :
           (<ContainerPost/>)}
  
-          <Link to={`/sectors`}>Volver</Link>
+          <Link to={`/sectors/${idSec}`}>Volver</Link>
         </>
     );
   } 

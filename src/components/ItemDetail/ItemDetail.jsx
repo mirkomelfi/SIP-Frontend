@@ -7,8 +7,8 @@ const ItemDetail =({item})=>{
         <>
             <div className="tarjetaProducto">
                 <h1>Item N°{item.id}</h1>
-                <h2>Nombre: {item.nombre}</h2>
-                <h2>Piso: {item.piso}</h2>
+                <h2>Nombre: {item.name}</h2>
+                <h2>Descripcion: {item.description}</h2>
                 
                 <Link to={`${item.id}`}>Ver item</Link>  
 

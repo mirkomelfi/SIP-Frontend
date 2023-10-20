@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const ContainerPost = () => {
 
-    const {id}= useParams();
+    const {idSec}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -19,7 +19,7 @@ export const ContainerPost = () => {
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const container = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/sectors/${id}/addContainer`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/sector/${idSec}/containers`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -46,12 +46,12 @@ export const ContainerPost = () => {
                     <h2>Creacion de Container</h2>
                     <form onSubmit={consultarForm} ref={datForm}>
                     <div className="mb-3">
-                            <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="nombre" required />
+                            <label htmlFor="name" className="form-label">Nombre</label>
+                            <input type="text" className="form-control" name="name" required />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="descripcion" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="descripcion" required/>
+                            <label htmlFor="description" className="form-label">Descripcion</label>
+                            <input type="text" className="form-control" name="description" required/>
                         </div>
 
                         <button type="submit" className="btn btn-primary">Crear</button>

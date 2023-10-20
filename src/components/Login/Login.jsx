@@ -13,6 +13,7 @@ export const Login = () => {
 
     const consultarLoggeo=async()=>{
         const token= getToken();
+        console.log("token",token)
 
         if (token){
             setLoggeado(true);
@@ -39,7 +40,7 @@ export const Login = () => {
         e.preventDefault()
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const cliente = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-       
+        console.log(cliente)
         if (!cliente.username||!cliente.password){
             console.log(cliente)
             setError(true)
@@ -48,7 +49,7 @@ export const Login = () => {
        
         else{
 
-            const response =  await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/auth/login`, {
+            const response =  await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

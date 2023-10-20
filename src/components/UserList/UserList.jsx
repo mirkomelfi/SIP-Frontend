@@ -1,4 +1,4 @@
-import { UserDetail } from "../UserDetail/UnidadDetail"
+import { UserDetail } from "../UserDetail/UserDetail"
 import { Link } from "react-router-dom"
 
 const UserList = ({listaUsers})=>{

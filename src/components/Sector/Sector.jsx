@@ -4,9 +4,10 @@ import { useState } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
+
 const Sector =({sector})=>{
 
-    const [mensaje,setMensaje]=useState(null)
+    const [mensaje,setMensaje]=useState(null);
 
     const eliminar=async()=>{
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/sectors/${sector.id}`, {
@@ -28,13 +29,11 @@ const Sector =({sector})=>{
             <div className="tarjetaProducto">
                 <h1>Sector N°{sector.id}</h1>
                 {!mensaje?(  <>
-                <h2>Calle: {sector.calle}</h2>
-                <h2>Numero: {sector.numero}</h2>
-                <h2>Ciudad: {sector.ciudad}</h2>
-                <h2>Codigo postal: {sector.codigoPostal}</h2>
-                <Link to={`${sector.id}/containers`}>Ver unidades</Link> 
+                <h2>Nombre: {sector.name}</h2>
+                <h2>Descripcion: {sector.description}</h2>
+                <Link to={`${sector.id}/containers`}>Ver Contenedores</Link> 
             
-                <Link to={`/updateSector/${sector.id}`}>Modificar</Link>
+                <Link to={`/updateSector/${sector.id}`}>Modificar sector</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button></>
                 
                 ):(<Mensaje msj={mensaje} />)}

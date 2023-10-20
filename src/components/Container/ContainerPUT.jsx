@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const ContainerPut = () => {
 
-    const {id}= useParams();
+    const {idCont}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -18,11 +18,11 @@ export const ContainerPut = () => {
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const container = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (container.nombre==""){container.nombre=null;}
-        if (container.descripcion==""){container.descripcion=null;}
-        if (!container.nombre&&!container.descripcion){ setMensaje("No se ingresaron valores para actualizar")}
+        if (container.name==""){container.name=null;}
+        if (container.description==""){container.description=null;}
+        if (!container.name&&!container.description){ setMensaje("No se ingresaron valores para actualizar")}
         else{
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/containers/${id}`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/containers/${idCont}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -49,12 +49,12 @@ export const ContainerPut = () => {
                     <h3>Ingrese solo los campos que desea modificar</h3>
                     <form onSubmit={consultarForm} ref={datForm}>
                     <div className="mb-3">
-                            <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="nombre" required />
+                            <label htmlFor="name" className="form-label">Nombre</label>
+                            <input type="text" className="form-control" name="name"  />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="descripcion" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="descripcion" required/>
+                            <label htmlFor="description" className="form-label">Descripcion</label>
+                            <input type="text" className="form-control" name="description" />
                         </div>
 
                         <button type="submit" className="btn btn-primary">Actualizar</button>

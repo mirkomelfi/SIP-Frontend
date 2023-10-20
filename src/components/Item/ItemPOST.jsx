@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const ItemPost = () => {
 
-    const {id}= useParams();
+    const {idItem,idCont}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -19,8 +19,19 @@ export const ItemPost = () => {
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const item = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/containers/${id}/addItem`, {
-            method: "POST",
+        let url=``
+        let type=""
+
+        if (idCont){
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}/newLocation/${idCont}`;
+            type= "PUT"
+        }else{
+           url= `${process.env.REACT_APP_DOMINIO_BACK}/items`;
+           type= "POST"
+        }
+
+        const response= await fetch(url, {
+            method: type,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`
@@ -46,13 +57,13 @@ export const ItemPost = () => {
                     <h2>Creacion de Item Comun</h2>
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
-                            <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="nombre" required/>
+                            <label htmlFor="name" className="form-label">Nombre</label>
+                            <input type="text" className="form-control" name="name" required/>
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="descripcion" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="descripcion" required/>
+                            <label htmlFor="description" className="form-label">Descripcion</label>
+                            <input type="text" className="form-control" name="description" required/>
                         </div>
 
                         <button type="submit" className="btn btn-primary">Crear</button>

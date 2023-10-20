@@ -13,7 +13,7 @@ export const SectorListContainer = ({greeting}) =>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
   
-    let url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/sectors`
+    let url=`${process.env.REACT_APP_DOMINIO_BACK}/sectors`
 
       useEffect(() => { 
         fetch(url, {

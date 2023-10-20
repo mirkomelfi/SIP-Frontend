@@ -55,12 +55,12 @@ export const Register = () => {
             <h3>Formulario de registro</h3>
             <form onSubmit={consultarForm} ref={datForm}>
                 <div className="mb-3">
-                    <label htmlFor="nombre" className="form-label">Nombre</label>
-                    <input type="text" className="form-control" name="nombre" required />
+                    <label htmlFor="name" className="form-label">Nombre</label>
+                    <input type="text" className="form-control" name="name" required />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="apellido" className="form-label">Apellido</label>
-                    <input type="text" className="form-control" name="apellido" required />
+                    <label htmlFor="surname" className="form-label">Apellido</label>
+                    <input type="text" className="form-control" name="surname" required />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="username" className="form-label">Nombre de Usuario</label>

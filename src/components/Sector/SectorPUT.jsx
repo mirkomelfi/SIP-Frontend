@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const SectorPut = () => {
 
-    const {id}= useParams();
+    const {idSec}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -18,13 +18,13 @@ export const SectorPut = () => {
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const sector = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (sector.nombre==""){sector.calle=null;}
-        if (sector.descripcion==""){sector.ciudad=null;}
+        if (sector.name==""){sector.calle=null;}
+        if (sector.description==""){sector.ciudad=null;}
         
-        if (!sector.nombre&&!sector.descripcion){ setMensaje("No se ingresaron valores para actualizar")}
+        if (!sector.name&&!sector.description){ setMensaje("No se ingresaron valores para actualizar")}
         else{
 
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/sectors/${id}`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/sectors/${idSec}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -51,12 +51,12 @@ export const SectorPut = () => {
                     <h3>Ingrese solo los campos que desea modificar</h3>
                     <form onSubmit={consultarForm} ref={datForm}>
                     <div className="mb-3">
-                            <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="nombre" required />
+                            <label htmlFor="name" className="form-label">Nombre</label>
+                            <input type="text" className="form-control" name="name"  />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="descripcion" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="descripcion" required/>
+                            <label htmlFor="description" className="form-label">Descripcion</label>
+                            <input type="text" className="form-control" name="description" />
                         </div>
 
                         <button type="submit" className="btn btn-primary">Actualizar</button>
