@@ -8,7 +8,7 @@ import { getToken } from "../../utils/auth-utils"
 export const ItemPost = () => {
 
     const {idItem,idCont}= useParams();
-
+    console.log(idItem,idCont)
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
@@ -54,7 +54,7 @@ export const ItemPost = () => {
             {!mensaje?(
                 
                 <div className="container divForm" >
-                    <h2>Creacion de Item Comun</h2>
+                    <h2>Creacion de Item</h2>
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Nombre</label>

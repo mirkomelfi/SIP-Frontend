@@ -13,6 +13,34 @@ const Item =()=>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
 
+    const changeLocation=async()=>{
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}/newLocation/${idCont}`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getToken()}`
+          }
+      })
+      const data = await response.json()
+      setMensaje(data.msj)
+      return;
+    }
+    
+
+      const agregar=async()=>{
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}/addItem/${idItem}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        const data = await response.json()
+        setMensaje(data.msj)
+        return;
+
+      }
+      
     const eliminar=async()=>{
       const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/items/${idItem}`, {
           method: "DELETE",
@@ -22,13 +50,9 @@ const Item =()=>{
           }
       })
       const data = await response.json()
-      console.log(data)
-      if (response.status==200){
-        setMensaje(data.msj)
-        return;
-      }
-
-  }
+      setMensaje(data.msj)
+      return;
+    }
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
@@ -59,7 +83,9 @@ const Item =()=>{
                 <h2>Nombre: {item.name}</h2>
                 <h2>Descripcion: {item.description}</h2>
 
-                <Link to={`/updateItem/${idItem}`}>Modificar</Link>
+                <Link to={`/updateItem/${idItem}`}>Modificar Item</Link>
+                <button onClick={()=>agregar()} className="btn btn-primary">Agregar a un contenedor</button>
+                <button onClick={()=>changeLocation()} className="btn btn-primary">Cambiar de contenedor</button>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 </>
                 
