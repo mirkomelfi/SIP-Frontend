@@ -16,7 +16,7 @@ import { ItemPut } from './Item/ItemPUT';
 import { Home } from './Home/Home';
 import { Container } from './Container/Container';
 import ItemListContainer from './ItemListContainer/ItemListContainer';
-import { Sector } from "./Sector/Sector";
+import { Sector } from './Sector/Sector';
 
 
 
@@ -31,7 +31,7 @@ export const App = () => {
           <Route path='/' element={<Home />} />
           <Route path="/users" element={<UserListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/sectors" element={<SectorListContainer greeting="Listado de Sectores"/>}/>
-          <Route path="/sectors/:idSec" element={<Sector /> }/>
+          <Route path="/sectors/:idSec" element={<Sector/> }/>
           <Route path="/sectors/:idSec/containers" element={<ContainerListContainer greeting="Listado de Contenedores del Sector seleccionado"/>}/>
           <Route path="/sectors/:idSec/containers/:idCont" element={<Container /> }/>
           <Route path="/sectors/:idSec/containers/:idCont/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado"/>}/>

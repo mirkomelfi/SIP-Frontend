@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const SectorPost = () => {
 
-    const {id}= useParams();
+    const {idSec}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
