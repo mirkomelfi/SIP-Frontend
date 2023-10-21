@@ -6,7 +6,7 @@ import { Mensaje } from "../Mensaje/Mensaje";
 import { useEffect } from "react";
 
 
-const Sector =()=>{
+const Sector =({fromContainer})=>{
 
     const {idSec}= useParams()
     console.log(idSec)
@@ -65,11 +65,12 @@ const Sector =()=>{
                 {!mensaje?(  <>
                     {sector&&<><h2>Nombre: {sector.name}</h2>
                 <h2>Descripcion: {sector.description}</h2></>}
+                {!fromContainer&&  <>
                 <Link to={`containers`}>Ver Contenedores</Link> 
-            
                 <Link to={`/updateSector/${idSec}`}>Modificar sector</Link>
+               
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button></>
-                
+                } </>
                 ):(<Mensaje msj={mensaje} />)}
             </div>
             <Link to={`/sectors`}>Volver</Link> 

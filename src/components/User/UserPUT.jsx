@@ -22,7 +22,7 @@ export const UserPut = () => {
         if (cliente.surname==""){cliente.surname=null;}
         if (cliente.username==""){cliente.username=null;}
         if (cliente.password==""){cliente.password=null;}
-        if (!cliente.nombre&&!cliente.apellido&&!cliente.username&&!cliente.password){ setMensaje("No se ingresaron valores para actualizar")}
+        if (!cliente.name&&!cliente.surname&&!cliente.username&&!cliente.password){ setMensaje("No se ingresaron valores para actualizar")}
         else{
             var url=``;
             if (idUser){

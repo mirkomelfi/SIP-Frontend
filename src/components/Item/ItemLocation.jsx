@@ -27,46 +27,10 @@ const ItemLocation =()=>{
         if (item.idCont){
           setIdCont(item.idCont)
         }
+        setContainers(true)
             
       }
       
-      useEffect(() => { 
-        setContainers(true)
-
-       /* let url=``;
-        if (idCont){
-        url=`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`;
-      }else{
-        url= `${process.env.REACT_APP_DOMINIO_BACK}/containers`;
-      }
-        fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-            
-        }
-        
-      })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            console.log(mensaje)
-            if(data.msj){
-                setMensaje(data.msj)
-                console.log(data)
-            }else{
-                setContainers(data)
-                console.log(data)
-            }
-
-
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-        })*/
-    },[idCont])
-
     return(
 
         <div>

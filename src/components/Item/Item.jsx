@@ -60,12 +60,12 @@ const Item =()=>{
                 {!mensaje?(<>
                 <h2>Nombre: {item.name}</h2>
                 <h2>Descripcion: {item.description}</h2>
-                <h2>Descripcion: {item.containerID}</h2>
+                <h2>Se encuentra en contenedor: {item.containerID}</h2>
 
                 <Link to={`/updateItem/${idItem}`}>Modificar Item</Link>
-                <Link to={`/containers/${item.containerID}`}>Ver contenedor</Link>
+                {!idCont&&<Link to={`/containers/${item.containerID}`}>Ver contenedor</Link>}
                 {!item.containerID?<button onClick={()=>changeLocation()} className="btn btn-primary">Agregar a un contenedor NO ANDA</button>:
-                <button onClick={()=>changeLocation()} className="btn btn-primary">Cambiar de contenedor NO ANDA</button>}
+                !idSec&&<button onClick={()=>changeLocation()} className="btn btn-primary">Cambiar de contenedor NO ANDA</button>}
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 </>
                 

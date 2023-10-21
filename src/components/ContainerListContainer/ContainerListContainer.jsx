@@ -12,6 +12,7 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
 
     const {idSec}= useParams();
 
+  console.log("ContainerListContainer",idSec,idContainer,idItem)
     const [listaContainers,setListaContainers]= useState([]);
     const [loading,setLoading]= useState(true);
     const [add,setAdd]= useState(false);
@@ -72,11 +73,14 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
           !add ?
           (!mensaje?<>
             <h1 className="greeting">{greeting}</h1>
+            {idSec?<> 
             <button onClick={()=>agregar()} className="btn btn-primary">Agregar contenedor</button>
-           {idSec? <ContainerList listaContainers={listaContainers} isInSector={true}/>:
-            <ContainerList listaContainers={listaContainers} idItem={idItem}/>}
-          </>:<Mensaje msj={mensaje}/>)
-          :
+           <ContainerList listaContainers={listaContainers} isInSector={true}/></>
+            :
+            <ContainerList listaContainers={listaContainers} idItem={idItem}/>}</>
+            :
+            <Mensaje msj={mensaje}/>
+          ):
           (<ContainerPost/>)}
  
           {idSec?<Link to={`/sectors/${idSec}`}>Volver</Link>:

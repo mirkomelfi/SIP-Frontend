@@ -6,7 +6,7 @@ import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 const Container =()=>{
-    const {idCont}= useParams();
+    const {idSec,idCont}= useParams();
 
     const [container,setContainer]= useState([]);
     console.log(container)
@@ -57,10 +57,15 @@ const Container =()=>{
                 {!mensaje?(<>
                 <h2>Nombre: {container.name}</h2>
                 <h2>Descripcion: {container.description}</h2>
-                <Link to={`items`}>Ver items</Link> 
+                <h2>Se encuentra en sector: {container.sectorID}</h2>
+               {idSec? 
+                 <><Link to={`items`}>Ver items</Link> 
                 <Link to={`/updateContainer/${idCont}`}>Modificar</Link>
-                <Link to={`/sectors/${container.sectorID}`}>Ver sector</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
+                  </>
+                :
+                <Link to={`/containers/sectors/${container.sectorID}`}>Ver sector</Link>
+                }
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}

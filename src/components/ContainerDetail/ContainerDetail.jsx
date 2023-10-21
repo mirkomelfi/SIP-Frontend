@@ -2,9 +2,10 @@ import { useState } from "react";
 import "./ContainerDetail.css";
 import {Link} from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
+import { getToken } from "../../utils/auth-utils";
 
 const ContainerDetail =({container, isInSector, idItem})=>{
-    console.log(isInSector)
+    console.log("ContainerDetail",isInSector)
     const [mensaje,setMensaje]= useState(null)
 
     const changeLocation=async()=>{

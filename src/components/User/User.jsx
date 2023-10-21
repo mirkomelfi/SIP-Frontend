@@ -35,7 +35,7 @@ const User =()=>{
         if (idUser){
             url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${idUser}`
         }else{
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/myProfile`
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/profile`
         }
         fetch(url, {
         method: "GET",

@@ -58,7 +58,7 @@ export const Login = () => {
             })
 
             const data=await response.json();
-            
+            console.log(data.msj)
             if(response.status == 200) {
                 setError(false)
                 setLoggeado(true)
