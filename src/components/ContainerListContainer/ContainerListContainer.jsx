@@ -23,6 +23,7 @@ const ContainerListContainer = ({greeting}) =>{
     }
 
     useEffect(() => { 
+
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${idSec}`, {
         method: "GET",
         headers: {

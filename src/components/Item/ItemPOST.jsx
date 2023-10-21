@@ -20,18 +20,15 @@ export const ItemPost = () => {
         const item = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
 
         let url=``
-        let type=""
 
         if (idCont){
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}/newLocation/${idCont}`;
-            type= "PUT"
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}/addItem`;
         }else{
            url= `${process.env.REACT_APP_DOMINIO_BACK}/items`;
-           type= "POST"
         }
 
         const response= await fetch(url, {
-            method: type,
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`

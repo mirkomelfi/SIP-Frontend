@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const ContainerPut = () => {
 
-    const {idCont}= useParams();
+    const {idSec,idCont}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -64,7 +64,7 @@ export const ContainerPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/edificios`}>Volver</Link>
+         <Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link>
         </div>
         
     )
