@@ -59,6 +59,7 @@ const Container =()=>{
                 <h2>Descripcion: {container.description}</h2>
                 <Link to={`items`}>Ver items</Link> 
                 <Link to={`/updateContainer/${idCont}`}>Modificar</Link>
+                <Link to={`/sectors/${container.sectorID}`}>Ver sector</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 </>
                 

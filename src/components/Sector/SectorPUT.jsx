@@ -18,8 +18,8 @@ export const SectorPut = () => {
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const sector = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (sector.name==""){sector.calle=null;}
-        if (sector.description==""){sector.ciudad=null;}
+        if (sector.name==""){sector.name=null;}
+        if (sector.description==""){sector.description=null;}
         
         if (!sector.name&&!sector.description){ setMensaje("No se ingresaron valores para actualizar")}
         else{

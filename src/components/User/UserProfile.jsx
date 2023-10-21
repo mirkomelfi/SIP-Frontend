@@ -42,11 +42,11 @@ const UserProfile =()=>{
             {!mensaje?(<div className="tarjetaProducto">
             <h1>DNI: {user.dni}</h1>
                 <h2>Nombre de user: {user.username}</h2>
-                <h2>Nombre: {user.nombre}</h2>
-                <h2>Apellido: {user.apellido}</h2>
+                <h2>Nombre: {user.name}</h2>
+                <h2>Apellido: {user.surname}</h2>
                 <Link to={`/updateUser`}>Modificar</Link>
             </div>):(<Mensaje msj={mensaje} />)}
-            <Link to={`/home`}>Volver</Link>
+            <Link to={`/`}>Volver</Link>
         </>
     )
 }

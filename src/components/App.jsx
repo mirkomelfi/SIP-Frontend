@@ -34,6 +34,7 @@ export const App = () => {
           <Route path="/sectors/:idSec" element={<Sector/> }/>
           <Route path="/sectors/:idSec/containers" element={<ContainerListContainer greeting="Listado de Contenedores del Sector seleccionado"/>}/>
           <Route path="/sectors/:idSec/containers/:idCont" element={<Container /> }/>
+          <Route path="/containers/:idCont" element={<Container /> }/>
           <Route path="/sectors/:idSec/containers/:idCont/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado"/>}/>
           <Route path="/sectors/:idSec/containers/:idCont/items/:idItem" element={<Item />}/> 
           <Route path="/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado"/>}/>

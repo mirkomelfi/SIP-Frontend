@@ -7,7 +7,7 @@ const UserDetail =({user})=>{
         <>
             <div className="tarjetaProducto">
                 <h1>Usuario N°: {user.id}</h1>
-                <h2>Apellido: {user.surname}</h2>
+                <h2>Nombre de usuario: {user.username}</h2>
                 <Link to={`${user.id}`}>Ver usuario</Link>  
             </div>
         </>

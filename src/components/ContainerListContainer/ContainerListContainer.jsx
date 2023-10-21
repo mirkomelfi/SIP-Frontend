@@ -8,7 +8,7 @@ import { ContainerPost } from "../Container/ContainerPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 
-const ContainerListContainer = ({greeting}) =>{
+const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
 
     const {idSec}= useParams();
 
@@ -23,8 +23,15 @@ const ContainerListContainer = ({greeting}) =>{
     }
 
     useEffect(() => { 
+      let url=``;
+      if (idSec){
+        url=`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${idSec}`;
+      }else{
+        url= `${process.env.REACT_APP_DOMINIO_BACK}/containers`; //      /filter?idCont=${idContainer}
+      }
 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${idSec}`, {
+
+        fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -36,12 +43,16 @@ const ContainerListContainer = ({greeting}) =>{
         .then(data => {
 
           if (data.msj){
-            console.log("data",data)
             setMensaje(data.msj)
+
           }else{
-            
-          const containers= data.containers
-          setListaContainers(containers)
+
+            if (idSec){
+              const containers= data.containers
+              setListaContainers(containers)
+            } else{
+              setListaContainers(data)
+            }
           }
 
         })
@@ -62,12 +73,14 @@ const ContainerListContainer = ({greeting}) =>{
           (!mensaje?<>
             <h1 className="greeting">{greeting}</h1>
             <button onClick={()=>agregar()} className="btn btn-primary">Agregar contenedor</button>
-            <ContainerList listaContainers={listaContainers} isAdmin={true}/>
+           {idSec? <ContainerList listaContainers={listaContainers} isInSector={true}/>:
+            <ContainerList listaContainers={listaContainers} idItem={idItem}/>}
           </>:<Mensaje msj={mensaje}/>)
           :
           (<ContainerPost/>)}
  
-          <Link to={`/sectors/${idSec}`}>Volver</Link>
+          {idSec?<Link to={`/sectors/${idSec}`}>Volver</Link>:
+          <Link to={`/`}>Volver</Link>}
         </>
     );
   } 

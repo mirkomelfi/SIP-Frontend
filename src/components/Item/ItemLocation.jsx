@@ -31,7 +31,9 @@ const ItemLocation =()=>{
       }
       
       useEffect(() => { 
-        let url=``;
+        setContainers(true)
+
+       /* let url=``;
         if (idCont){
         url=`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`;
       }else{
@@ -62,7 +64,7 @@ const ItemLocation =()=>{
         })
         .catch(error => console.error(error))
         .finally(()=>{
-        })
+        })*/
     },[idCont])
 
     return(
@@ -87,7 +89,7 @@ const ItemLocation =()=>{
               </div>
           )
           
-          :<ContainerListContainer/>
+          :<ContainerListContainer idContainer={idCont} idItem={idItem} />
           
           :    
           <Mensaje msj={mensaje} />

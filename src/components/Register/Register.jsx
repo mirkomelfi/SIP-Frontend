@@ -32,17 +32,10 @@ export const Register = () => {
 
             const data = await response.json()
 
-                if(response.status == 200) {
-                    setMensaje("Cuenta creada. Fuiste loggeado automaticamente")
-        
-                } else {
-
-                    if (response.status==401){
-                        setMensaje(data.message)
-                    }
-
-                }
-                
+            if(data.msj == 200) {
+                setMensaje(data.msj)
+    
+            }                 
                 
             e.target.reset() //Reset form
         }

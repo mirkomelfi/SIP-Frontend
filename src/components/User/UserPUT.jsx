@@ -18,8 +18,8 @@ export const UserPut = () => {
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const cliente = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (cliente.nombre==""){cliente.nombre=null;}
-        if (cliente.apellido==""){cliente.apellido=null;}
+        if (cliente.name==""){cliente.name=null;}
+        if (cliente.surname==""){cliente.surname=null;}
         if (cliente.username==""){cliente.username=null;}
         if (cliente.password==""){cliente.password=null;}
         if (!cliente.nombre&&!cliente.apellido&&!cliente.username&&!cliente.password){ setMensaje("No se ingresaron valores para actualizar")}
@@ -56,12 +56,12 @@ export const UserPut = () => {
                     <h3>Ingrese solo los campos que desea modificar</h3>
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
-                            <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="nombre" />
+                            <label htmlFor="name" className="form-label">Nombre</label>
+                            <input type="text" className="form-control" name="name" />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="apellido" className="form-label">Apellido</label>
-                            <input type="text" className="form-control" name="apellido" />
+                            <label htmlFor="surname" className="form-label">Apellido</label>
+                            <input type="text" className="form-control" name="surname" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Nombre de User</label>
