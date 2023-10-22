@@ -3,7 +3,6 @@ import React from "react";
 //import { CartWidget } from "../CartWidget/CartWidget";
 import {Link} from "react-router-dom";
 import "./Navbar.css"
-import { CartWidget } from "../CartWidget/CartWidget";
 
 const Navbar = () =>{
     return (

@@ -2,17 +2,31 @@ header{
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: rgb(152, 170, 170);
+    background-color: rgb(0, 0, 0);
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+header a{
+    font-size: 25px;
+    padding: 15px;
+    color: rgba(255, 0, 0, 0.681);
+    text-decoration: none;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
 a{
-    font-size: 20px;
+    font-size: 25px;
     padding: 15px;
-    color: blue;
+    color: rgb(191, 42, 42);
     text-decoration: none;
-    font-style: oblique;
-    
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
+
+h1,h2{
+    font-family: 'Courier New', Courier, monospace;
+}
+
 img{
     width: 100px;
     height:100px;
