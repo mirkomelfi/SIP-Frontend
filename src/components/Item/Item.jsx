@@ -6,7 +6,7 @@ import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { ItemLocation } from "./ItemLocation";
 
-const Item =()=>{
+const Item =({fromSector})=>{
     const {idSec,idCont,idItem}= useParams();
 
     const [item,setItem]= useState([]);
@@ -60,12 +60,15 @@ const Item =()=>{
                 {!mensaje?(<>
                 <h2>Nombre: {item.name}</h2>
                 <h2>Descripcion: {item.description}</h2>
-                <h2>Se encuentra en contenedor: {item.containerID}</h2>
+                {item.containerID==0||!item.containerID?
+                <h2>No se encuentra en ningun contenedor</h2>
+                :
+                <h2>Se encuentra en contenedor: {item.containerID}</h2>}
 
-                <Link to={`/updateItem/${idItem}`}>Modificar Item</Link>
-                {!idCont&&<Link to={`/containers/${item.containerID}`}>Ver contenedor</Link>}
-                {!item.containerID?<button onClick={()=>changeLocation()} className="btn btn-primary">Agregar a un contenedor NO ANDA</button>:
-                !idSec&&<button onClick={()=>changeLocation()} className="btn btn-primary">Cambiar de contenedor NO ANDA</button>}
+                <Link to={`updateItem`}>Modificar Item</Link>
+                {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!fromSector)&&<Link to={`containers/${item.containerID}`}>Ver contenedor</Link>}
+                {item.containerID==0||!item.containerID?<button onClick={()=>changeLocation()} className="btn btn-primary">Agregar a un contenedor</button>:
+                !idSec&&<button onClick={()=>changeLocation()} className="btn btn-primary">Cambiar de contenedor</button>}
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 </>
                 

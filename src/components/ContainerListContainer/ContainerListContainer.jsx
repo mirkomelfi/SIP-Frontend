@@ -42,18 +42,16 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
       })
         .then(response => response.json())
         .then(data => {
-
-          if (data.msj){
-            setMensaje(data.msj)
-
-          }else{
-
-            if (idSec){
-              const containers= data.containers
+        
+          if (idSec){
+            const containers= data.containers
+            if (containers.length==0){
+              setMensaje(`No hay contenedores cargados en el sector ${idSec}`)
+            }else{
               setListaContainers(containers)
-            } else{
-              setListaContainers(data)
             }
+          } else{
+            setListaContainers(data)
           }
 
         })
@@ -79,7 +77,10 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
             :
             <ContainerList listaContainers={listaContainers} idItem={idItem}/>}</>
             :
+            <> 
+            <button onClick={()=>agregar()} className="btn btn-primary">Agregar contenedor</button>
             <Mensaje msj={mensaje}/>
+            </> 
           ):
           (<ContainerPost/>)}
  

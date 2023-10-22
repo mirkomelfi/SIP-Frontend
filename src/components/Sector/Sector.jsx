@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 const Sector =({fromContainer})=>{
 
-    const {idSec}= useParams()
+    const {idSec,idCont,idItem}= useParams()
     console.log(idSec)
     const [mensaje,setMensaje]=useState(null);
     const [sector,setSector]=useState();
@@ -73,7 +73,9 @@ const Sector =({fromContainer})=>{
                 } </>
                 ):(<Mensaje msj={mensaje} />)}
             </div>
-            <Link to={`/sectors`}>Volver</Link> 
+            {!fromContainer?<Link to={`/sectors`}>Volver</Link> 
+            :<Link to={`/items/${idItem}/containers/${idCont}`}>Volver</Link>
+            }
         </>
     )
 }

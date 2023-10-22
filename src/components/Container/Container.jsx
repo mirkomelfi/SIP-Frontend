@@ -5,8 +5,9 @@ import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
-const Container =()=>{
-    const {idSec,idCont}= useParams();
+const Container =({fromItem})=>{
+
+    const {idSec,idCont,idItem}= useParams();
 
     const [container,setContainer]= useState([]);
     console.log(container)
@@ -60,18 +61,20 @@ const Container =()=>{
                 <h2>Se encuentra en sector: {container.sectorID}</h2>
                {idSec? 
                  <><Link to={`items`}>Ver items</Link> 
-                <Link to={`/updateContainer/${idCont}`}>Modificar</Link>
+                <Link to={`updateContainer`}>Modificar</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                   </>
                 :
-                <Link to={`/containers/sectors/${container.sectorID}`}>Ver sector</Link>
+                <Link to={`sectors/${container.sectorID}`}>Ver sector</Link>
                 }
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>
             }
-            <Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link>
+           { !fromItem?<Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link>:
+            <Link to={`/items/${idItem}`}>Volver</Link>
+          }
         </>
     )
 }

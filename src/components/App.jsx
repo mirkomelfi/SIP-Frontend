@@ -34,19 +34,20 @@ export const App = () => {
           <Route path="/sectors/:idSec" element={<Sector/> }/>
           <Route path="/sectors/:idSec/containers" element={<ContainerListContainer greeting="Listado de Contenedores del Sector seleccionado"/>}/>
           <Route path="/sectors/:idSec/containers/:idCont" element={<Container /> }/>
-          <Route path="/containers/:idCont" element={<Container /> }/>
+          <Route path="/items/:idItem/containers/:idCont" element={<Container fromItem={true} /> }/>
           <Route path="/items/:idItem/changeLocation/:idCont" element={<Container />}/> 
-          <Route path="/containers/sectors/:idSec" element={<Sector fromContainer={true} /> }/>
+          <Route path="/items/:idItem/containers/:idCont/sectors/:idSec" element={<Sector fromContainer={true} /> }/>
           <Route path="/sectors/:idSec/containers/:idCont/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado"/>}/>
-          <Route path="/sectors/:idSec/containers/:idCont/items/:idItem" element={<Item />}/> 
+          <Route path="/sectors/:idSec/containers/:idCont/items/:idItem" element={<Item fromSector={true}/>}/> 
           <Route path="/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado"/>}/>
           <Route path="/items/:idItem" element={<Item />}/> 
           <Route path="/users/:idUser" element={<User/>}/> 
           <Route path="/updateUser/:idUser" element={<UserPut />}/> 
           <Route path="/updateSector/:idSec" element={<SectorPut />}/>
           <Route path="/addSector" element={<SectorPost />}/>
-          <Route path="/updateItem/:idItem" element={<ItemPut />}/>
-          <Route path="/updateContainer/:idCont" element={<ContainerPut />}/>
+          <Route path="/sectors/:idSec/containers/:idCont/items/:idItem/updateItem" element={<ItemPut />}/>
+          <Route path="/items/:idItem/updateItem" element={<ItemPut />}/>
+          <Route path="/sectors/:idSec/containers/:idCont/updateContainer" element={<ContainerPut />}/>
           <Route path="/user/current" element={<User />}/> 
           <Route path="/updateUser" element={<UserPut />}/>
           <Route path='*' element={<h1>404 Not Found</h1>} />

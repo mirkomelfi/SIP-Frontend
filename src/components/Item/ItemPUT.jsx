@@ -7,7 +7,7 @@ import { getToken } from "../../utils/auth-utils"
 
 export const ItemPut = () => {
 
-    const {idItem}= useParams();
+    const {idSec,idCont,idItem}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -65,7 +65,9 @@ export const ItemPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        <Link to={`/items/${idItem}`}>Volver</Link>
+       { !idSec?<Link to={`/items/${idItem}`}>Volver</Link>:
+       <Link to={`/sectors/${idSec}/containers/${idCont}/items/${idItem}`}>Volver</Link>
+       }
         </div>
         
     )

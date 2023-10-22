@@ -4,6 +4,7 @@ import {useParams,Link} from "react-router-dom";
 import { ItemList } from "../ItemList/ItemList";
 import { getToken } from "../../utils/auth-utils";
 import { ItemPost } from "../Item/ItemPOST";
+import { Mensaje } from "../Mensaje/Mensaje";
 
 
 const ItemListContainer = ({greeting}) =>{
@@ -12,6 +13,7 @@ const ItemListContainer = ({greeting}) =>{
 
     const [listaItems,setListaItems]= useState([]);
     const [loading,setLoading]= useState(true);
+    const [mensaje,setMensaje]= useState(null);
     const [add,setAdd]= useState(false);
 
     const agregar= () =>{ 
@@ -26,7 +28,6 @@ const ItemListContainer = ({greeting}) =>{
         url=`${process.env.REACT_APP_DOMINIO_BACK}/items`
       }
 
-
         fetch(url, {
         method: "GET",
         headers: {
@@ -39,10 +40,15 @@ const ItemListContainer = ({greeting}) =>{
         .then(data => {
           if (idCont){
             const items= data.items
-            setListaItems(items)
+            if (items.length==0){
+              setMensaje(`No hay items cargados en el contenedor ${idCont}`)
+            }else{
+              setListaItems(items)
+            }
           }else{
             setListaItems(data)
           }
+
 
         })
         .catch(error => console.error(error))
@@ -61,7 +67,7 @@ const ItemListContainer = ({greeting}) =>{
           (<>
             <h1 className="greeting">{greeting}</h1>
             <button onClick={()=>agregar()} className="btn btn-primary">Agregar Item</button>
-            <ItemList listaItems={listaItems}/>
+            {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
           </>)
           :
           (<ItemPost/>)}
