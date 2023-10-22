@@ -2,6 +2,7 @@ import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { getToken } from "../../utils/auth-utils"
 
 export const Register = () => {
 
@@ -25,17 +26,15 @@ export const Register = () => {
             const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/register`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    //"Authorization": `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(cliente)
             })
 
             const data = await response.json()
 
-            if(data.msj == 200) {
-                setMensaje(data.msj)
-    
-            }                 
+            setMensaje(data.msj)
                 
             e.target.reset() //Reset form
         }
@@ -72,7 +71,7 @@ export const Register = () => {
                 </form>
 
             </div>
-        </>):<><Mensaje msj={mensaje} /><Link to="/"><button>Ir a comprar</button></Link></>
+        </>):<><Mensaje msj={mensaje} /><Link to="/"><button>Volver al Menu Principal</button></Link></>
         }
         </div>
     )

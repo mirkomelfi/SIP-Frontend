@@ -8,7 +8,7 @@ const Navbar = () =>{
     return (
         <header>
             <Link to="/register">Register</Link>
-            <Link to="/"><h1>Sistema de Busqueda</h1></Link>
+            <Link to="/"><h1>Sistema de Búsqueda</h1></Link>
             <Link to="/login">Login</Link>
             
             {/*<nav>
