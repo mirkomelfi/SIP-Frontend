@@ -79,7 +79,7 @@ export const UserPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        {idUser?<Link to={`/users`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
+        {idUser?<Link to={`/users`}>Volver</Link>:<Link to={`/user/current`}>Volver</Link>}
         </div>
         
     )
