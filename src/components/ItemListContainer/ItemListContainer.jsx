@@ -5,6 +5,8 @@ import { ItemList } from "../ItemList/ItemList";
 import { getToken } from "../../utils/auth-utils";
 import { ItemPost } from "../Item/ItemPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
+import { ItemLocation } from "../Item/ItemLocation";
+import { ItemFilter } from "../Item/ItemFilter";
 
 
 const ItemListContainer = ({greeting,filter}) =>{
@@ -16,6 +18,11 @@ const ItemListContainer = ({greeting,filter}) =>{
     const [mensaje,setMensaje]= useState(null);
     const [add,setAdd]= useState(false);
     const [error,setError]= useState(null);
+    const [goBack,setGoBack]= useState(null);
+
+    const returnToItem=()=>{
+        setGoBack(true)
+    }
 
     const agregar= () =>{ 
       setAdd(true)
@@ -26,7 +33,7 @@ const ItemListContainer = ({greeting,filter}) =>{
       if (idCont){
         url=`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`
       }else{
-        url=`${process.env.REACT_APP_DOMINIO_BACK}/items/filter?name=${filter}`
+        url=`${process.env.REACT_APP_DOMINIO_BACK}/items/filter?query=${filter}`
       }
 
         fetch(url, {
@@ -70,17 +77,22 @@ const ItemListContainer = ({greeting,filter}) =>{
           <p>Cargando...</p> 
           : 
           !error ?
-          !add ?
-          (<>
-            <h1 className="greeting">{greeting}</h1>
-            <button onClick={()=>agregar()} className="btn btn-primary">Agregar Item</button>
-            {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
-          </>)
-          :
-          (<ItemPost/>)
-            : <Mensaje msj={mensaje} />
+            !goBack ?
+              !add ?
+              (<>
+                <h1 className="greeting">{greeting}</h1>
+                <button onClick={()=>agregar()} className="btn btn-primary">Agregar Item</button>
+                {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
+              </>)
+              :(<ItemPost/>)
+            :<ItemFilter/>
+          : <Mensaje msj={mensaje} />
         }
-          {idSec?<Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
+          {idSec&&<Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link>}
+       {   //<Link to={`/`}>Volver</Link>
+       }
+          {!goBack&&!idSec&&<button onClick={()=>returnToItem()} className="btn btn-primary">Volver</button>}
+          
 
         </>
     );

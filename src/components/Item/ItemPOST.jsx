@@ -70,6 +70,7 @@ export const ItemPost = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
+        <Link to={`/`}>Volver</Link>
         </div>
         
     )

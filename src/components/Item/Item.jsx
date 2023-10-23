@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
-import { ItemLocation } from "./ItemLocation";
+import { Location } from "../Location/Location";
 
 const Item =({fromSector})=>{
     const {idSec,idCont,idItem}= useParams();
@@ -13,12 +13,8 @@ const Item =({fromSector})=>{
     console.log(item)
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null);
-    const [location,setLocation]=useState(null)
+    const [locations,setLocations]= useState(null);
 
-    const changeLocation=async()=>{
-      setLocation(true);
-    }
-      
     const eliminar=async()=>{
       const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/items/${idItem}`, {
           method: "DELETE",
@@ -30,6 +26,10 @@ const Item =({fromSector})=>{
       const data = await response.json()
       setMensaje(data.msj)
       return;
+    }
+
+    const verLocations=async()=>{
+     setLocations(true)
     }
 
     useEffect(() => { 
@@ -55,7 +55,8 @@ const Item =({fromSector})=>{
     },[])
     return(
         <>
-            {//!location?
+            {!locations?
+          <>
             <div className="tarjetaProducto">
                 <h1>Item N°{item.id}</h1>
                 {!mensaje?(<>
@@ -67,23 +68,29 @@ const Item =({fromSector})=>{
                 <h2>Se encuentra en contenedor: {item.containerID}</h2>}
 
                 <Link to={`updateItem`}>Modificar Item</Link>
+               { <button onClick={()=>verLocations()} className="btn btn-primary">Ver historial de locations</button>}
                 {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!fromSector)&&<Link to={`containers/${item.containerID}`}>Ver contenedor</Link>}
                 {item.containerID==0||!item.containerID?
-                //<button onClick={()=>changeLocation()} className="btn btn-primary">Agregar a un contenedor</button>
                 <Link to={`locationChange`}>Agregar a un contenedor</Link>
                 :
                 !idSec&&
-                //<button onClick={()=>changeLocation()} className="btn btn-primary">Cambiar de contenedor</button>
                 <Link to={`locationChange`}>Cambiar de contenedor</Link>
                 }
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
+                 
             </div>
-            //:<ItemLocation />
+            <>
+              {idSec?<Link to={`/sectors/${idSec}/containers/${idCont}/items`}>Volver</Link>:<Link to={`/items`}>Volver</Link>}
+              </>
+            </>
+             
+            :<Location item={item} />
+
             }
-            {idSec?<Link to={`/sectors/${idSec}/containers/${idCont}/items`}>Volver</Link>:<Link to={`/items`}>Volver</Link>}
+
         </>
     )
 }
