@@ -7,7 +7,7 @@ import { ItemPost } from "../Item/ItemPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 
-const ItemListContainer = ({greeting}) =>{
+const ItemListContainer = ({greeting,filter}) =>{
 
     const {idSec,idCont}= useParams();
 
@@ -15,6 +15,7 @@ const ItemListContainer = ({greeting}) =>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]= useState(null);
     const [add,setAdd]= useState(false);
+    const [error,setError]= useState(null);
 
     const agregar= () =>{ 
       setAdd(true)
@@ -25,7 +26,7 @@ const ItemListContainer = ({greeting}) =>{
       if (idCont){
         url=`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`
       }else{
-        url=`${process.env.REACT_APP_DOMINIO_BACK}/items`
+        url=`${process.env.REACT_APP_DOMINIO_BACK}/items/filter?name=${filter}`
       }
 
         fetch(url, {
@@ -46,7 +47,12 @@ const ItemListContainer = ({greeting}) =>{
               setListaItems(items)
             }
           }else{
-            setListaItems(data)
+            if (data.msj){
+              setError(true)
+              setMensaje(data.msj)
+            }else{
+              setListaItems(data)
+            }
           }
 
 
@@ -63,6 +69,7 @@ const ItemListContainer = ({greeting}) =>{
           ? 
           <p>Cargando...</p> 
           : 
+          !error ?
           !add ?
           (<>
             <h1 className="greeting">{greeting}</h1>
@@ -70,7 +77,9 @@ const ItemListContainer = ({greeting}) =>{
             {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
           </>)
           :
-          (<ItemPost/>)}
+          (<ItemPost/>)
+            : <Mensaje msj={mensaje} />
+        }
           {idSec?<Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
 
         </>
