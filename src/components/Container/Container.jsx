@@ -5,7 +5,7 @@ import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
-const Container =({fromItem})=>{
+const Container =({fromItem,fromLocation})=>{
 
     const {idSec,idCont,idItem}= useParams();
 
@@ -24,12 +24,22 @@ const Container =({fromItem})=>{
         })
         const data = await response.json()
         console.log(data)
-        if (response.status==200){
-          setMensaje(data.msj)
-          return;
-        }
+        setMensaje(data.msj)
   
     }
+
+    const changeLocation=async()=>{
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}/newLocation/${idCont}`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getToken()}`
+          }
+      })
+      const data = await response.json()
+      setMensaje(data.msj)
+      return;
+  }
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`, {
@@ -59,20 +69,27 @@ const Container =({fromItem})=>{
                 <h2>Nombre: {container.name}</h2>
                 <h2>Descripcion: {container.description}</h2>
                 <h2>Se encuentra en sector: {container.sectorID}</h2>
-               {idSec? 
+
+               {
+               !fromLocation ?
+               
+               idSec? 
                  <><Link to={`items`}>Ver items</Link> 
                 <Link to={`updateContainer`}>Modificar</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                   </>
                 :
                 <Link to={`sectors/${container.sectorID}`}>Ver sector</Link>
+                :
+                <button onClick={()=>changeLocation()} className="btn btn-primary">Seleccionar container</button>
                 }
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>
             }
-           { !fromItem?<Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link>:
+           { !fromItem&&!fromLocation?<Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link>:
+           fromLocation? <Link to={`/items/${idItem}/locationChange`}>Volver</Link>:
             <Link to={`/items/${idItem}`}>Volver</Link>
           }
         </>

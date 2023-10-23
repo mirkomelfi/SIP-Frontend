@@ -55,7 +55,8 @@ const Item =({fromSector})=>{
     },[])
     return(
         <>
-            {!location?<div className="tarjetaProducto">
+            {//!location?
+            <div className="tarjetaProducto">
                 <h1>Item N°{item.id}</h1>
                 {!mensaje?(<>
                 <h2>Nombre: {item.name}</h2>
@@ -67,13 +68,21 @@ const Item =({fromSector})=>{
 
                 <Link to={`updateItem`}>Modificar Item</Link>
                 {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!fromSector)&&<Link to={`containers/${item.containerID}`}>Ver contenedor</Link>}
-                {item.containerID==0||!item.containerID?<button onClick={()=>changeLocation()} className="btn btn-primary">Agregar a un contenedor</button>:
-                !idSec&&<button onClick={()=>changeLocation()} className="btn btn-primary">Cambiar de contenedor</button>}
+                {item.containerID==0||!item.containerID?
+                //<button onClick={()=>changeLocation()} className="btn btn-primary">Agregar a un contenedor</button>
+                <Link to={`locationChange`}>Agregar a un contenedor</Link>
+                :
+                !idSec&&
+                //<button onClick={()=>changeLocation()} className="btn btn-primary">Cambiar de contenedor</button>
+                <Link to={`locationChange`}>Cambiar de contenedor</Link>
+                }
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
-            </div>:<ItemLocation />}
+            </div>
+            //:<ItemLocation />
+            }
             {idSec?<Link to={`/sectors/${idSec}/containers/${idCont}/items`}>Volver</Link>:<Link to={`/items`}>Volver</Link>}
         </>
     )

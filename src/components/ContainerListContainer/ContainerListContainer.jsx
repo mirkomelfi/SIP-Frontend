@@ -28,7 +28,7 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
       if (idSec){
         url=`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${idSec}`;
       }else{
-        url= `${process.env.REACT_APP_DOMINIO_BACK}/containers`; //      /filter?idCont=${idContainer}
+        url= `${process.env.REACT_APP_DOMINIO_BACK}/containers/filter?idCont=${idContainer}`; //      /filter?idCont=${idContainer}
       }
 
 
@@ -85,6 +85,7 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
           (<ContainerPost/>)}
  
           {idSec?<Link to={`/sectors/${idSec}`}>Volver</Link>:
+          idItem? <Link to={`/items/${idItem}`}>Volver</Link>:
           <Link to={`/`}>Volver</Link>}
         </>
     );

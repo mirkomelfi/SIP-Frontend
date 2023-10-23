@@ -49,6 +49,7 @@ const ItemLocation =()=>{
 
                   <button type="submit" className="btn btn-primary">Ver contenedor/es</button>
                   </form>
+                  <Link to={`/items/${idItem}`}>Volver</Link>
 
               </div>
           )
@@ -57,7 +58,7 @@ const ItemLocation =()=>{
           
           :    
           <Mensaje msj={mensaje} />
-        
+       
    
   }
   </div>

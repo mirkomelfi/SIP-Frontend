@@ -17,6 +17,7 @@ import { Home } from './Home/Home';
 import { Container } from './Container/Container';
 import ItemListContainer from './ItemListContainer/ItemListContainer';
 import { Sector } from './Sector/Sector';
+import { ItemLocation } from './Item/ItemLocation';
 
 
 
@@ -41,6 +42,8 @@ export const App = () => {
           <Route path="/sectors/:idSec/containers/:idCont/items/:idItem" element={<Item fromSector={true}/>}/> 
           <Route path="/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado"/>}/>
           <Route path="/items/:idItem" element={<Item />}/> 
+          <Route path="/items/:idItem/locationChange" element={<ItemLocation />}/> 
+          <Route path="/items/:idItem/locationChange/:idCont" element={<Container fromLocation={true} />}/> 
           <Route path="/users/:idUser" element={<User/>}/> 
           <Route path="/updateUser/:idUser" element={<UserPut />}/> 
           <Route path="/updateSector/:idSec" element={<SectorPut />}/>
