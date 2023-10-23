@@ -10,7 +10,7 @@ const Container =({fromItem,fromLocation})=>{
     const {idSec,idCont,idItem}= useParams();
 
     const [container,setContainer]= useState([]);
-    console.log(container)
+
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null);
 
@@ -89,7 +89,6 @@ const Container =({fromItem,fromLocation})=>{
             </div>
             }
            { !fromItem&&!fromLocation?<Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link>:
-           fromLocation? <Link to={`/items/${idItem}/locationChange`}>Volver</Link>:
             <Link to={`/items/${idItem}`}>Volver</Link>
           }
         </>

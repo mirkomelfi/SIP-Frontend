@@ -54,7 +54,7 @@ const ItemLocation =()=>{
               </div>
           )
           
-          :<ContainerListContainer idContainer={idCont} idItem={idItem} />
+          :<ContainerListContainer fromLoc={true} idContainer={idCont} idItem={idItem} />
           
           :    
           <Mensaje msj={mensaje} />

@@ -8,15 +8,18 @@ import { ContainerPost } from "../Container/ContainerPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 
-const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
+const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
 
-    const {idSec}= useParams();
+  const {idSec}= useParams();
+
+  if (!idContainer)idContainer="";
 
   console.log("ContainerListContainer",idSec,idContainer,idItem)
     const [listaContainers,setListaContainers]= useState([]);
     const [loading,setLoading]= useState(true);
     const [add,setAdd]= useState(false);
     const [mensaje,setMensaje]= useState(null);
+    const [error,setError]= useState(null);
 
 
     const agregar= () =>{ 
@@ -51,7 +54,12 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
               setListaContainers(containers)
             }
           } else{
-            setListaContainers(data)
+            if (data.msj){
+              setError(true)
+              setMensaje(data.msj)
+            }else{
+              setListaContainers(data)
+            }
           }
 
         })
@@ -68,6 +76,7 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
           ? 
           <p>Cargando...</p> 
           : 
+          !error ?
           !add ?
           (!mensaje?<>
             <h1 className="greeting">{greeting}</h1>
@@ -75,17 +84,19 @@ const ContainerListContainer = ({greeting, idContainer, idItem}) =>{
             <button onClick={()=>agregar()} className="btn btn-primary">Agregar contenedor</button>
            <ContainerList listaContainers={listaContainers} isInSector={true}/></>
             :
-            <ContainerList listaContainers={listaContainers} idItem={idItem}/>}</>
+            <ContainerList listaContainers={listaContainers} idItem={idItem} />  }</>
             :
             <> 
             <button onClick={()=>agregar()} className="btn btn-primary">Agregar contenedor</button>
             <Mensaje msj={mensaje}/>
             </> 
           ):
-          (<ContainerPost/>)}
+          (<ContainerPost/>):
+          <Mensaje msj={mensaje}/>
+        }
  
           {idSec?<Link to={`/sectors/${idSec}`}>Volver</Link>:
-          idItem? <Link to={`/items/${idItem}`}>Volver</Link>:
+          fromLoc?<Link to={`/items/${idItem}`}>Volver</Link>:
           <Link to={`/`}>Volver</Link>}
         </>
     );

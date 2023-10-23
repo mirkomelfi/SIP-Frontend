@@ -1,7 +1,7 @@
 import { ContainerDetail } from "../ContainerDetail/ContainerDetail";
 
 const ContainerList = ({listaContainers,isInSector, idItem})=>{
-    console.log("ContainerList",isInSector)
+
     return (
         <>
            {listaContainers&&

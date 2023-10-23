@@ -5,6 +5,7 @@ import { Mensaje } from "../Mensaje/Mensaje";
 import { getToken } from "../../utils/auth-utils";
 
 const ContainerDetail =({container, isInSector})=>{
+    console.log("llegue a ContainerDetail")
 
 
     return(
