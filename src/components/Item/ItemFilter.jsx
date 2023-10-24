@@ -25,7 +25,12 @@ export const ItemFilter = () => {
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const item = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
 
-        setItemName(item.query)
+        if (item.query==""){
+            setItemName(" ")
+        }else{  
+            setItemName(item.query)
+        }
+
         console.log(e)
         e.target.reset() //Reset form
                 
