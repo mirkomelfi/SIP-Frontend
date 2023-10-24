@@ -4,12 +4,20 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
+import { ItemFilter } from "./ItemFilter"
 
 export const ItemPost = () => {
 
     const {idItem,idCont}= useParams();
     console.log(idItem,idCont)
     const [mensaje,setMensaje]=useState(null)
+    const [goBack,setGoBack]= useState(null);
+
+    const returnToItem=()=>{
+        setGoBack(true)
+    }
+
+
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
     const consultarForm = async(e) => {
@@ -48,8 +56,9 @@ export const ItemPost = () => {
     return (
 
         <div>
-            {!mensaje?(
-                
+            {!goBack?
+            !mensaje?(
+                <>
                 <div className="container divForm" >
                     <h2>Creacion de Item</h2>
                     <form onSubmit={consultarForm} ref={datForm}>
@@ -65,12 +74,13 @@ export const ItemPost = () => {
 
                         <button type="submit" className="btn btn-primary">Crear</button>
                         </form>
-
                     </div>
+                 <button onClick={()=>returnToItem()} className="btn btn-primary">Volver</button>
+                 </>
                 ):    <Mensaje msj={mensaje} />
+        :<ItemFilter/>
                     
         }
-        <Link to={`/`}>Volver</Link>
         </div>
         
     )

@@ -21,6 +21,11 @@ const ItemListContainer = ({greeting,filter}) =>{
     const [goBack,setGoBack]= useState(null);
 
     const returnToItem=()=>{
+      if (mensaje){
+        setGoBack(null)
+        setError(null)
+        setAdd(null)
+      }
         setGoBack(true)
     }
 
@@ -72,7 +77,7 @@ const ItemListContainer = ({greeting,filter}) =>{
 
     return (
         <>
-          {loading 
+        {loading 
           ? 
           <p>Cargando...</p> 
           : 
@@ -85,13 +90,12 @@ const ItemListContainer = ({greeting,filter}) =>{
                 {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
               </>)
               :(<ItemPost/>)
-            :<ItemFilter/>
+            :<ItemFilter />
           : <Mensaje msj={mensaje} />
         }
           {idSec&&<Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link>}
-       {   //<Link to={`/`}>Volver</Link>
-       }
           {!goBack&&!idSec&&<button onClick={()=>returnToItem()} className="btn btn-primary">Volver</button>}
+          
           
 
         </>

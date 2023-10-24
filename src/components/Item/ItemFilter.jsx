@@ -16,6 +16,7 @@ export const ItemFilter = () => {
     const agregar= () =>{ 
       setAdd(true)
     }
+    
 
     const consultarForm = async(e) => {
         //Consultar los datos del formulario
