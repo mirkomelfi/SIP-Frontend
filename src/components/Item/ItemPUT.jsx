@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
@@ -9,8 +9,31 @@ export const ItemPut = () => {
 
     const {idSec,idCont,idItem}= useParams();
 
+    const [item,setItem]= useState([]);
+
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
+
+    useEffect(() => { 
+        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+            
+        }
+        
+      })
+        .then(response => response.json())
+        .then(data => {
+          setItem(data)
+          console.log(item)
+
+        })
+        .catch(error => console.error(error))
+        .finally(()=>{
+        })
+    },[])
 
     const consultarForm = async(e) => {
         //Consultar los datos del formulario
@@ -51,11 +74,11 @@ export const ItemPut = () => {
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="name" />
+                            <input type="text" className="form-control" name="name" placeholder={item.name}/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="description" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="description" />
+                            <input type="text" className="form-control" name="description" placeholder={item.description}/>
                         </div>
 
                         <button type="submit" className="btn btn-primary">Actualizar</button>
