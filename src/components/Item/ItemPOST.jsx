@@ -5,17 +5,20 @@ import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
 import { ItemFilter } from "./ItemFilter"
+import { Item } from "./Item"
 
 export const ItemPost = () => {
 
     const {idItem,idCont}= useParams();
     console.log(idItem,idCont)
     const [mensaje,setMensaje]=useState(null)
+    const [itemCreated,setItemCreated]=useState(null)
     const [goBack,setGoBack]= useState(null);
 
     const returnToItem=()=>{
         setGoBack(true)
     }
+
 
 
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
@@ -45,8 +48,13 @@ export const ItemPost = () => {
         })
 
         const data = await response.json()
-        console.log(data)
-        setMensaje(data.msj)
+        console.log("creacion item",data)
+        if (data.msj){
+            setMensaje(data.msj)
+        }else{
+            setItemCreated(data)
+            console.log(data)
+        }
             
         e.target.reset() //Reset form
             
@@ -57,28 +65,34 @@ export const ItemPost = () => {
 
         <div>
             {!goBack?
-            !mensaje?(
-                <>
-                <div className="container divForm" >
-                    <h2>Creacion de Item</h2>
-                    <form onSubmit={consultarForm} ref={datForm}>
-                        <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="name" required/>
-                        </div>
+                !mensaje?
+                    !itemCreated ?
+                    <>
+                    <div className="container divForm" >
+                        <h2>Creacion de Item</h2>
+                        <form onSubmit={consultarForm} ref={datForm}>
+                            <div className="mb-3">
+                                <label htmlFor="name" className="form-label">Nombre</label>
+                                <input type="text" className="form-control" name="name" required/>
+                            </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="description" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="description" required/>
-                        </div>
+                            <div className="mb-3">
+                                <label htmlFor="description" className="form-label">Descripcion</label>
+                                <input type="text" className="form-control" name="description" required/>
+                            </div>
 
-                        <button type="submit" className="btn btn-primary">Crear</button>
-                        </form>
-                    </div>
-                 <button onClick={()=>returnToItem()} className="btn btn-primary">Volver</button>
-                 </>
-                ):    <Mensaje msj={mensaje} />
-        :<ItemFilter/>
+                            <button type="submit" className="btn btn-primary">Crear</button>
+                            </form>
+                        <button onClick={()=>returnToItem()} className="btn btn-primary">Volver</button>
+                        </div>
+                    </>
+                    :
+                    <>
+                    <h2>Item creado correctamente. Agregue una imagen si lo desea.</h2>
+                    <Link to={`/items/${itemCreated.id}`}>Ver item creado</Link>
+                    </>
+                :<Mensaje msh={mensaje} />// en vez de mensaje le pongo el ITEM y le mando la props fromPost={true}
+            :<ItemFilter/>
                     
         }
         </div>

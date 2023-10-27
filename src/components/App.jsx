@@ -19,6 +19,7 @@ import ItemListContainer from './ItemListContainer/ItemListContainer';
 import { Sector } from './Sector/Sector';
 import { ItemLocation } from './Item/ItemLocation';
 import { ItemFilter } from './Item/ItemFilter';
+import ImagenPost from './Imagen/ImagenPOST';
 
 
 
@@ -49,6 +50,7 @@ export const App = () => {
           <Route path="/updateUser/:idUser" element={<UserPut />}/> 
           <Route path="/updateSector/:idSec" element={<SectorPut />}/>
           <Route path="/addSector" element={<SectorPost />}/>
+          <Route path="/addImage/:idItem" element={<ImagenPost />}/> 
           <Route path="/sectors/:idSec/containers/:idCont/items/:idItem/updateItem" element={<ItemPut />}/>
           <Route path="/items/:idItem/updateItem" element={<ItemPut />}/>
           <Route path="/sectors/:idSec/containers/:idCont/updateContainer" element={<ContainerPut />}/>

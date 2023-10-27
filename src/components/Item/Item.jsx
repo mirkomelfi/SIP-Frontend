@@ -6,8 +6,8 @@ import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { Location } from "../Location/Location";
 
-const Item =({fromSector})=>{
-    const {idSec,idCont,idItem}= useParams();
+const Item =({fromSector,id})=>{
+    let {idSec,idCont,idItem}= useParams();
 
     const [item,setItem]= useState([]);
     console.log(item)
@@ -33,6 +33,7 @@ const Item =({fromSector})=>{
     }
 
     useEffect(() => { 
+
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
         method: "GET",
         headers: {
@@ -61,12 +62,13 @@ const Item =({fromSector})=>{
                 <h1>Item N°{item.id}</h1>
                 {!mensaje?(<>
                 <h2>Nombre: {item.name}</h2>
+                {item.image!=null&&<img src={`data:image/jpeg;base64,${item.image.imageData}`} alt="" />}
                 <h2>Descripcion: {item.description}</h2>
                 {item.containerID==0||!item.containerID?
                 <h2>No se encuentra en ningun contenedor</h2>
                 :
                 <h2>Se encuentra en contenedor: {item.containerID}</h2>}
-
+                {item.image==null?<Link to={`/addImage/${item.id}`}>Agregar imagen</Link>:<Link to={`/addImage/${item.id}`}>Modificar imagen</Link>}
                 <Link to={`updateItem`}>Modificar Item</Link>
                { <button onClick={()=>verLocations()} className="btn btn-primary">Ver historial de locations</button>}
                 {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!fromSector)&&<Link to={`containers/${item.containerID}`}>Ver contenedor</Link>}
