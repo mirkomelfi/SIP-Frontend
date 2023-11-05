@@ -2,7 +2,7 @@ import "./Container.css";
 import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
-import { getToken } from "../../utils/auth-utils";
+import { getToken, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 const Container =({fromItem,fromLocation})=>{
@@ -22,9 +22,15 @@ const Container =({fromItem,fromLocation})=>{
                 "Authorization": `Bearer ${getToken()}`
             }
         })
-        const data = await response.json()
-        console.log(data)
-        setMensaje(data.msj)
+        const rol=validateRol(response)
+        if (!rol){
+            setMensaje("No posee los permisos necesarios")
+        }else{
+            const data = await response.json()
+            if (data.msj){
+                setMensaje(data.msj)
+            }
+        }
   
     }
 

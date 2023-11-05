@@ -10,3 +10,9 @@ export const deleteToken=()=>{
     localStorage.removeItem("jwt")
 }
 
+export const validateRol=(response)=>{
+    if (response.status==403){
+        return undefined
+    }
+    return true
+}

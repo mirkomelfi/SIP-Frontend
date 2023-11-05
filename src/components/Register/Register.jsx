@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { getToken } from "../../utils/auth-utils"
+import { getToken, validateRol } from "../../utils/auth-utils"
 
 export const Register = () => {
 
@@ -31,13 +31,13 @@ export const Register = () => {
                 },
                 body: JSON.stringify(cliente)
             })
-
-            if (response.status==403){
-                setMensaje("No posee rol necesario")
-              }else{
+            const rol=validateRol(response)
+            if (!rol){
+                setMensaje("No posee los permisos necesarios")
+            }else{
                 const data = await response.json()
                 setMensaje(data.msj)
-              }
+            }
                 
             e.target.reset() //Reset form
         }

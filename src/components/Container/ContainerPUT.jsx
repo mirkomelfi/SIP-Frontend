@@ -3,7 +3,7 @@ import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { getToken } from "../../utils/auth-utils"
+import { getToken, validateRol } from "../../utils/auth-utils"
 
 export const ContainerPut = () => {
 
@@ -31,8 +31,15 @@ export const ContainerPut = () => {
                 body: JSON.stringify(container)
             })
 
-            const data = await response.json()
-            setMensaje(data.msj)
+            const rol=validateRol(response)
+            if (!rol){
+                setMensaje("No posee los permisos necesarios")
+            }else{
+                const data = await response.json()
+                if (data.msj){
+                    setMensaje(data.msj)
+                }
+        }
                 
             e.target.reset() //Reset form
                 

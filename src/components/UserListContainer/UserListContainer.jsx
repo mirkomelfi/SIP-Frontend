@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {useParams} from "react-router-dom";
 import { UserList } from "../UserList/UserList";
 import { Link } from "react-router-dom";
-import { getToken } from "../../utils/auth-utils";
+import { getToken, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 
@@ -23,50 +23,27 @@ const UserListContainer = ({greeting}) =>{
             "Content-Type": "application/json",
             "Authorization": `Bearer ${getToken()}`
         }
-      })
-      if (response.status==403){
-        setMensaje("No posee rol necesario")
-      }else{
-        const data = await response.json()
-        if (data.msj){
-          setMensaje(data.msj)
-        }else{
-          setListaUsers(data)
-        }
-      }
+    })
+    const rol=validateRol(response)
+    if (!rol){
+      setMensaje("No posee los permisos necesarios")
+    }else{
+    const data = await response.json()
+    if (data.msj){
+      setMensaje(data.msj)
+    }else{
+      setListaUsers(data)
+    }
+    }
   }
-    useEffect(() => { 
 
-        ejecutarFetch()
-        /*fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/users`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-        }
-        
-      })
-        .then(response => {
-          if (response.status==403){
-            setMensaje("No posee rol necesario")
-          }else{
-            response.json()
-          }
-        })
-        .then(data => {
-          console.log("data", data)
-          if (data.msj){
-            setMensaje(data.msj)
-          }else{
-            setListaUsers(data)
-          }
-
-        })        */
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
-    },[])
+  useEffect(() => { 
+    ejecutarFetch()
+    .catch(error => console.error(error))
+    .finally(()=>{
+      setLoading(false)
+    })
+  },[])
 
     return (
         <>{!mensaje

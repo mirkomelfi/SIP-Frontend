@@ -2,7 +2,7 @@ import "./User.css";
 import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
-import { getToken } from "../../utils/auth-utils";
+import { getToken, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 const User =()=>{
@@ -15,6 +15,35 @@ const User =()=>{
 
     const [mensaje,setMensaje]=useState(null)
 
+    const ejecutarFetch = async() =>{
+        var url=``;
+        if (idUser){
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${idUser}`
+        }else{
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/profile`
+        }
+
+        const response= await  fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+            }  
+        })
+
+        const rol=validateRol(response)
+        if (!rol){
+            setMensaje("No posee los permisos necesarios")
+        }else{
+            const data = await response.json()
+            if (data.msj){
+                setMensaje(data.msj)
+            }else{
+                setUser(data)
+            }
+        }
+      }
+
     const eliminar=async()=>{
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${idUser}`, {
             method: "DELETE",
@@ -23,39 +52,24 @@ const User =()=>{
                 "Authorization": `Bearer ${getToken()}`
             }
         })
-        const data = await response.json()
-        console.log(data)
-        setMensaje(data.msj)
-        
+        const rol=validateRol(response)
+        if (!rol){
+          setMensaje("No posee los permisos necesarios")
+        }else{
+            const data = await response.json()
+            setMensaje(data.msj)
+        }
+
   
     }
-
     useEffect(() => { 
-        var url=``;
-        if (idUser){
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/users/${idUser}`
-        }else{
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/profile`
-        }
-        fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-        }
-        
-      })
-        .then(response => response.json())
-        .then(data => {
-          setUser(data)
-          console.log(user)
-
-        })
+        ejecutarFetch()
         .catch(error => console.error(error))
         .finally(()=>{
           setLoading(false)
         })
-    },[])
+      },[])
+    
     return(
         <>
             {!mensaje?(<div className="tarjetaProducto">
