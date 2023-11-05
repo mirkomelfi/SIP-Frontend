@@ -27,14 +27,17 @@ export const Register = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    //"Authorization": `Bearer ${getToken()}`
+                    "Authorization": `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(cliente)
             })
 
-            const data = await response.json()
-
-            setMensaje(data.msj)
+            if (response.status==403){
+                setMensaje("No posee rol necesario")
+              }else{
+                const data = await response.json()
+                setMensaje(data.msj)
+              }
                 
             e.target.reset() //Reset form
         }
