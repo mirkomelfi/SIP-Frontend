@@ -97,10 +97,10 @@ export const Login = () => {
                         <input type="password" className="form-control" name="password" />
                     </div>
 
-                    {!loggeado&&<button type="submit" className="btn btn-primary" >Iniciar Sesion</button>}
+                    {!loggeado&&<button type="submit" className="btn-red" >Iniciar Sesion</button>}
                 </form>
-                {loggeado&&<button onClick={()=>desloggear()} className="btn btn-primary">Cerrar Sesion</button>}
-                {loggeado&&<Link to="/"><button>Volver a Inicio</button></Link>}
+                {loggeado&&<button onClick={()=>desloggear()} className="btn-red">Cerrar Sesion</button>}
+                {loggeado&&<Link to="/">Volver a Inicio</Link>}
             </div>
         </>):<Mensaje msj={mensaje} />
         }

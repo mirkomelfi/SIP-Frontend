@@ -67,7 +67,7 @@ export const SectorPut = () => {
                             <input type="text" className="form-control" name="description" />
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="btn-red">Actualizar</button>
                         </form>
 
                     </div>

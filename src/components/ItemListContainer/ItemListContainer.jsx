@@ -86,7 +86,7 @@ const ItemListContainer = ({greeting,filter}) =>{
               !add ?
               (<>
                 <h1 className="greeting">{greeting}</h1>
-                <button onClick={()=>agregar()} className="btn btn-primary">Agregar Item</button>
+                <button onClick={()=>agregar()} className="btn-red">Agregar Item</button>
                 {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
               </>)
               :(<ItemPost/>)
@@ -94,7 +94,7 @@ const ItemListContainer = ({greeting,filter}) =>{
           : <Mensaje msj={mensaje} />
         }
           {idSec&&<Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link>}
-          {!goBack&&!idSec&&<button onClick={()=>returnToItem()} className="btn btn-primary">Volver</button>}
+          {!goBack&&!idSec&&<button onClick={()=>returnToItem()} className="btn-red">Volver</button>}
           
           
 

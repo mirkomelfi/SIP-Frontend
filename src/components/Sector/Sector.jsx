@@ -74,7 +74,7 @@ const Sector =({fromContainer})=>{
                 <Link to={`containers`}>Ver Contenedores</Link> 
                 <Link to={`/updateSector/${idSec}`}>Modificar sector</Link>
                
-                <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button></>
+                <button onClick={()=>eliminar()}>Eliminar</button></>
                 } </>
                 ):(<Mensaje msj={mensaje} />)}
             </div>

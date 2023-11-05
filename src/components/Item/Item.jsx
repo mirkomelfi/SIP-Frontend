@@ -77,7 +77,7 @@ const Item =({fromSector,id})=>{
                 <h2>Se encuentra en contenedor: {item.containerID}</h2>}
                 {item.image==null?<Link to={`/addImage/${item.id}`}>Agregar imagen</Link>:<Link to={`/addImage/${item.id}`}>Modificar imagen</Link>}
                 <Link to={`updateItem`}>Modificar Item</Link>
-               { <button onClick={()=>verLocations()} className="btn btn-primary">Ver historial de locations</button>}
+               { <button onClick={()=>verLocations()} >Ver historial de locations</button>}
                 {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!fromSector)&&<Link to={`containers/${item.containerID}`}>Ver contenedor</Link>}
                 {item.containerID==0||!item.containerID?
                 <Link to={`locationChange`}>Agregar a un contenedor</Link>
@@ -85,7 +85,7 @@ const Item =({fromSector,id})=>{
                 !idSec&&
                 <Link to={`locationChange`}>Cambiar de contenedor</Link>
                 }
-                <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
+                <button onClick={()=>eliminar()}>Eliminar</button>
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}

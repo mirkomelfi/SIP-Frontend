@@ -70,10 +70,10 @@ const Imagen =()=>{
             (<div className="tarjetaProducto">
                 <h1>Imagen N°{num}</h1>
                 <img src={`data:image/jpeg;base64,${bytes}`} alt="" />
-                <button onClick={()=>eliminarImg()} className="btn btn-primary">Eliminar imagen</button>
+                <button onClick={()=>eliminarImg()} className="btn-red">Eliminar imagen</button>
             </div>
             <>
-            <button onClick={()=>siguienteImg()} className="btn btn-primary">Siguiente imagen</button>
+            <button onClick={()=>siguienteImg()} className="btn-red">Siguiente imagen</button>
             </>)</>
             
             :<Mensaje msj={mensaje} />

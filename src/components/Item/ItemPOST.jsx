@@ -81,9 +81,9 @@ export const ItemPost = () => {
                                 <input type="text" className="form-control" name="description" required/>
                             </div>
 
-                            <button type="submit" className="btn btn-primary">Crear</button>
+                            <button type="submit" className="btn-red">Crear</button>
                             </form>
-                        <button onClick={()=>returnToItem()} className="btn btn-primary">Volver</button>
+                        <button onClick={()=>returnToItem()} className="btn-red">Volver</button>
                         </div>
                     </>
                     :

@@ -81,7 +81,7 @@ export const ItemPut = () => {
                             <input type="text" className="form-control" name="description" placeholder={item.description}/>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="btn-red">Actualizar</button>
                         </form>
 
                     </div>

@@ -78,7 +78,7 @@ const User =()=>{
                 <h2>Nombre: {user.name}</h2>
                 <h2>Apellido: {user.surname}</h2>
                 {idUser?<Link to={`/updateUser/${idUser}`}>Modificar</Link>:<Link to={`/updateUser`}>Modificar</Link>}
-                {idUser&&<button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>}
+                {idUser&&<button onClick={()=>eliminar()}>Eliminar</button>}
             </div>):(<Mensaje msj={mensaje} />)}
             {idUser?<Link to={`/users`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
         </>

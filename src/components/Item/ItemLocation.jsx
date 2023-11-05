@@ -47,7 +47,7 @@ const ItemLocation =()=>{
                       <input type="text" className="form-control" name="idCont" />
                   </div>
 
-                  <button type="submit" className="btn btn-primary">Ver contenedor/es</button>
+                  <button type="submit" className="btn-red">Ver contenedor/es</button>
                   </form>
                   <Link to={`/items/${idItem}`}>Volver</Link>
 

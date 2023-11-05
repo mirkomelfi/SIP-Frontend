@@ -25,7 +25,7 @@ const Location =({item})=>{
                         <h3>{location.description}</h3>
                     </>
                 )}
-                 <button onClick={()=>returnToItem()} className="btn btn-primary">Volver al Item</button>
+                 <button onClick={()=>returnToItem()} >Volver al Item</button>
                 
             </div>:
             <Item />

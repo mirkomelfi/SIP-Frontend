@@ -81,13 +81,13 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
           (!mensaje?<>
             <h1 className="greeting">{greeting}</h1>
             {idSec?<> 
-            <button onClick={()=>agregar()} className="btn btn-primary">Agregar contenedor</button>
+            <button onClick={()=>agregar()}>Agregar contenedor</button>
            <ContainerList listaContainers={listaContainers} isInSector={true}/></>
             :
             <ContainerList listaContainers={listaContainers} idItem={idItem} />  }</>
             :
             <> 
-            <button onClick={()=>agregar()} className="btn btn-primary">Agregar contenedor</button>
+            <button onClick={()=>agregar()} className="btn-red">Agregar contenedor</button>
             <Mensaje msj={mensaje}/>
             </> 
           ):

@@ -45,7 +45,7 @@ export const ItemFilter = () => {
                 <>
 
                 <div>
-                    <button onClick={()=>agregar()} className="btn btn-primary">Agregar Item</button>
+                    <button onClick={()=>agregar()} className="btn-red">Agregar Item</button>
                 </div >
 
                 <div className="container divForm" >
@@ -61,7 +61,7 @@ export const ItemFilter = () => {
                             <input type="text" className="form-control" name="query" />
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Buscar</button>
+                        <button type="submit" className="btn-red">Buscar</button>
                         </form>
 
                     </div>

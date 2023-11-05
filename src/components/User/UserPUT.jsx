@@ -81,7 +81,7 @@ export const UserPut = () => {
                             <input type="password" className="form-control" name="password" />
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="btn-red">Actualizar</button>
                         </form>
 
                     </div>

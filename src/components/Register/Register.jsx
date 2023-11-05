@@ -70,11 +70,11 @@ export const Register = () => {
                     <input type="password" className="form-control" name="password" />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Registrar</button>
+                <button type="submit" className="btn-red">Registrar</button>
                 </form>
 
             </div>
-        </>):<><Mensaje msj={mensaje} /><Link to="/"><button>Volver al Menu Principal</button></Link></>
+        </>):<><Mensaje msj={mensaje} /><Link to="/">Volver al Menu Principal</Link></>
         }
         </div>
     )
