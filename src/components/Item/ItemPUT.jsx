@@ -3,7 +3,7 @@ import { Mensaje } from "../Mensaje/Mensaje"
 import { useState,useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { getToken, validateRol } from "../../utils/auth-utils"
+import { deleteToken, getToken, validateRol } from "../../utils/auth-utils"
 
 export const ItemPut = () => {
 
@@ -15,22 +15,35 @@ export const ItemPut = () => {
     const navigate= useNavigate()
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-            
-        }
-        
-      })
-        .then(response => response.json())
-        .then(data => {
-          setItem(data)
-          console.log(item)
 
+    const ejecutarFetch=async () =>{ 
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+                
+            }
+            
         })
+        const rol=validateRol(response)
+        if (!rol){
+            deleteToken()
+            navigate("/login")
+        }else{
+            const data = await response.json()
+            if (data.msj){
+              setMensaje(data.msj)
+            }else{
+              setItem(data)
+            }
+        }
+  
+    }
+
+
+    useEffect(() => { 
+        ejecutarFetch()
         .catch(error => console.error(error))
         .finally(()=>{
         })
@@ -95,8 +108,8 @@ export const ItemPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-       { !idSec?<Link to={`/items/${idItem}`}>Volver</Link>:
-       <Link to={`/sectors/${idSec}/containers/${idCont}/items/${idItem}`}>Volver</Link>
+       { !idSec?<div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>:
+       <div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}/items/${idItem}`}>Volver</Link></div>
        }
         </div>
         

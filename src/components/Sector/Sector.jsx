@@ -1,7 +1,7 @@
 import "./Sector.css";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import { useState } from "react";
-import { getToken, isRolUser, validateRol } from "../../utils/auth-utils";
+import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useEffect } from "react";
 
@@ -28,7 +28,9 @@ const Sector =({fromContainer})=>{
         
         const rol=validateRol(response)
         if (!rol){
+            deleteToken()
             navigate("/login")
+            
         }else{
             const data = await response.json()
             if(data.msj){
@@ -54,7 +56,9 @@ const Sector =({fromContainer})=>{
               console.log("rol user")
                 setMensaje("No posee los permisos necesarios")
             }else{
+                deleteToken()
                 navigate("/login")
+                
             }
         }else{
             const data = await response.json()
@@ -89,7 +93,7 @@ const Sector =({fromContainer})=>{
                 ):(<Mensaje msj={mensaje} />)}
             </div>
             {!fromContainer?<Link to={`/sectors`}>Volver</Link> 
-            :<Link to={`/items/${idItem}/containers/${idCont}`}>Volver</Link>
+            :<div className="contenedorBotones"><Link to={`/items/${idItem}/containers/${idCont}`}>Volver</Link></div>
             }
         </>
     )

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import { ContainerList } from "../ContainerList/ContainerList";
 import { Link } from "react-router-dom";
-import { getToken, validateRol } from "../../utils/auth-utils";
+import { deleteToken, getToken, validateRol } from "../../utils/auth-utils";
 import { ContainerPost } from "../Container/ContainerPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 
@@ -45,6 +45,7 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
 
       const rol=validateRol(response)
         if (!rol){
+          deleteToken()
           navigate("/login")
         }else{
           const data = await response.json()
@@ -101,9 +102,9 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
           <Mensaje msj={mensaje}/>
         }
  
-          {idSec?<Link to={`/sectors/${idSec}`}>Volver</Link>:
-          fromLoc?<Link to={`/items/${idItem}`}>Volver</Link>:
-          <Link to={`/`}>Volver</Link>}
+          {idSec?<div className="contenedorBotones"><Link to={`/sectors/${idSec}`}>Volver</Link></div>:
+          fromLoc?<div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>:
+          <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>}
         </>
     );
   } 

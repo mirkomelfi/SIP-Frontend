@@ -20,6 +20,7 @@ import { Sector } from './Sector/Sector';
 import { ItemLocation } from './Item/ItemLocation';
 import { ItemFilter } from './Item/ItemFilter';
 import ImagenPost from './Imagen/ImagenPOST';
+import { Logout } from './Logout/Logout';
 
 
 
@@ -31,6 +32,7 @@ export const App = () => {
         <Routes>
          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/logout' element={<Logout/>} />
           <Route path='/' element={<Home />} />
           <Route path="/users" element={<UserListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/sectors" element={<SectorListContainer greeting="Listado de Sectores"/>}/>

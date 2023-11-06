@@ -3,7 +3,7 @@ import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { getToken, validateRol } from "../../utils/auth-utils"
+import { deleteToken, getToken, validateRol } from "../../utils/auth-utils"
 import { ItemFilter } from "./ItemFilter"
 import { Item } from "./Item"
 
@@ -49,6 +49,7 @@ export const ItemPost = () => {
         })
         const rol=validateRol(response)
         if (!rol){
+            deleteToken()
             navigate("/login")
         }else{
             const data = await response.json()
@@ -93,7 +94,7 @@ export const ItemPost = () => {
                     :
                     <>
                     <h2>Item creado correctamente. Agregue una imagen si lo desea.</h2>
-                    <Link to={`/items/${itemCreated.id}`}>Ver item creado</Link>
+                    <div className="contenedorBotones"><Link to={`/items/${itemCreated.id}`}>Ver item creado</Link></div>
                     </>
                 :<Mensaje msh={mensaje} />// en vez de mensaje le pongo el ITEM y le mando la props fromPost={true}
             :<ItemFilter/>

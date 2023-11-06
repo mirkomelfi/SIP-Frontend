@@ -2,7 +2,7 @@ import "./Container.css";
 import {Link, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
-import { getToken, isRolUser, validateRol } from "../../utils/auth-utils";
+import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 const Container =({fromItem,fromLocation})=>{
@@ -26,6 +26,7 @@ const Container =({fromItem,fromLocation})=>{
           })
         const rol=validateRol(response)
         if (!rol){
+            deleteToken()
             navigate("/login")
         }else{
             const data = await response.json()
@@ -51,6 +52,7 @@ const Container =({fromItem,fromLocation})=>{
               console.log("rol user")
                 setMensaje("No posee los permisos necesarios")
             }else{
+                deleteToken()
                 navigate("/login")
             }
         }else{
@@ -72,6 +74,7 @@ const Container =({fromItem,fromLocation})=>{
       })
       const rol=validateRol(response)
         if (!rol){
+            deleteToken()
             navigate("/login") 
         }else{
             const data = await response.json()
@@ -115,8 +118,8 @@ const Container =({fromItem,fromLocation})=>{
                 ):(<Mensaje msj={mensaje} />)}
             </div>
             }
-           { !fromItem&&!fromLocation?<Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link>:
-            <Link to={`/items/${idItem}`}>Volver</Link>
+           { !fromItem&&!fromLocation? <div className="contenedorBotones"><Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link></div>:
+            <div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>
           }
         </>
     )

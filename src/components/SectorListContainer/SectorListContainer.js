@@ -3,7 +3,7 @@ import "./SectorListContainer.css";
 import { useState, useEffect } from "react";
 import {SectorList} from "../SectorList/SectorList"
 import {useParams,Link, useNavigate} from "react-router-dom";
-import { getToken, validateRol } from "../../utils/auth-utils";
+import { deleteToken, getToken, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 
@@ -27,7 +27,9 @@ export const SectorListContainer = ({greeting}) =>{
 
       const rol=validateRol(response)
         if (!rol){
+          deleteToken()
           navigate("/login")
+        
         }else{
           const data = await response.json()
           if (data.msj){
@@ -53,13 +55,14 @@ export const SectorListContainer = ({greeting}) =>{
     return (
       <>
       <h1 className="greeting">{greeting}</h1>
-        <Link to={`/addSector`}>Agregar Sector</Link> 
+      <div className="contenedorBotones"> <Link to={`/addSector`}>Agregar Sector</Link> </div>
       {!mensaje?(
-      <div> 
+      <div > 
 
         {loading ? <p>cargando...</p> : <SectorList listaSectors={listaSectors}/>}
       </div>):<Mensaje msj={mensaje}/>}
-      <Link to={`/`}>Volver</Link>
+      
+      <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>
       </>
     );
   }

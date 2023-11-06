@@ -65,7 +65,7 @@ export const ItemFilter = () => {
                         </form>
 
                     </div>
-                    <Link to={`/`}>Volver</Link>
+                    <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>
                     </>
                 ):    <ItemListContainer filter={itemName}  greeting="Listado de Items" />
                 :(<ItemPost/>)

@@ -5,11 +5,12 @@ import {Link} from "react-router-dom";
 import "./Navbar.css"
 
 const Navbar = () =>{
+
     return (
         <header>
-            <Link to="/register">Register</Link>
+            <Link to="/logout"><h3>Logout</h3></Link>
             <Link to="/"><h1>Sistema de Búsqueda</h1></Link>
-            <Link to="/login">Login</Link>
+            <Link to="/login"><h3>Login</h3></Link>
             
             {/*<nav>
                 <Link to="/category/cursos">Cursos</Link>

@@ -3,7 +3,7 @@ import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { getToken, isRolUser, validateRol } from "../../utils/auth-utils"
+import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils"
 
 export const ContainerPut = () => {
 
@@ -38,6 +38,7 @@ export const ContainerPut = () => {
                   console.log("rol user")
                     setMensaje("No posee los permisos necesarios")
                 }else{
+                    deleteToken()
                     navigate("/login")
                 }
             }else{

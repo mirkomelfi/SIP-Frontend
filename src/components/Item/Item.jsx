@@ -2,7 +2,7 @@ import "./Item.css";
 import {Link, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
-import { getToken, isRolUser, validateRol } from "../../utils/auth-utils";
+import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { Location } from "../Location/Location";
 
@@ -54,6 +54,7 @@ const Item =({fromSector,id})=>{
           console.log("rol user")
             setMensaje("No posee los permisos necesarios")
         }else{
+          deleteToken()
             navigate("/login")
         }
       }else{

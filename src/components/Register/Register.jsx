@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { getToken, isRolUser, validateRol } from "../../utils/auth-utils"
+import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils"
 
 export const Register = () => {
 
@@ -37,7 +37,10 @@ export const Register = () => {
                   console.log("rol user")
                     setMensaje("No posee los permisos necesarios")
                 }else{
+                    deleteToken()
                     navigate("/login")
+                    
+                    
                 }
             }else{
                 const data = await response.json()
@@ -79,8 +82,9 @@ export const Register = () => {
                 </form>
 
             </div>
-        </>):<><Mensaje msj={mensaje} /><Link to="/">Volver al Menu Principal</Link></>
+        </>):<><Mensaje msj={mensaje} /></>
         }
+        <Link to="/users">Volver</Link>
         </div>
     )
 }

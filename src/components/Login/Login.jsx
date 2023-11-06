@@ -82,7 +82,7 @@ export const Login = () => {
 
         <div>
             {!error?(
-        <>
+        <>{
             <div className="container divForm" >
                 <h3>Formulario de Inicio de Sesion</h3>
                 <form onSubmit={consultarForm} ref={datForm}>
@@ -101,7 +101,7 @@ export const Login = () => {
                 </form>
                 {loggeado&&<button onClick={()=>desloggear()} className="btn-red">Cerrar Sesion</button>}
                 {loggeado&&<Link to="/">Volver a Inicio</Link>}
-            </div>
+            </div>}
         </>):<Mensaje msj={mensaje} />
         }
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import {useParams,Link, useNavigate} from "react-router-dom";
 import { ItemList } from "../ItemList/ItemList";
-import { getToken, validateRol } from "../../utils/auth-utils";
+import { deleteToken, getToken, validateRol } from "../../utils/auth-utils";
 import { ItemPost } from "../Item/ItemPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { ItemLocation } from "../Item/ItemLocation";
@@ -52,6 +52,7 @@ const ItemListContainer = ({greeting,filter}) =>{
       })
       const rol=validateRol(response)
       if (!rol){
+        deleteToken()
         navigate("/login")
       }else{
         const data = await response.json()
@@ -100,7 +101,7 @@ const ItemListContainer = ({greeting,filter}) =>{
             :<ItemFilter />
           : <Mensaje msj={mensaje} />
         }
-          {idSec&&<Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link>}
+          {idSec&&<div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link></div>}
           {!goBack&&!idSec&&<button onClick={()=>returnToItem()} className="btn-red">Volver</button>}
           
           

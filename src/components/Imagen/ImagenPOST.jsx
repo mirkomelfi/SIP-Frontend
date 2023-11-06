@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams} from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useState,useEffect,useRef } from "react";
 import { Link } from "react-router-dom";
-import { getToken, validateRol } from "../../utils/auth-utils";
+import { deleteToken, getToken, validateRol } from "../../utils/auth-utils";
 
 const ImagenPost = () =>{ 
 
@@ -33,6 +33,7 @@ const ImagenPost = () =>{
         })
         const rol=validateRol(response)
         if (!rol){
+            deleteToken()
             navigate("/login")
         }else{
             const data = await response.json()
@@ -66,7 +67,7 @@ const ImagenPost = () =>{
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/items/${idItem}`}>Volver</Link>
+         <div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>
         </div>
         
     )

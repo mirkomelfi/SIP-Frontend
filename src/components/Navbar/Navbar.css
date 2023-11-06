@@ -1,3 +1,10 @@
+.contenedorBotones{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+}
+
+
 header{
     display: flex;
     align-items: center;
@@ -43,6 +50,17 @@ button{
     border-style: none;
 }
 
+button:hover{
+
+    transform: scale(1.2);
+}
+a:hover{
+    transform: scale(1.2);
+}
+.btn-red:hover{
+
+    transform: scale(1.2);
+}
 
 h1,h2,h3{
     font-family: 'Courier New', Courier, monospace;
@@ -51,5 +69,4 @@ h1,h2,h3{
 img{
     width: 100px;
     height:100px;
-
 }

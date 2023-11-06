@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {Navigate, useNavigate, useParams} from "react-router-dom";
 import { UserList } from "../UserList/UserList";
 import { Link } from "react-router-dom";
-import { getToken, isRolUser, validateRol } from "../../utils/auth-utils";
+import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 
@@ -30,6 +30,7 @@ const UserListContainer = ({greeting}) =>{
         console.log("rol user")
           setMensaje("No posee los permisos necesarios")
       }else{
+        deleteToken()
         navigate("/login")
       }
     }else{
@@ -55,8 +56,9 @@ const UserListContainer = ({greeting}) =>{
           ?
           <>
           <h1 className="greeting">{greeting}</h1>
+          <div className="contenedorBotones"><Link to="/register">Registrar nuevo usuario</Link></div>
           {loading ? <p>Cargando...</p> : <UserList pid={idUser} listaUsers={listaUsers}/>}
-          <Link to={`/`}>Volver</Link>
+          <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>
           </>
           : <Mensaje msj={mensaje}/>
         }

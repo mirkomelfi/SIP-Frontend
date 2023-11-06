@@ -2,7 +2,7 @@ import "./User.css";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
-import { extractRol, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
+import { deleteToken, extractRol, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 const User =()=>{
@@ -39,6 +39,7 @@ const User =()=>{
               console.log("rol user")
                 setMensaje("No posee los permisos necesarios")
             }else{
+                deleteToken()
                 navigate("/login")
             }
         }else{
@@ -92,7 +93,7 @@ const User =()=>{
                 {idUser?<Link to={`/updateUser/${idUser}`}>Modificar</Link>:<Link to={`/updateUser`}>Modificar</Link>}
                 {idUser&&<button onClick={()=>eliminar()}>Eliminar</button>}
             </div>):(<Mensaje msj={mensaje} />)}
-            {idUser?<Link to={`/users`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
+            {idUser?<div className="contenedorBotones"><Link to={`/users`}>Volver</Link></div>:<div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>}
         </>
     )
 }
