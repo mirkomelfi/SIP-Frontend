@@ -1,9 +1,9 @@
 import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState,useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { getToken } from "../../utils/auth-utils"
+import { getToken, validateRol } from "../../utils/auth-utils"
 
 export const ItemPut = () => {
 
@@ -12,6 +12,7 @@ export const ItemPut = () => {
     const [item,setItem]= useState([]);
 
     const [mensaje,setMensaje]=useState(null)
+    const navigate= useNavigate()
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
     useEffect(() => { 
@@ -54,9 +55,15 @@ export const ItemPut = () => {
                 },
                 body: JSON.stringify(item)
             })
-
-            const data = await response.json()
-            setMensaje(data.msj)
+            const rol=validateRol(response)
+            if (!rol){
+                navigate("/login")
+            }else{
+                const data = await response.json()
+                if (data.msj){
+                    setMensaje(data.msj)
+                }
+            }
                 
             e.target.reset() //Reset form
                 

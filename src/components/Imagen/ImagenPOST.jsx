@@ -1,15 +1,16 @@
 import React from "react";
-import { Navigate, useParams} from "react-router-dom";
+import { Navigate, useNavigate, useParams} from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useState,useEffect,useRef } from "react";
 import { Link } from "react-router-dom";
-import { getToken } from "../../utils/auth-utils";
+import { getToken, validateRol } from "../../utils/auth-utils";
 
 const ImagenPost = () =>{ 
 
     const {idItem}= useParams();
     console.log("ImagenPost",idItem)
     const [mensaje,setMensaje]=useState(null)
+    const navigate=useNavigate()
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
     const consultarForm = async(e) => {
@@ -30,10 +31,15 @@ const ImagenPost = () =>{
             },
             body: img
         })
-
-        const data = await response.json()
-        setMensaje(data.msj)
-            
+        const rol=validateRol(response)
+        if (!rol){
+            navigate("/login")
+        }else{
+            const data = await response.json()
+            if (data.msj){
+                setMensaje(data.msj)
+            }
+        } 
         e.target.reset() //Reset form
             
         }

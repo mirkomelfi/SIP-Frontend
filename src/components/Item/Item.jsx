@@ -1,8 +1,8 @@
 import "./Item.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
-import { getToken, validateRol } from "../../utils/auth-utils";
+import { getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { Location } from "../Location/Location";
 
@@ -14,6 +14,31 @@ const Item =({fromSector,id})=>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null);
     const [locations,setLocations]= useState(null);
+    const navigate= useNavigate();
+
+    const ejecutarFetch=async () =>{ 
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`   
+        }
+        
+      })
+      const rol=validateRol(response)
+      if (!rol){
+          navigate("/login")
+      }else{
+          const data = await response.json()
+          if (data.msj){
+            setMensaje(data.msj)
+          }else{
+            setItem(data)
+          }
+      }
+
+  }
+
 
     const eliminar=async()=>{
       const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/items/${idItem}`, {
@@ -25,7 +50,12 @@ const Item =({fromSector,id})=>{
       })
       const rol=validateRol(response)
       if (!rol){
-          setMensaje("No posee los permisos necesarios")
+        if (isRolUser(getToken())){
+          console.log("rol user")
+            setMensaje("No posee los permisos necesarios")
+        }else{
+            navigate("/login")
+        }
       }else{
           const data = await response.json()
           if (data.msj){
@@ -40,27 +70,13 @@ const Item =({fromSector,id})=>{
     }
 
     useEffect(() => { 
-
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-            
-        }
-        
-      })
-        .then(response => response.json())
-        .then(data => {
-          setItem(data)
-          console.log(item)
-
-        })
-        .catch(error => console.error(error))
+        ejecutarFetch()
+         .catch(error => console.error(error))
         .finally(()=>{
           setLoading(false)
         })
     },[])
+    
     return(
         <>
             {!locations?

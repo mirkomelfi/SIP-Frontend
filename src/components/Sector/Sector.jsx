@@ -1,7 +1,7 @@
 import "./Sector.css";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import { useState } from "react";
-import { getToken, validateRol } from "../../utils/auth-utils";
+import { getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useEffect } from "react";
 
@@ -12,6 +12,33 @@ const Sector =({fromContainer})=>{
     console.log(idSec)
     const [mensaje,setMensaje]=useState(null);
     const [sector,setSector]=useState();
+    const navigate= useNavigate()
+
+    const ejecutarFetch=async () =>{ 
+    
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${idSec}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+                
+            }
+            
+        })
+        
+        const rol=validateRol(response)
+        if (!rol){
+            navigate("/login")
+        }else{
+            const data = await response.json()
+            if(data.msj){
+                setMensaje(data.msj)
+            }else{
+                setSector(data)
+            }
+        }
+    }
+
 
     const eliminar=async()=>{
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/sectors/${idSec}`, {
@@ -23,7 +50,12 @@ const Sector =({fromContainer})=>{
         })
         const rol=validateRol(response)
         if (!rol){
-            setMensaje("No posee los permisos necesarios")
+            if (isRolUser(getToken())){
+              console.log("rol user")
+                setMensaje("No posee los permisos necesarios")
+            }else{
+                navigate("/login")
+            }
         }else{
             const data = await response.json()
             if (data.msj){
@@ -34,29 +66,7 @@ const Sector =({fromContainer})=>{
     }
 
     useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${idSec}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-            
-        }
-        
-      })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            console.log(mensaje)
-            if(data.msj){
-                setMensaje(data.msj)
-                console.log(data)
-            }else{
-                setSector(data)
-                console.log(data)
-            }
-
-
-        })
+        ejecutarFetch()
         .catch(error => console.error(error))
         .finally(()=>{
         })

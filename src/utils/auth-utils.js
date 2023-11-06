@@ -1,3 +1,5 @@
+import {jwtDecode} from "jwt-decode"
+
 export const setToken=(token)=>{
     localStorage.setItem("jwt",token)
 }
@@ -15,4 +17,18 @@ export const validateRol=(response)=>{
         return undefined
     }
     return true
+}
+
+export const extractRol=(token)=>{
+    const decoded= jwtDecode(token)
+    return decoded.rol
+}
+
+export const isRolUser=(token)=>{
+    if (token){
+        if (extractRol(token)=="ROL_USER"){
+            return true
+        }
+    }
+    return undefined
 }

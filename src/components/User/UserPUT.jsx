@@ -1,9 +1,9 @@
 import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { getToken, validateRol } from "../../utils/auth-utils"
+import { getToken, isRolUser, validateRol } from "../../utils/auth-utils"
 
 export const UserPut = () => {
 
@@ -12,6 +12,7 @@ export const UserPut = () => {
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
+    const navigate= useNavigate()
     const consultarForm = async(e) => {
         //Consultar los datos del formulario
         e.preventDefault()
@@ -42,7 +43,12 @@ export const UserPut = () => {
             
             const rol=validateRol(response)
             if (!rol){
-                setMensaje("No posee los permisos necesarios")
+                if (isRolUser(getToken())){
+                  console.log("rol user")
+                    setMensaje("No posee los permisos necesarios")
+                }else{
+                    navigate("/login")
+                }
             }else{
                 const data = await response.json()
                 if (data.msj){

@@ -1,8 +1,8 @@
 import "./User.css";
-import {Link} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
-import { getToken, validateRol } from "../../utils/auth-utils";
+import { extractRol, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 const User =()=>{
@@ -13,6 +13,8 @@ const User =()=>{
     const [loading,setLoading]= useState(true);
 
 
+    
+    const navigate= useNavigate()
     const [mensaje,setMensaje]=useState(null)
 
     const ejecutarFetch = async() =>{
@@ -33,7 +35,12 @@ const User =()=>{
 
         const rol=validateRol(response)
         if (!rol){
-            setMensaje("No posee los permisos necesarios")
+            if (isRolUser(getToken())){
+              console.log("rol user")
+                setMensaje("No posee los permisos necesarios")
+            }else{
+                navigate("/login")
+            }
         }else{
             const data = await response.json()
             if (data.msj){
@@ -54,7 +61,12 @@ const User =()=>{
         })
         const rol=validateRol(response)
         if (!rol){
-          setMensaje("No posee los permisos necesarios")
+            if (isRolUser(getToken())){
+              console.log("rol user")
+                setMensaje("No posee los permisos necesarios")
+            }else{
+                navigate("/login")
+            }
         }else{
             const data = await response.json()
             setMensaje(data.msj)

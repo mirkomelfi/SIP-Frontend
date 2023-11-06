@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { ContainerList } from "../ContainerList/ContainerList";
 import { Link } from "react-router-dom";
-import { getToken } from "../../utils/auth-utils";
+import { getToken, validateRol } from "../../utils/auth-utils";
 import { ContainerPost } from "../Container/ContainerPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 
@@ -20,22 +20,21 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
     const [add,setAdd]= useState(false);
     const [mensaje,setMensaje]= useState(null);
     const [error,setError]= useState(null);
-
+    const navigate= useNavigate()
 
     const agregar= () =>{ 
       setAdd(true)
     }
 
-    useEffect(() => { 
+    const ejecutarFetch=async () =>{ 
       let url=``;
       if (idSec){
         url=`${process.env.REACT_APP_DOMINIO_BACK}/sectors/${idSec}`;
       }else{
-        url= `${process.env.REACT_APP_DOMINIO_BACK}/containers/filter?idCont=${idContainer}`; //      /filter?idCont=${idContainer}
+        url= `${process.env.REACT_APP_DOMINIO_BACK}/containers/filter?idCont=${idContainer}`; 
       }
 
-
-        fetch(url, {
+      const response= await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -43,9 +42,12 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
         }
         
       })
-        .then(response => response.json())
-        .then(data => {
-        
+
+      const rol=validateRol(response)
+        if (!rol){
+          navigate("/login")
+        }else{
+          const data = await response.json()
           if (idSec){
             const containers= data.containers
             if (containers.length==0){
@@ -61,13 +63,17 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
               setListaContainers(data)
             }
           }
+        }
+      
+    }
 
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-          setAdd(false)
-        })
+    useEffect(() => {
+      ejecutarFetch()
+      .catch(error => console.error(error))
+      .finally(()=>{
+        setLoading(false)
+        setAdd(false)
+      })
     },[])
 
     return (

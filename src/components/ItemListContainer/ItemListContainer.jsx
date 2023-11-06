@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {useParams,Link} from "react-router-dom";
+import {useParams,Link, useNavigate} from "react-router-dom";
 import { ItemList } from "../ItemList/ItemList";
-import { getToken } from "../../utils/auth-utils";
+import { getToken, validateRol } from "../../utils/auth-utils";
 import { ItemPost } from "../Item/ItemPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { ItemLocation } from "../Item/ItemLocation";
@@ -19,6 +19,8 @@ const ItemListContainer = ({greeting,filter}) =>{
     const [add,setAdd]= useState(false);
     const [error,setError]= useState(null);
     const [goBack,setGoBack]= useState(null);
+    
+    const navigate= useNavigate()
 
     const returnToItem=()=>{
       if (mensaje){
@@ -33,15 +35,14 @@ const ItemListContainer = ({greeting,filter}) =>{
       setAdd(true)
     }
 
-    useEffect(() => { 
+    const ejecutarFetch=async () =>{ 
       let url=``
       if (idCont){
         url=`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`
       }else{
         url=`${process.env.REACT_APP_DOMINIO_BACK}/items/filter?query=${filter}`
       }
-
-        fetch(url, {
+      const response= await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -49,30 +50,36 @@ const ItemListContainer = ({greeting,filter}) =>{
         }
         
       })
-        .then(response => response.json())
-        .then(data => {
-          if (idCont){
-            const items= data.items
-            if (items.length==0){
-              setMensaje(`No hay items cargados en el contenedor ${idCont}`)
-            }else{
-              setListaItems(items)
-            }
+      const rol=validateRol(response)
+      if (!rol){
+        navigate("/login")
+      }else{
+        const data = await response.json()
+        if (idCont){
+          const items= data.items
+          if (items.length==0){
+            setMensaje(`No hay items cargados en el contenedor ${idCont}`)
           }else{
-            if (data.msj){
-              setError(true)
-              setMensaje(data.msj)
-            }else{
-              setListaItems(data)
-            }
+            setListaItems(items)
           }
+        }else{
+          if (data.msj){
+            setError(true)
+            setMensaje(data.msj)
+          }else{
+            setListaItems(data)
+          }
+        }
+    }
 
+    }
 
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
+    useEffect(() => { 
+      ejecutarFetch()
+      .catch(error => console.error(error))
+      .finally(()=>{
+        setLoading(false)
+      })
     },[])
 
     return (
