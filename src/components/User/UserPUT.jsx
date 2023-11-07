@@ -80,19 +80,19 @@ export const UserPut = ({fromPerfil}) => {
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="name" />
+                            <input type="text" className="form-control" name="name" placeholder="Ingrese el nuevo nombre" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="surname" className="form-label">Apellido</label>
-                            <input type="text" className="form-control" name="surname" />
+                            <input type="text" className="form-control" name="surname" placeholder="Ingrese el nuevo apellido" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Nombre de User</label>
-                            <input type="text" className="form-control" name="username" />
+                            <input type="text" className="form-control" name="username" placeholder="Ingrese el nuevo nombre de usuario" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Contraseña</label>
-                            <input type="password" className="form-control" name="password" />
+                            <input type="password" className="form-control" name="password" placeholder="Ingrese la nueva contraseña" />
                         </div>
 
                         <button type="submit" className="btn-red">Actualizar</button>

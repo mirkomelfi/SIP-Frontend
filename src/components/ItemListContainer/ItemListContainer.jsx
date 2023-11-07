@@ -97,7 +97,7 @@ const ItemListContainer = ({greeting,filter}) =>{
                 <button onClick={()=>agregar()} className="btn-red">Agregar Item</button>
                 {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
               </>)
-              :(<ItemPost/>)
+              :(<ItemPost />)
             :<ItemFilter />
           : <Mensaje msj={mensaje} />
         }

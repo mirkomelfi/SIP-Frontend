@@ -17,6 +17,9 @@ const ItemLocation =()=>{
 
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
+    const returnToContainers=()=>{
+      setContainers(true)
+    }
     const consultarForm = async(e) => {
         //Consultar los datos del formulario
         e.preventDefault()
@@ -49,7 +52,7 @@ const ItemLocation =()=>{
 
                   <button type="submit" className="btn-red">Ver contenedor/es</button>
                   </form>
-                  <Link to={`/items/${idItem}`}>Volver</Link>
+                  <div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>
 
               </div>
           )

@@ -122,7 +122,7 @@ const Container =({fromItem,fromLocation})=>{
             </div>
             }
            { !fromItem&&!fromLocation? <div className="contenedorBotones"><Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link></div>:
-            <div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>
+            <div className="contenedorBotones"><Link to={`/items/${idItem}/locationChange`}>Volver</Link></div>
           }
         </>
     )

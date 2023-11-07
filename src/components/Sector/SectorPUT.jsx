@@ -67,11 +67,11 @@ export const SectorPut = () => {
                     <form onSubmit={consultarForm} ref={datForm}>
                     <div className="mb-3">
                             <label htmlFor="name" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="name"  />
+                            <input type="text" className="form-control" name="name" placeholder="Ingrese el nuevo nombre" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="description" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="description" />
+                            <input type="text" className="form-control" name="description" placeholder="Ingrese la nueva descripcion" />
                         </div>
 
                         <button type="submit" className="btn-red">Actualizar</button>

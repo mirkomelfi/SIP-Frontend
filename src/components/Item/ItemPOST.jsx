@@ -7,10 +7,9 @@ import { deleteToken, getToken, validateRol } from "../../utils/auth-utils"
 import { ItemFilter } from "./ItemFilter"
 import { Item } from "./Item"
 
-export const ItemPost = () => {
+export const ItemPost = ({fromFilter}) => {
 
     const {idItem,idCont}= useParams();
-    console.log(idItem,idCont)
     const [mensaje,setMensaje]=useState(null)
     const [itemCreated,setItemCreated]=useState(null)
     const [goBack,setGoBack]= useState(null);
@@ -88,7 +87,7 @@ export const ItemPost = () => {
 
                             <button type="submit" className="btn-red">Crear</button>
                             </form>
-                        {!idCont&&<button onClick={()=>returnToItem()} className="btn-red">Volver</button>}
+                        {fromFilter&&<button onClick={()=>returnToItem()} className="btn-red">Volver</button>}
                         </div>
                     </>
                     :

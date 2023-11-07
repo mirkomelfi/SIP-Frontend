@@ -68,7 +68,7 @@ export const ItemFilter = () => {
                     <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>
                     </>
                 ):    <ItemListContainer filter={itemName}  greeting="Listado de Items" />
-                :(<ItemPost/>)
+                :(<ItemPost fromFilter={true} />)
                     
         }
        

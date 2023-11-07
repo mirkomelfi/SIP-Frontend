@@ -26,6 +26,7 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
       setAdd(true)
     }
 
+
     const ejecutarFetch=async () =>{ 
       let url=``;
       if (idSec){
