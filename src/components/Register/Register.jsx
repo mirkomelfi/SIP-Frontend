@@ -70,10 +70,6 @@ export const Register = () => {
                     <input type="text" className="form-control" name="username" />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="dni" className="form-label">DNI</label>
-                    <input type="number" className="form-control" name="dni" />
-                </div>
-                <div className="mb-3">
                     <label htmlFor="password" className="form-label">Contraseña</label>
                     <input type="password" className="form-control" name="password" />
                 </div>
