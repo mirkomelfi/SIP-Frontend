@@ -60,7 +60,7 @@ const ImagenPost = () =>{
                             <input type="file" className="form-control" name="imagen" required />
                         </div>
 
-                        <button type="submit" className="btn-red">Agregar imagen</button>
+                        <button type="submit" className="btn-red">Cargar imagen</button>
                         </form>
 
                     </div>

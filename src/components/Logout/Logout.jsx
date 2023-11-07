@@ -7,11 +7,14 @@ import { deleteToken, getToken, setToken } from "../../utils/auth-utils"
 export const Logout = () => {
     
 
-    const [mensaje,setMensaje]=useState(null)
+    const [mensaje,setMensaje]=useState("No se encuentra loggeado")
 
     const desloggear=async()=>{
-        deleteToken()
-        setMensaje("Sesion cerrada con exito")
+        const token= getToken()
+        if (token!=null){
+            deleteToken()
+            setMensaje("Sesion cerrada con exito")
+        }
     }
 
     useEffect(() => { 
