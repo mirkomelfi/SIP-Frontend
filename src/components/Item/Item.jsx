@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { Location } from "../Location/Location";
+import { CodigoQR } from "../CodigoQR/CodigoQR";
 
 const Item =({fromSector,id})=>{
     let {idSec,idCont,idItem}= useParams();
@@ -15,6 +16,11 @@ const Item =({fromSector,id})=>{
     const [mensaje,setMensaje]=useState(null);
     const [locations,setLocations]= useState(null);
     const navigate= useNavigate();
+    const [qr,setQr]=useState(undefined);
+
+    const generarQr=async()=>{
+        setQr(true)
+    }
 
     const ejecutarFetch=async () =>{ 
       const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
@@ -80,9 +86,10 @@ const Item =({fromSector,id})=>{
     
     return(
         <>
-            {!locations?
-          <>
-            <div className="tarjetaProducto">
+            {
+            !locations?
+            <>{!qr?
+              <div className="tarjetaProducto">
                 <h1>Item N°{item.id}</h1>
                 {!mensaje?(<>
                 <h2>Nombre: {item.name}</h2>
@@ -102,22 +109,23 @@ const Item =({fromSector,id})=>{
                 !idSec&&
                 <Link to={`locationChange`}>Cambiar de contenedor</Link>
                 }
+                <button onClick={()=>generarQr()}>Generar QR</button>
                 <button onClick={()=>eliminar()}>Eliminar</button>
+                
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
                  
-            </div>
-            <>
-              {idSec? <div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}/items`}>Volver</Link></div>
-              :<div className="contenedorBotones"><Link to={`/items`}>Volver</Link></div>}
+              </div> :<CodigoQR url={window.location.href} />}
+              <>
+                {idSec? <div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}/items`}>Volver</Link></div>
+                :<div className="contenedorBotones"><Link to={`/items`}>Volver</Link></div>}
               </>
             </>
              
             :<Location item={item} />
-
+           
             }
-
         </>
     )
 }

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
+import { CodigoQR } from "../CodigoQR/CodigoQR";
 
 const Container =({fromItem,fromLocation})=>{
 
@@ -16,6 +17,12 @@ const Container =({fromItem,fromLocation})=>{
     
     const [rol,setRol]=useState(undefined);
     const navigate= useNavigate()
+    const [qr,setQr]=useState(undefined);
+
+    const generarQr=async()=>{
+        setQr(true)
+    }
+
 
     const ejecutarFetch=async () =>{ 
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`, {
@@ -96,7 +103,7 @@ const Container =({fromItem,fromLocation})=>{
     },[])
     return(
         <>
-            {<div className="tarjetaProducto">
+            {!qr?<div className="tarjetaProducto">
                 <h1>Container N°{container.id}</h1>
                 {!mensaje?(<>
                 <h2>Nombre: {container.name}</h2>
@@ -109,6 +116,7 @@ const Container =({fromItem,fromLocation})=>{
                idSec? 
                  <><Link to={`items`}>Ver items</Link> 
                 {!rol&&<Link to={`updateContainer`}>Modificar</Link>}
+                <button onClick={()=>generarQr()}>Generar QR</button>
                 {!rol&&<button onClick={()=>eliminar()} className="btn-red">Eliminar</button>}
                   </>
                 :
@@ -119,7 +127,7 @@ const Container =({fromItem,fromLocation})=>{
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
-            </div>
+            </div>: <CodigoQR url={window.location.href} />
             }
            { !fromItem&&!fromLocation? <div className="contenedorBotones"><Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link></div>:
             <div className="contenedorBotones"><Link to={`/items/${idItem}/locationChange`}>Volver</Link></div>

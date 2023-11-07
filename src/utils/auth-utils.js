@@ -24,6 +24,10 @@ export const extractRol=(token)=>{
     return decoded.rol
 }
 
+export const extractUrl=(url)=>{
+    return url.substr(url.indexOf('http://') + 7)
+}
+
 export const isRolUser=(token)=>{
     if (token){
         if (extractRol(token)=="ROL_USER"){
