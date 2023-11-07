@@ -52,6 +52,12 @@ export const UserPut = () => {
                 }
             }else{
                 const data = await response.json()
+                if (cliente.username!=null){
+                    console.log("username",cliente.username)
+                    alert("Se modificó el username. Debe volver a iniciar sesion")
+                    deleteToken()
+                    navigate("/login")
+                }
                 if (data.msj){
                     setMensaje(data.msj)
                 }
