@@ -57,7 +57,7 @@ export const App = () => {
           <Route path="/items/:idItem/updateItem" element={<ItemPut />}/>
           <Route path="/sectors/:idSec/containers/:idCont/updateContainer" element={<ContainerPut />}/>
           <Route path="/user/current" element={<User />}/> 
-          <Route path="/updateUser" element={<UserPut />}/>
+          <Route path="/updateUser" element={<UserPut fromPerfil={true} />}/>
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>
         
