@@ -71,14 +71,14 @@ export const ContainerPut = () => {
                             <input type="text" className="form-control" name="description" />
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="btn-red">Actualizar</button>
                         </form>
 
                     </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link>
+          <div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link></div>
         </div>
         
     )

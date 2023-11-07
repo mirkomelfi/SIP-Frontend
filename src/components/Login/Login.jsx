@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { useState,useEffect } from "react"
-import { Navigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { Link } from "react-router-dom"
 import { deleteToken, getToken, setToken } from "../../utils/auth-utils"
@@ -9,6 +9,7 @@ export const Login = () => {
     const[ loggeado,setLoggeado]=useState(false)
     const[ error,setError]=useState(false)
     const [mensaje,setMensaje]=useState(null)
+    const navigate=useNavigate()
     const datForm = useRef()
 
     const consultarLoggeo=async()=>{
@@ -63,6 +64,7 @@ export const Login = () => {
                 setError(false)
                 setLoggeado(true)
                 setToken(data.token)
+                navigate("/")
      
             } else {
 

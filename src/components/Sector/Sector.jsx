@@ -13,6 +13,7 @@ const Sector =({fromContainer})=>{
     const [mensaje,setMensaje]=useState(null);
     const [sector,setSector]=useState();
     const navigate= useNavigate()
+    const [rol,setRol]=useState(undefined);
 
     const ejecutarFetch=async () =>{ 
     
@@ -33,6 +34,7 @@ const Sector =({fromContainer})=>{
             
         }else{
             const data = await response.json()
+            setRol(isRolUser(getToken()))
             if(data.msj){
                 setMensaje(data.msj)
             }else{
@@ -86,13 +88,15 @@ const Sector =({fromContainer})=>{
                 <h2>Descripcion: {sector.description}</h2></>}
                 {!fromContainer&&  <>
                 <Link to={`containers`}>Ver Contenedores</Link> 
-                <Link to={`/updateSector/${idSec}`}>Modificar sector</Link>
+                {!rol&&<Link to={`/updateSector/${idSec}`}>Modificar sector</Link>}
                
-                <button onClick={()=>eliminar()}>Eliminar</button></>
+                {!rol&&<button onClick={()=>eliminar()}>Eliminar</button>}
+                
+                </>
                 } </>
                 ):(<Mensaje msj={mensaje} />)}
             </div>
-            {!fromContainer?<Link to={`/sectors`}>Volver</Link> 
+            {!fromContainer? <div className="contenedorBotones"><Link to={`/sectors`}>Volver</Link> </div>
             :<div className="contenedorBotones"><Link to={`/items/${idItem}/containers/${idCont}`}>Volver</Link></div>
             }
         </>

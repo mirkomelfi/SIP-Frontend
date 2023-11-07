@@ -95,7 +95,7 @@ const Item =({fromSector,id})=>{
                 {item.image==null?<Link to={`/addImage/${item.id}`}>Agregar imagen</Link>:<Link to={`/addImage/${item.id}`}>Modificar imagen</Link>}
                 <Link to={`updateItem`}>Modificar Item</Link>
                { <button onClick={()=>verLocations()} >Ver historial de locations</button>}
-                {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!fromSector)&&<Link to={`containers/${item.containerID}`}>Ver contenedor</Link>}
+                {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!idSec)&&<Link to={`containers/${item.containerID}`}>Ver contenedor</Link>}
                 {item.containerID==0||!item.containerID?
                 <Link to={`locationChange`}>Agregar a un contenedor</Link>
                 :
@@ -109,7 +109,8 @@ const Item =({fromSector,id})=>{
                  
             </div>
             <>
-              {idSec?<Link to={`/sectors/${idSec}/containers/${idCont}/items`}>Volver</Link>:<Link to={`/items`}>Volver</Link>}
+              {idSec? <div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}/items`}>Volver</Link></div>
+              :<div className="contenedorBotones"><Link to={`/items`}>Volver</Link></div>}
               </>
             </>
              

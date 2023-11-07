@@ -13,6 +13,8 @@ const Container =({fromItem,fromLocation})=>{
 
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null);
+    
+    const [rol,setRol]=useState(undefined);
     const navigate= useNavigate()
 
     const ejecutarFetch=async () =>{ 
@@ -56,6 +58,7 @@ const Container =({fromItem,fromLocation})=>{
                 navigate("/login")
             }
         }else{
+            setRol(isRolUser(getToken()))
             const data = await response.json()
             if (data.msj){
                 setMensaje(data.msj)
@@ -105,8 +108,8 @@ const Container =({fromItem,fromLocation})=>{
                
                idSec? 
                  <><Link to={`items`}>Ver items</Link> 
-                <Link to={`updateContainer`}>Modificar</Link>
-                <button onClick={()=>eliminar()} className="btn-red">Eliminar</button>
+                {!rol&&<Link to={`updateContainer`}>Modificar</Link>}
+                {!rol&&<button onClick={()=>eliminar()} className="btn-red">Eliminar</button>}
                   </>
                 :
                 <Link to={`sectors/${container.sectorID}`}>Ver sector</Link>

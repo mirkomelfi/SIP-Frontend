@@ -18,15 +18,15 @@ const Location =({item})=>{
     return(
         <>
 
-{    !goBack?        <div className="tarjetaProducto">
-                {locations.map(location => 
+            {!goBack?
+            <div className="tarjetaProducto">
+                {locations.length!=0?locations.map(location => 
                     <>
                         <h2>Autor: {location.completeName}</h2>
                         <h3>{location.description}</h3>
                     </>
-                )}
-                 <button onClick={()=>returnToItem()} >Volver al Item</button>
-                
+                ):<h2>No hay historial por el momento</h2>}
+                <button onClick={()=>returnToItem()} >Volver al Item</button>
             </div>:
             <Item />
             }

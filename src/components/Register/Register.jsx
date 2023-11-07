@@ -84,7 +84,7 @@ export const Register = () => {
             </div>
         </>):<><Mensaje msj={mensaje} /></>
         }
-        <Link to="/users">Volver</Link>
+         <div className="contenedorBotones"><Link to="/users">Volver</Link></div>
         </div>
     )
 }

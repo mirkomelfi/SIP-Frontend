@@ -88,7 +88,7 @@ export const ItemPost = () => {
 
                             <button type="submit" className="btn-red">Crear</button>
                             </form>
-                        <button onClick={()=>returnToItem()} className="btn-red">Volver</button>
+                        {!idCont&&<button onClick={()=>returnToItem()} className="btn-red">Volver</button>}
                         </div>
                     </>
                     :
