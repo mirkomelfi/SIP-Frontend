@@ -25,7 +25,11 @@ export const extractRol=(token)=>{
 }
 
 export const extractUrl=(url)=>{
-    return url.substr(url.indexOf('http://') + 7)
+    const url_desarrollo=process.env.REACT_APP_DOMINIO_FRONT
+    if (url_desarrollo=="http://localhost:3000"){
+        return url.substr(url.indexOf("3000") + 4)
+    }
+    return url.substr(url.indexOf(".com") + 4)
 }
 
 export const isRolUser=(token)=>{

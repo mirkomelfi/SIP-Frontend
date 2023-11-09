@@ -7,9 +7,10 @@ import { Mensaje } from "../Mensaje/Mensaje";
 import { Location } from "../Location/Location";
 import { CodigoQR } from "../CodigoQR/CodigoQR";
 
+
 const Item =({fromSector,id})=>{
     let {idSec,idCont,idItem}= useParams();
-
+    const actualLocation=window.location.href
     const [item,setItem]= useState([]);
     console.log(item)
     const [loading,setLoading]= useState(true);
@@ -33,7 +34,7 @@ const Item =({fromSector,id})=>{
       })
       const rol=validateRol(response)
       if (!rol){
-          navigate("/login")
+          navigate("/login",{state:{from:actualLocation}} )
       }else{
           const data = await response.json()
           if (data.msj){
@@ -60,7 +61,8 @@ const Item =({fromSector,id})=>{
           console.log("rol user")
             setMensaje("No posee los permisos necesarios")
         }else{
-          deleteToken()
+            deleteToken()
+            
             navigate("/login")
         }
       }else{

@@ -9,7 +9,7 @@ import { CodigoQR } from "../CodigoQR/CodigoQR";
 const Container =({fromItem,fromLocation})=>{
 
     const {idSec,idCont,idItem}= useParams();
-
+    const actualLocation=window.location.href
     const [container,setContainer]= useState([]);
 
     const [loading,setLoading]= useState(true);
@@ -36,7 +36,7 @@ const Container =({fromItem,fromLocation})=>{
         const rol=validateRol(response)
         if (!rol){
             deleteToken()
-            navigate("/login")
+            navigate("/login",{state:{from:actualLocation}} )
         }else{
             const data = await response.json()
             if (data.msj){
@@ -85,7 +85,7 @@ const Container =({fromItem,fromLocation})=>{
       const rol=validateRol(response)
         if (!rol){
             deleteToken()
-            navigate("/login") 
+            navigate("/login")
         }else{
             const data = await response.json()
             setMensaje(data.msj)

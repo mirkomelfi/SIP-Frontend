@@ -11,6 +11,7 @@ const Sector =({fromContainer})=>{
     const {idSec,idCont,idItem}= useParams()
     console.log(idSec)
     const [mensaje,setMensaje]=useState(null);
+    const actualLocation=window.location.href
     const [sector,setSector]=useState();
     const navigate= useNavigate()
     const [rol,setRol]=useState(undefined);
@@ -35,7 +36,7 @@ const Sector =({fromContainer})=>{
         const rol=validateRol(response)
         if (!rol){
             deleteToken()
-            navigate("/login")
+            navigate("/login",{state:{from:actualLocation}} )
             
         }else{
             const data = await response.json()
