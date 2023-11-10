@@ -43,6 +43,10 @@ const UserListContainer = ({greeting}) =>{
     }
   }
 
+  const navigateTo=(url)=>{
+    navigate(url)
+  }
+
   useEffect(() => { 
     ejecutarFetch()
     .catch(error => console.error(error))
@@ -56,9 +60,9 @@ const UserListContainer = ({greeting}) =>{
           ?
           <>
           <h1 className="greeting">{greeting}</h1>
-          <div className="contenedorBotones"><Link to="/register">Registrar nuevo usuario</Link></div>
+          <button class="button btnPrimary" onClick={()=>navigateTo("/register")}><span class="btnText">Registrar usuario</span></button>
           {loading ? <p>Cargando...</p> : <UserList pid={idUser} listaUsers={listaUsers}/>}
-          <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>
+          <button class="button btnPrimary" onClick={()=>navigateTo("/")}><span class="btnText">Volver</span></button>
           </>
           : <Mensaje msj={mensaje}/>
         }

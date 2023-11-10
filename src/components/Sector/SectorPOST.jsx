@@ -50,7 +50,10 @@ export const SectorPost = () => {
         e.target.reset() //Reset form
             
         }
-        
+
+    const navigateTo=(url)=>{
+        navigate(url)
+        }
 
     return (
 
@@ -70,14 +73,14 @@ export const SectorPost = () => {
                             <input type="text" className="form-control" name="description" required/>
                         </div>
 
-                        <button type="submit" className="btn-red">Crear</button>
+                        <button type="submit" class="button btnPrimary"><span class="btnText">Crear</span></button>
                         </form>
 
                     </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <div className="contenedorBotones"><Link to={`/sectors`}>Volver</Link></div>
+         <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors`)}><span class="btnText">Volver</span></button>
         </div>
         
     )

@@ -66,7 +66,7 @@ export const ContainerPost = () => {
                             <input type="text" className="form-control" name="description" required/>
                         </div>
 
-                        <button type="submit" className="btn-red">Crear</button>
+                        <button type="submit" class="button btnPrimary" ><span class="btnText">Crear</span></button>
                         </form>
 
                     </div>

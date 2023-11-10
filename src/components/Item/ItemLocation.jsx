@@ -1,5 +1,5 @@
 import "./Item.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
@@ -14,6 +14,7 @@ const ItemLocation =()=>{
     const [mensaje,setMensaje]=useState(null);
     const [idCont,setIdCont]=useState(null)
     const [containers,setContainers]=useState(null)
+    const navigate= useNavigate()
 
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
@@ -33,6 +34,10 @@ const ItemLocation =()=>{
         setContainers(true)
             
       }
+          
+    const navigateTo=(url)=>{
+      navigate(url)
+    }
       
     return(
 
@@ -50,9 +55,9 @@ const ItemLocation =()=>{
                       <input type="text" className="form-control" name="idCont" />
                   </div>
 
-                  <button type="submit" className="btn-red">Ver contenedor/es</button>
+                  <button type="submit" class="button btnPrimary" >Ver contenedor/es</button>
                   </form>
-                  <div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>
+                  <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}`)}><span class="btnText">Volver</span></button>
 
               </div>
           )

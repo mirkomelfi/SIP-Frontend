@@ -56,6 +56,11 @@ export const SectorPut = () => {
             }
         }
 
+
+        const navigateTo=(url)=>{
+            navigate(url)
+          }
+
     return (
 
         <div>
@@ -74,14 +79,14 @@ export const SectorPut = () => {
                             <input type="text" className="form-control" name="description" placeholder="Ingrese la nueva descripcion" />
                         </div>
 
-                        <button type="submit" className="btn-red">Actualizar</button>
+                        <button type="submit" class="button btnPrimary"><span class="btnText">Actualizar</span></button>
                         </form>
 
                     </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        <div className="contenedorBotones"> <Link to={`/sectors`}>Volver</Link></div>
+         <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors`)}><span class="btnText">Volver</span></button>
         </div>
         
     )

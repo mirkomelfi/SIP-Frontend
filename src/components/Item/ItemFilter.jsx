@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
 import ItemListContainer from "../ItemListContainer/ItemListContainer"
 import { ItemPost } from "./ItemPOST"
@@ -12,6 +12,7 @@ export const ItemFilter = () => {
     const [itemName,setItemName]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
     const [add,setAdd]= useState(false);
+    const navigate= useNavigate()
 
     const agregar= () =>{ 
       setAdd(true)
@@ -35,6 +36,10 @@ export const ItemFilter = () => {
         e.target.reset() //Reset form
                 
         }
+        
+        const navigateTo=(url)=>{
+            navigate(url)
+          }
 
     return (
 
@@ -45,7 +50,7 @@ export const ItemFilter = () => {
                 <>
 
                 <div>
-                    <button onClick={()=>agregar()} className="btn-red">Agregar Item</button>
+                    <button class="button btnPrimary" onClick={()=>agregar()} >Agregar Item</button>
                 </div >
 
                 <div className="container divForm" >
@@ -61,11 +66,11 @@ export const ItemFilter = () => {
                             <input type="text" className="form-control" name="query" />
                         </div>
 
-                        <button type="submit" className="btn-red">Buscar</button>
+                        <button type="submit" class="button btnPrimary" >Buscar</button>
                         </form>
 
                     </div>
-                    <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>
+                    <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
                     </>
                 ):    <ItemListContainer filter={itemName}  greeting="Listado de Items" />
                 :(<ItemPost fromFilter={true} />)

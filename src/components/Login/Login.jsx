@@ -87,6 +87,11 @@ export const Login = () => {
             e.target.reset() //Reset form
         }
     }
+
+    
+    const navigateTo=(url)=>{
+        navigate(url)
+      }
     
     return (
 
@@ -107,12 +112,16 @@ export const Login = () => {
                         <input type="password" className="form-control" name="password" />
                     </div>
 
-                    {!loggeado&&<button type="submit" className="btn-red" >Iniciar Sesion</button>}
+                    {!loggeado&&<button type="submit" class="button btnPrimary" >Iniciar Sesion</button>}
                 </form>
-                {loggeado&&<button onClick={()=>desloggear()} className="btn-red">Cerrar Sesion</button>}
-                {loggeado&&<Link to="/">Volver a Inicio</Link>}
+                {loggeado&&<button class="button btnPrimary" onClick={()=>desloggear()}><span class="btnText">Cerrar sesion</span></button>}
+                {loggeado&& <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Menu principal</span></button>
+        }
             </div>}
-        </>):<Mensaje msj={mensaje} />
+        </>): 
+            <>
+                <Mensaje msj={mensaje}/>
+                <button class="button btnPrimary"  onClick={()=>navigateTo(`/`)}><span class="btnText">Volver a Login</span></button> </>
         }
         </div>
     )

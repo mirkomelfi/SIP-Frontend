@@ -68,6 +68,9 @@ export const UserPut = ({fromPerfil}) => {
                 
             }
         }
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
 
     return (
 
@@ -95,15 +98,16 @@ export const UserPut = ({fromPerfil}) => {
                             <input type="password" className="form-control" name="password" placeholder="Ingrese la nueva contraseña" />
                         </div>
 
-                        <button type="submit" className="btn-red">Actualizar</button>
+                        <button type="submit" class="button btnPrimary"><span class="btnText">Actualizar</span></button>
                         </form>
 
                     </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        {idUser?<div className="contenedorBotones"><Link to={`/users`}>Volver</Link></div>:<div className="contenedorBotones"><Link to={`/user/current`}>Volver</Link></div>}
-        </div>
+        {idUser?
+         <button class="button btnPrimary" onClick={()=>navigateTo("/users")}><span class="btnText">Volver</span></button>:<button class="button btnPrimary" onClick={()=>navigateTo("/user/current")}><span class="btnText">Volver</span></button>}
+         </div>
         
     )
 }

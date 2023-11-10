@@ -50,6 +50,12 @@ export const Register = () => {
             e.target.reset() //Reset form
         }
     }
+
+    
+    const navigateTo=(url)=>{
+        navigate(url)
+      }
+      
     return (
         <div>
             {!mensaje?(
@@ -74,13 +80,13 @@ export const Register = () => {
                     <input type="password" className="form-control" name="password" />
                 </div>
 
-                <button type="submit" className="btn-red">Registrar</button>
+                <button type="submit" class="button btnPrimary" >Registrar</button>
                 </form>
 
             </div>
         </>):<><Mensaje msj={mensaje} /></>
         }
-         <div className="contenedorBotones"><Link to="/users">Volver</Link></div>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/users`)}><span class="btnText">Volver</span></button>
         </div>
     )
 }

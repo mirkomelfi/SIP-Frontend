@@ -68,6 +68,9 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
         }
       
     }
+    const navigateTo=(url)=>{
+      navigate(url)
+  }
 
     useEffect(() => {
       ejecutarFetch()
@@ -89,13 +92,13 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
           (!mensaje?<>
             <h1 className="greeting">{greeting}</h1>
             {idSec?<> 
-            <button onClick={()=>agregar()}>Agregar contenedor</button>
+            <button  class="button btnPrimary"  onClick={()=>agregar()}><span class="btnText">Agregar contenedor</span></button>
            <ContainerList listaContainers={listaContainers} isInSector={true}/></>
             :
             <ContainerList listaContainers={listaContainers} idItem={idItem} />  }</>
             :
             <> 
-            <button onClick={()=>agregar()} className="btn-red">Agregar contenedor</button>
+            <button onClick={()=>agregar()} class="button btnPrimary" ><span class="btnText">Agregar contenedor</span></button>
             <Mensaje msj={mensaje}/>
             </> 
           ):
@@ -103,9 +106,13 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
           <Mensaje msj={mensaje}/>
         }
  
-          {idSec?<div className="contenedorBotones"><Link to={`/sectors/${idSec}`}>Volver</Link></div>:
-          fromLoc?<div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>:
-          <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>}
+          {idSec?
+          <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors/${idSec}`)}><span class="btnText">Volver</span></button>
+          :
+          fromLoc?
+          <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}`)}><span class="btnText">Volver</span></button>
+          :
+          <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>}
         </>
     );
   } 

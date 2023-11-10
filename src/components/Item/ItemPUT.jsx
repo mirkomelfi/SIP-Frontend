@@ -82,7 +82,10 @@ export const ItemPut = () => {
                 
             }
         }
-
+    
+        const navigateTo=(url)=>{
+            navigate(url)
+          }
     return (
 
         <div>
@@ -108,8 +111,10 @@ export const ItemPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-       { !idSec?<div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>:
-       <div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}/items/${idItem}`}>Volver</Link></div>
+       { !idSec?
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}`)}><span class="btnText">Volver</span></button>
+       :
+       <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors/${idSec}/containers/${idCont}/items/${idItem}`)}><span class="btnText">Volver</span></button>
        }
         </div>
         

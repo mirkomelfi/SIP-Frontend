@@ -64,6 +64,10 @@ export const ItemPost = ({fromFilter}) => {
             
         }
         
+            
+    const navigateTo=(url)=>{
+        navigate(url)
+      }
 
     return (
 
@@ -85,15 +89,15 @@ export const ItemPost = ({fromFilter}) => {
                                 <input type="text" className="form-control" name="description" required/>
                             </div>
 
-                            <button type="submit" className="btn-red">Crear</button>
+                            <button type="submit" class="button btnPrimary"><span class="btnText">Crear</span></button>
                             </form>
-                        {fromFilter&&<button onClick={()=>returnToItem()} className="btn-red">Volver</button>}
+                        {fromFilter&&<button onClick={()=>returnToItem()} class="button btnPrimary"><span class="btnText">Volver</span></button>}
                         </div>
                     </>
                     :
                     <>
                     <h2>Item creado correctamente. Agregue una imagen si lo desea.</h2>
-                    <div className="contenedorBotones"><Link to={`/items/${itemCreated.id}`}>Ver item creado</Link></div>
+                    <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${itemCreated.id}`)}><span class="btnText">Ver item creado</span></button>
                     </>
                 :<Mensaje msh={mensaje} />// en vez de mensaje le pongo el ITEM y le mando la props fromPost={true}
             :<ItemFilter/>

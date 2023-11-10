@@ -93,6 +93,9 @@ const Container =({fromItem,fromLocation})=>{
 
       return;
   }
+  const navigateTo=(url)=>{
+    navigate(url)
+}
 
     useEffect(() => { 
         ejecutarFetch()
@@ -114,23 +117,28 @@ const Container =({fromItem,fromLocation})=>{
                !fromLocation ?
                
                idSec? 
-                 <><Link to={`items`}>Ver items</Link> 
-                {!rol&&<Link to={`updateContainer`}>Modificar</Link>}
-                <button onClick={()=>generarQr()}>Generar QR</button>
-                {!rol&&<button onClick={()=>eliminar()} className="btn-red">Eliminar</button>}
+                 <><button class="button btnPrimary" onClick={()=>navigateTo(`items`)}><span class="btnText">Ver items</span></button>
+                
+                {!rol&&
+                <button class="button btnPrimary" onClick={()=>navigateTo(`updateContainer`)}><span class="btnText">Modificar</span></button>
+                }
+                <button class="button btnPrimary" onClick={()=>generarQr()}><span class="btnText">Generar QR</span></button>
+                {!rol&&<button onClick={()=>eliminar()} class="button btnPrimary"><span class="btnText">Eliminar</span></button>}
                   </>
                 :
-                <Link to={`sectors/${container.sectorID}`}>Ver sector</Link>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`sectors/${container.sectorID}`)}><span class="btnText">Ver sector</span></button>
                 :
-                <button onClick={()=>changeLocation()} className="btn-red">Seleccionar container</button>
+                <button onClick={()=>changeLocation()} class="button btnPrimary" ><span class="btnText">Seleccionar contenedor</span></button>
                 }
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>: <CodigoQR url={window.location.href} />
             }
-           { !fromItem&&!fromLocation? <div className="contenedorBotones"><Link to={`/sectors/${container.sectorID}/containers`}>Volver</Link></div>:
-            <div className="contenedorBotones"><Link to={`/items/${idItem}/locationChange`}>Volver</Link></div>
+           { !fromItem&&!fromLocation? 
+           <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors/${container.sectorID}/containers`)}><span class="btnText">Volver</span></button>
+           :
+           <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}/locationChange`)}><span class="btnText">Volver</span></button>
           }
         </>
     )

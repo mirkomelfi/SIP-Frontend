@@ -52,7 +52,10 @@ export const ContainerPut = () => {
                 
             }
         }
-
+        const navigateTo=(url)=>{
+            navigate(url)
+        }
+      
     return (
 
         <div>
@@ -71,14 +74,14 @@ export const ContainerPut = () => {
                             <input type="text" className="form-control" name="description" placeholder="Ingrese la nueva descripcion"/>
                         </div>
 
-                        <button type="submit" className="btn-red">Actualizar</button>
+                        <button type="submit"class="button btnPrimary"><span class="btnText">Actualizar</span></button>
                         </form>
 
                     </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }
-          <div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link></div>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors/${idSec}/containers/${idCont}`)}><span class="btnText">Volver</span></button>
         </div>
         
     )

@@ -45,7 +45,10 @@ const ImagenPost = () =>{
             
         }
         
-
+        const navigateTo=(url)=>{
+            navigate(url)
+        }
+      
     return (
 
         <div>
@@ -67,7 +70,7 @@ const ImagenPost = () =>{
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <div className="contenedorBotones"><Link to={`/items/${idItem}`}>Volver</Link></div>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}`)}><span class="btnText">Volver</span></button>
         </div>
         
     )

@@ -75,6 +75,11 @@ const User =()=>{
 
   
     }
+
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
+
     useEffect(() => { 
         ejecutarFetch()
         .catch(error => console.error(error))
@@ -90,10 +95,19 @@ const User =()=>{
                 <h2>Nombre de usuario: {user.username}</h2>
                 <h2>Nombre: {user.name}</h2>
                 <h2>Apellido: {user.surname}</h2>
-                {idUser?<Link to={`/updateUser/${idUser}`}>Modificar</Link>:<Link to={`/updateUser`}>Modificar</Link>}
-                {idUser&&<button onClick={()=>eliminar()}>Eliminar</button>}
+                {idUser?
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUser/${idUser}`)}><span class="btnText">Modificar</span></button>
+                :
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUser`)}><span class="btnText">Modificar</span></button>
+                }
+                {idUser&&
+                <button class="button btnPrimary" onClick={()=>eliminar()}><span class="btnText">Eliminar</span></button>
+                }
             </div>):(<Mensaje msj={mensaje} />)}
-            {idUser?<div className="contenedorBotones"><Link to={`/users`}>Volver</Link></div>:<div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>}
+            {idUser?
+            <button class="button btnPrimary" onClick={()=>navigateTo("/users")}><span class="btnText">Volver</span></button>
+            :
+            <button class="button btnPrimary" onClick={()=>navigateTo("/")}><span class="btnText">Volver</span></button>}
         </>
     )
 }

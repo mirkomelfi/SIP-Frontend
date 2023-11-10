@@ -76,6 +76,10 @@ const Sector =({fromContainer})=>{
         return;
     }
 
+    const navigateTo=(url)=>{
+        navigate(url)
+      }
+
     useEffect(() => { 
         ejecutarFetch()
         .catch(error => console.error(error))
@@ -94,18 +98,21 @@ const Sector =({fromContainer})=>{
                     {sector&&<><h2>Nombre: {sector.name}</h2>
                 <h2>Descripcion: {sector.description}</h2></>}
                 {!fromContainer&&  <>
-                <Link to={`containers`}>Ver Contenedores</Link> 
-                
-                {!rol&&<Link to={`/updateSector/${idSec}`}>Modificar sector</Link>}
-                <button onClick={()=>generarQr()}>Generar QR</button>
-                {!rol&&<button onClick={()=>eliminar()}>Eliminar</button>}
+                <button class="button btnPrimary" onClick={()=>navigateTo("containers")}><span class="btnText">Ver Contenedores</span></button>
+                {!rol&&
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateSector/${idSec}`)}><span class="btnText">Modificar sector</span></button>
+                }
+                <button class="button btnPrimary" onClick={()=>generarQr()}><span class="btnText">Generar QR</span></button>
+                {!rol&&<button class="button btnPrimary" onClick={()=>eliminar()}><span class="btnText">Eliminar</span></button>}
                 
                 </>
                 } </>
                 ):(<Mensaje msj={mensaje} />)}
             </div> :<CodigoQR url={window.location.href} />}
-            {!fromContainer? <div className="contenedorBotones"><Link to={`/sectors`}>Volver</Link> </div>
-            :<div className="contenedorBotones"><Link to={`/items/${idItem}/containers/${idCont}`}>Volver</Link></div>
+            {!fromContainer? 
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors`)}><span class="btnText">Volver</span></button>
+            :
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}/containers/${idCont}`)}><span class="btnText">Volver</span></button>
             }
            
             

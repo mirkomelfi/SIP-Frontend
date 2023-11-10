@@ -75,6 +75,11 @@ const ItemListContainer = ({greeting,filter}) =>{
 
     }
 
+    const navigateTo=(url)=>{
+      navigate(url)
+  }
+
+
     useEffect(() => { 
       ejecutarFetch()
       .catch(error => console.error(error))
@@ -94,15 +99,19 @@ const ItemListContainer = ({greeting,filter}) =>{
               !add ?
               (<>
                 <h1 className="greeting">{greeting}</h1>
-                <button onClick={()=>agregar()} className="btn-red">Agregar Item</button>
+                <button class="button btnPrimary" onClick={()=>agregar()}>Agregar Item</button>
                 {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
               </>)
               :(<ItemPost />)
             :<ItemFilter />
           : <Mensaje msj={mensaje} />
         }
-          {idSec&&<div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}`}>Volver</Link></div>}
-          {!goBack&&!idSec&&<button onClick={()=>returnToItem()} className="btn-red">Volver</button>}
+          {idSec&&
+          <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors/${idSec}/containers/${idCont}`)}><span class="btnText">Volver</span></button>
+          }
+          {!goBack&&!idSec&&
+          <button class="button btnPrimary" onClick={()=>returnToItem()}><span class="btnText">Volver</span></button>
+          }
           
           
 

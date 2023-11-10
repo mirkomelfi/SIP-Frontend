@@ -77,6 +77,9 @@ const Item =({fromSector,id})=>{
     const verLocations=async()=>{
      setLocations(true)
     }
+    const navigateTo=(url)=>{
+      navigate(url)
+    }
 
     useEffect(() => { 
         ejecutarFetch()
@@ -101,18 +104,24 @@ const Item =({fromSector,id})=>{
                 <h2>No se encuentra en ningun contenedor</h2>
                 :
                 <h2>Se encuentra en contenedor: {item.containerID}</h2>}
-                {item.image==null?<Link to={`/addImage/${item.id}`}>Agregar imagen</Link>:<Link to={`/addImage/${item.id}`}>Modificar imagen</Link>}
-                <Link to={`updateItem`}>Modificar Item</Link>
-               { <button onClick={()=>verLocations()} >Ver historial de locations</button>}
-                {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!idSec)&&<Link to={`containers/${item.containerID}`}>Ver contenedor</Link>}
+                {item.image==null?
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/addImage/${item.id}`)}><span class="btnText">Agregar imagen</span></button>
+                :
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/addImage/${item.id}`)}><span class="btnText">Modificar imagen</span></button>
+                }
+                <button class="button btnPrimary" onClick={()=>navigateTo(`updateItem`)}><span class="btnText">Modificar Item</span></button>
+                {<button  class="button btnPrimary" onClick={()=>verLocations()}><span class="btnText">Historial de Locations</span></button>}
+                {(item.containerID!=undefined&&item.containerID!=0&&item.containerID!=null&&!idSec)&&
+                 <button class="button btnPrimary" onClick={()=>navigateTo(`containers/${item.containerID}`)}><span class="btnText">Ver contenedor</span></button>
+                }
                 {item.containerID==0||!item.containerID?
-                <Link to={`locationChange`}>Agregar a un contenedor</Link>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`locationChange`)}><span class="btnText">Asignar contenedor</span></button>
                 :
                 !idSec&&
-                <Link to={`locationChange`}>Cambiar de contenedor</Link>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`locationChange`)}><span class="btnText">Cambiar contenedor</span></button>
                 }
-                <button onClick={()=>generarQr()}>Generar QR</button>
-                <button onClick={()=>eliminar()}>Eliminar</button>
+                <button class="button btnPrimary"  onClick={()=>generarQr()}><span class="btnText">Generar QR</span></button>
+                <button class="button btnPrimary"  onClick={()=>eliminar()}><span class="btnText">Eliminar</span></button>
                 
                 </>
                 
@@ -120,8 +129,10 @@ const Item =({fromSector,id})=>{
                  
               </div> :<CodigoQR url={window.location.href} />}
               <>
-                {idSec? <div className="contenedorBotones"><Link to={`/sectors/${idSec}/containers/${idCont}/items`}>Volver</Link></div>
-                :<div className="contenedorBotones"><Link to={`/items`}>Volver</Link></div>}
+                {idSec? 
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors/${idSec}/containers/${idCont}/items`)}><span class="btnText">Volver</span></button>
+                :
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/items`)}><span class="btnText">Volver</span></button>}
               </>
             </>
              

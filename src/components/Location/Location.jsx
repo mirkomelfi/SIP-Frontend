@@ -26,7 +26,7 @@ const Location =({item})=>{
                         <h3>{location.description}</h3>
                     </>
                 ):<h2>No hay historial por el momento</h2>}
-                <button onClick={()=>returnToItem()} >Volver al Item</button>
+                <button class="button btnPrimary" onClick={()=>returnToItem()}><span class="btnText">Volver al Item</span></button>
             </div>:
             <Item />
             }

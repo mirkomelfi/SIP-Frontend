@@ -42,7 +42,9 @@ export const SectorListContainer = ({greeting}) =>{
       
     }
 
-
+    const navigateTo=(url)=>{
+      navigate(url)
+    }
 
     useEffect(() => { 
       ejecutarFetch()
@@ -55,14 +57,14 @@ export const SectorListContainer = ({greeting}) =>{
     return (
       <>
       <h1 className="greeting">{greeting}</h1>
-      <div className="contenedorBotones"> <Link to={`/addSector`}>Agregar Sector</Link> </div>
+      <button class="button btnPrimary" onClick={()=>navigateTo("/addSector")}><span class="btnText">Agregar Sector</span></button>
       {!mensaje?(
       <div > 
 
         {loading ? <p>cargando...</p> : <SectorList listaSectors={listaSectors}/>}
       </div>):<Mensaje msj={mensaje}/>}
       
-      <div className="contenedorBotones"><Link to={`/`}>Volver</Link></div>
+      <button class="button btnPrimary" onClick={()=>navigateTo("/")}><span class="btnText">Volver</span></button>
       </>
     );
   }
