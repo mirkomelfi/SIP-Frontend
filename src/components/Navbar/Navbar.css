@@ -130,6 +130,20 @@ img{
     ;
 }
 
+@media (width<=600px){
+    .home{
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+        background:url(../../../public/assets/home1.jpg) no-repeat center center fixed;
+        background-size: cover;
+        opacity: 100
+        ;
+    }   
+}
+
 
 .button-home {
     margin: 40px;
