@@ -102,7 +102,7 @@ export const Login = () => {
                 <h3>Formulario de Inicio de Sesion</h3>
                 <form onSubmit={consultarForm} ref={datForm}>
 
-                    <div className="mb-3">
+                    <div className="input-form">
                         <label htmlFor="username" className="form-label">Nombre de Usuario</label>
                         <input type="username" className="form-control" name="username" />
                     </div>

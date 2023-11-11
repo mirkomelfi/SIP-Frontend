@@ -23,21 +23,23 @@ export const Home = () =>{
     }
 
   }
-
+  const navigateTo=(url)=>{
+    navigate(url)
+  }
     useEffect(()=>{
       ejecutarFetch()
       .catch(error => console.error(error))
     },[])
 
     return (
-      <>
-      <div className="contenedorBotones">
-        {!rolUser&&<Link to={`users`}>Usuarios</Link>}
-        <Link to={`sectors`}>Sectores</Link> 
-        <Link to={`items`}>Items</Link>
-        <Link to={`user/current`}>Mi perfil</Link> 
-        </div>
-      </>
+      <div className="home">
+        {!rolUser&&
+        <button class="button button-home btnPrimary-home" onClick={()=>navigateTo(`users`)}><span class="btnText">Usuarios</span></button>
+        }
+        <button class="button button-home btnPrimary-home" onClick={()=>navigateTo(`sectors`)}><span class="btnText">Sectores</span></button>
+        <button class="button button-home btnPrimary-home" onClick={()=>navigateTo(`items`)}><span class="btnText">Items</span></button>
+        <button class="button button-home btnPrimary-home" onClick={()=>navigateTo(`user/current`)}><span class="btnText">Mi perfil</span></button>
+      </div>
     );
   }
   
