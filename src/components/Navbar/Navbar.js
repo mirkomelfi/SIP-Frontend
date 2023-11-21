@@ -3,13 +3,15 @@ import React from "react";
 //import { CartWidget } from "../CartWidget/CartWidget";
 import {Link} from "react-router-dom";
 import "./Navbar.css"
+import logo from "../../logo.png"
+
 
 const Navbar = () =>{
 
     return (
         <header>
             <Link to="/logout"><h3>Logout</h3></Link>
-            <Link to="/"><h1>Sistema de Búsqueda</h1></Link>
+            <img className="logo" src={logo} alt="" />
             <Link to="/login"><h3>Login</h3></Link>
             
             {/*<nav>

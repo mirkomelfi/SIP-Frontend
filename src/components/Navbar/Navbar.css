@@ -1,4 +1,16 @@
-i
+/*@media (max-width: 600px) {
+    .home{
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+        background:url(../../../public/assets/home1.jpg) no-repeat center center fixed;
+        background-size: cover;
+        opacity: 100
+        ;
+    }   
+}*/
 
 .contenedorBotones{
     display:flex;
@@ -6,6 +18,10 @@ i
     justify-content: space-between;
 }
 
+header img {
+    height: 150px;
+    width: 400px;
+}
 
 header{
     display: flex;
@@ -14,6 +30,7 @@ header{
     background-color: rgb(0, 0, 0);
     margin-bottom: 15px;
     margin-top: 10px;
+    
 }
 
 header a{
@@ -120,7 +137,9 @@ img{
 
 .home{
     display: flex;
-    flex-direction:row;
+    /* 
+    flex-direction:row;*/
+    flex-direction:column;
     align-items: center;
     justify-content: center;
     min-height: 80vh;
@@ -128,20 +147,6 @@ img{
     background-size: cover;
     opacity: 100
     ;
-}
-
-@media (width<=600px){
-    .home{
-        display: flex;
-        flex-direction:column;
-        align-items: center;
-        justify-content: center;
-        min-height: 80vh;
-        background:url(../../../public/assets/home1.jpg) no-repeat center center fixed;
-        background-size: cover;
-        opacity: 100
-        ;
-    }   
 }
 
 
