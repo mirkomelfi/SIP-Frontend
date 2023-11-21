@@ -20,6 +20,7 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
     const [add,setAdd]= useState(false);
     const [mensaje,setMensaje]= useState(null);
     const [error,setError]= useState(null);
+    const [rol,setRol]= useState(undefined);
     const navigate= useNavigate()
 
     const agregar= () =>{ 
@@ -50,6 +51,7 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
           navigate("/login")
         }else{
           const data = await response.json()
+          setRol(isRolUser(getToken()))
           if (idSec){
             const containers= data.containers
             if (containers.length==0){
@@ -91,14 +93,16 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
           !add ?
           (!mensaje?<>
             <h1 className="greeting">{greeting}</h1>
-            {idSec?<> 
-            <button  class="button btnPrimary"  onClick={()=>agregar()}><span class="btnText">Agregar contenedor</span></button>
-           <ContainerList listaContainers={listaContainers} isInSector={true}/></>
+            {idSec?
+            <> 
+              {!rol&&<button  class="button btnPrimary"  onClick={()=>agregar()}><span class="btnText">Agregar contenedor</span></button>}
+              <ContainerList listaContainers={listaContainers} isInSector={true}/>
+            </>
             :
             <ContainerList listaContainers={listaContainers} idItem={idItem} />  }</>
             :
             <> 
-            <button onClick={()=>agregar()} class="button btnPrimary" ><span class="btnText">Agregar contenedor</span></button>
+            {!rol&&<button  class="button btnPrimary"  onClick={()=>agregar()}><span class="btnText">Agregar contenedor</span></button>}
             <Mensaje msj={mensaje}/>
             </> 
           ):

@@ -39,6 +39,7 @@ const Container =({fromItem,fromLocation})=>{
             navigate("/login",{state:{from:actualLocation}} )
         }else{
             const data = await response.json()
+            setRol(isRolUser(getToken()))
             if (data.msj){
                 setMensaje(data.msj)
             }else{

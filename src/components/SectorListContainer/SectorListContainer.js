@@ -11,7 +11,8 @@ export const SectorListContainer = ({greeting}) =>{
 
     const [listaSectors,setListaSectors]= useState([]);
     const [loading,setLoading]= useState(true);
-    const [mensaje,setMensaje]=useState(null)
+    const [mensaje,setMensaje]=useState(null);
+    const [rol,setRol]= useState(undefined);
     const navigate= useNavigate()
   
     const ejecutarFetch=async () =>{ 
@@ -32,6 +33,7 @@ export const SectorListContainer = ({greeting}) =>{
         
         }else{
           const data = await response.json()
+          setRol(isRolUser(getToken()))
           if (data.msj){
             setMensaje(data.msj)
           }else{
@@ -57,7 +59,7 @@ export const SectorListContainer = ({greeting}) =>{
     return (
       <>
       <h1 className="greeting">{greeting}</h1>
-      <button class="button btnPrimary" onClick={()=>navigateTo("/addSector")}><span class="btnText">Agregar Sector</span></button>
+      {!rol&&<button class="button btnPrimary" onClick={()=>navigateTo("/addSector")}><span class="btnText">Agregar Sector</span></button>}
       {!mensaje?(
       <div > 
 
