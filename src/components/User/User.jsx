@@ -1,4 +1,3 @@
-import "./User.css";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";

@@ -33,7 +33,8 @@ export const SectorListContainer = ({greeting}) =>{
         
         }else{
           const data = await response.json()
-          setRol(isRolUser(getToken()))
+          //setRol(isRolUser(getToken()))
+          setRol(true)
           if (data.msj){
             setMensaje(data.msj)
           }else{

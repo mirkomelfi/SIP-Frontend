@@ -1,4 +1,3 @@
-import "./UserDetail.css";
 import {Link, useNavigate} from "react-router-dom";
 
 const UserDetail =({user})=>{

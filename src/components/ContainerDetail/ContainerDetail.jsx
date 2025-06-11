@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./ContainerDetail.css";
 import {Link, useNavigate} from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { getToken } from "../../utils/auth-utils";

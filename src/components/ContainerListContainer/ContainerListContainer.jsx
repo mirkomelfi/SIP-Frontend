@@ -51,7 +51,8 @@ const ContainerListContainer = ({fromLoc, greeting, idContainer, idItem}) =>{
           navigate("/login")
         }else{
           const data = await response.json()
-          setRol(isRolUser(getToken()))
+          //setRol(isRolUser(getToken()))
+          setRol(true)
           if (idSec){
             const containers= data.containers
             if (containers.length==0){

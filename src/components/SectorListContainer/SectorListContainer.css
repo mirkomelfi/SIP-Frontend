@@ -1,7 +1,12 @@
-.greeting{
-    text-align: center;
+.greeting {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
-div{
-    display: flex;
-    flex-direction: column;
+
+.button.btnPrimary {
+  margin: 1rem auto;
+  display: block;
 }

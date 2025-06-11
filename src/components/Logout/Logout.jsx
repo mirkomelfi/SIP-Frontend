@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { Link } from "react-router-dom"
 import { deleteToken, getToken, setToken } from "../../utils/auth-utils"
+import "./Logout.css"
 export const Logout = () => {
     
 

@@ -1,4 +1,3 @@
-import "./ItemDetail.css";
 import {Link, useNavigate} from "react-router-dom";
 
 const ItemDetail =({item})=>{
