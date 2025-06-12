@@ -33,7 +33,7 @@ export const App = () => {
          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout/>} />
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<ItemFilter />} />
           <Route path="/users" element={<UserListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/sectors" element={<SectorListContainer greeting="Listado de Sectores"/>}/>
           <Route path="/sectors/:idSec" element={<Sector/> }/>
