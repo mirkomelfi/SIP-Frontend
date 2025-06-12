@@ -59,7 +59,7 @@ export const Register = () => {
     return (
         <div>
             {!mensaje?(
-        <>
+        
         <div className="container divForm" >
             <h3>Formulario de registro</h3>
             <form onSubmit={consultarForm} ref={datForm}>
@@ -84,7 +84,7 @@ export const Register = () => {
                 </form>
 
             </div>
-        </>):<><Mensaje msj={mensaje} /></>
+        ):<Mensaje msj={mensaje} />
         }
         <button class="button btnPrimary" onClick={()=>navigateTo(`/users`)}><span class="btnText">Volver</span></button>
         </div>

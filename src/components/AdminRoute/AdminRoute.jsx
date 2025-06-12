@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
 const AdminRoute = () => {
-  const { user, rol } = useUser();
+  const { user, rol, clearAuthData} = useUser();
   const location = useLocation();
 
   // No está logueado → redirige al login

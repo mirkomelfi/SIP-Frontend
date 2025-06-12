@@ -40,7 +40,7 @@ export const UserProvider = ({ children }) => {
       }
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/auth/check`, {
+        const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/profile`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${storedToken}`,
@@ -49,7 +49,6 @@ export const UserProvider = ({ children }) => {
 
         if (response.ok) {
           const data = await response.json();
-          setAuthData(storedToken, data.user); // data.user lo devuelve el back
         } else {
           clearAuthData(); // token expirado o inválido
         }
