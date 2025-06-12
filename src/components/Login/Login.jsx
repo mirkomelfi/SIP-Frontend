@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
-import { deleteToken, extractUrl, getToken, setToken, extractRol } from "../../utils/auth-utils";
+import { extractUrl } from "../../utils/auth-utils";
 import { useUser } from "../../context/UserContext";
 import "./Login.css";
 
@@ -12,14 +12,7 @@ export const Login = () => {
   const { state } = useLocation();
   const datForm = useRef();
 
-  const { user, setUser, setTokenState, setRol } = useUser();
-
-  const desloggear = () => {
-    deleteToken();
-    setUser(null);
-    setTokenState(null);
-    setRol(null);
-  };
+  const { user, setAuthData, clearAuthData } = useUser();
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -32,36 +25,34 @@ export const Login = () => {
       return;
     }
 
-    const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(cliente)
-    });
+    try {
+      const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cliente)
+      });
 
-    const data = await response.json();
-    console.log(data.msj);
+      const data = await response.json();
 
-    if (response.status === 200) {
-      setError(false);
-
-      // Guardar en localStorage y en el contexto
-      setToken(data.token);
-      setTokenState(data.token);
-      setUser(data.usuario);
-      setRol(extractRol(data.token));
-
-      // Redirigir
-      navigate(state?.from ? extractUrl(state.from) : "/");
-    } else {
-      if (response.status === 401) {
+      if (response.status === 200) {
+        setError(false);
+        setAuthData(data.token,data.user); // Guarda todo en localStorage + contexto
+        navigate(state?.from ? extractUrl(state.from) : "/");
+      } else {
         setError(true);
         setMensaje("Credenciales inválidas");
+        clearAuthData(); // por si quedó algo viejo en el storage/contexto
       }
+    } catch (err) {
+      setError(true);
+      setMensaje("Error al conectar con el servidor.");
     }
 
     e.target.reset();
+  };
+
+  const desloggear = () => {
+    clearAuthData();
   };
 
   const navigateTo = (url) => {
@@ -76,7 +67,7 @@ export const Login = () => {
           <form onSubmit={consultarForm} ref={datForm}>
             <div className="input-form">
               <label htmlFor="username" className="form-label">Nombre de Usuario</label>
-              <input type="username" className="form-control" name="username" />
+              <input type="text" className="form-control" name="username" />
             </div>
 
             <div className="mb-3">
@@ -85,9 +76,7 @@ export const Login = () => {
             </div>
 
             {!user && (
-              <button type="submit" className="button btnPrimary">
-                Iniciar Sesión
-              </button>
+              <button type="submit" className="button btnPrimary">Iniciar Sesión</button>
             )}
           </form>
 
@@ -105,7 +94,7 @@ export const Login = () => {
       ) : (
         <>
           <Mensaje msj={mensaje} />
-          <button className="button btnPrimary" onClick={() => navigateTo(`/`)}>
+          <button className="button btnPrimary" onClick={() => navigateTo(`/login`)}>
             <span className="btnText">Volver a Login</span>
           </button>
         </>
