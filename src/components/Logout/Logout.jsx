@@ -1,37 +1,39 @@
-import { useRef } from "react"
-import { useState,useEffect } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
-import { Mensaje } from "../Mensaje/Mensaje"
-import { Link } from "react-router-dom"
-import { deleteToken, getToken, setToken } from "../../utils/auth-utils"
-import "./Logout.css"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Mensaje } from "../Mensaje/Mensaje";
+import { getToken, deleteToken } from "../../utils/auth-utils";
+import { useUser } from "../../context/UserContext";
+import "./Logout.css";
+
 export const Logout = () => {
-    
+  const [mensaje, setMensaje] = useState("No se encontraba logueado");
+  const navigate = useNavigate();
 
-    const [mensaje,setMensaje]=useState("No se encuentra loggeado")
-const navigate= useNavigate()
-    const desloggear=async()=>{
-        const token= getToken()
-        if (token!=null){
-            deleteToken()
-            setMensaje("Sesion cerrada con exito")
-        }
+  // setters del contexto
+  const { setUser, setTokenState, setRol } = useUser();
+
+  useEffect(() => {
+    // Ejecuta al montar el componente
+    const token = getToken();
+
+    if (token) {
+      deleteToken();          // limpia localStorage
+      setUser(null);          // limpia contexto
+      setTokenState(null);
+      setRol(null);
+      setMensaje("Sesión cerrada con éxito");
     }
+    // Si no había token, se mantiene el mensaje inicial
+  }, [setUser, setTokenState, setRol]);
 
-    const navigateTo=(url)=>{
-        navigate(url)
-      }
+  const goToLogin = () => navigate("/login");
 
-    useEffect(() => { 
-        desloggear()
-    },[])
-    
-    return (
-
-        <div className="tarjetaProducto">
-            <Mensaje msj={mensaje} />
-            <button class="button btnPrimary" onClick={()=>navigateTo(`/login`)}><span class="btnText">Inicio de Sesion</span></button>
-        
-        </div>
-    )
-}    
+  return (
+    <div className="tarjetaProducto">
+      <Mensaje msj={mensaje} />
+      <button className="button btnPrimary" onClick={goToLogin}>
+        <span className="btnText">Inicio de Sesión</span>
+      </button>
+    </div>
+  );
+};
