@@ -3,7 +3,6 @@ import {
   getToken,
   setToken,
   deleteToken,
-  decodeToken,
   extractRol,
 } from "../utils/auth-utils";
 
@@ -13,36 +12,56 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [tokenState, setTokenState] = useState(null);
   const [rol, setRol] = useState(null);
+  const [loading, setLoading] = useState(true); // opcional para UX
 
-  // Centraliza el login: guarda token + usuario + rol
+  // Centraliza el login
   const setAuthData = (token, usuario) => {
-    setToken(token);               // guarda en localStorage
-    setTokenState(token);          // guarda en el contexto
-    setUser(usuario);              // guarda el usuario
-    setRol(extractRol(token));     // extrae y guarda el rol desde el token
+    setToken(token);
+    setTokenState(token);
+    setUser(usuario);
+    setRol(extractRol(token));
   };
 
-  // Centraliza el logout: limpia todo
+  // Centraliza el logout
   const clearAuthData = () => {
-    deleteToken();                 // borra del localStorage
-    setTokenState(null);          // limpia el token del contexto
-    setUser(null);                // limpia usuario
-    setRol(null);                 // limpia rol
+    deleteToken();
+    setTokenState(null);
+    setUser(null);
+    setRol(null);
   };
 
-  // Al iniciar la app, intenta cargar sesión desde el token guardado
+  // Validación real al iniciar
   useEffect(() => {
-    const storedToken = getToken();
-    if (storedToken) {
-      const decoded = decodeToken(storedToken);
-      if (decoded) {
-        setTokenState(storedToken);
-        setUser(decoded.user || null); // setteo el usuario desde el token JWT recibida
-        setRol(extractRol(storedToken));
-      } else {
-        clearAuthData(); // token inválido
+    const validateSession = async () => {
+      const storedToken = getToken();
+      if (!storedToken) {
+        setLoading(false);
+        return;
       }
-    }
+
+      try {
+        const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/auth/check`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${storedToken}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setAuthData(storedToken, data.user); // data.user lo devuelve el back
+        } else {
+          clearAuthData(); // token expirado o inválido
+        }
+      } catch (err) {
+        console.error("Error al validar sesión:", err);
+        clearAuthData();
+      } finally {
+        setLoading(false); // se completó la verificación
+      }
+    };
+
+    validateSession();
   }, []);
 
   return (
@@ -53,6 +72,7 @@ export const UserProvider = ({ children }) => {
         rol,
         setAuthData,
         clearAuthData,
+        loading, // útil si querés mostrar un loader
       }}
     >
       {children}

@@ -7,9 +7,9 @@ const SessionButton = () => {
   return (
     <>
       {user ? (
-        <Link to="/logout" className="navbar__link">Logout</Link>
+        <Link to="/logout" className="session-button">Logout</Link>
       ) : (
-        <Link to="/login" className="navbar__link">Login</Link>
+        <Link to="/login" className="session-button">Login</Link>
       )}
     </>
   );

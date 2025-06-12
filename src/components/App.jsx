@@ -20,13 +20,11 @@ import { ItemLocation } from './Item/ItemLocation';
 import { ItemFilter } from './Item/ItemFilter';
 import ImagenPost from './Imagen/ImagenPOST';
 import { Logout } from './Logout/Logout';
-import { UserProvider } from '../context/UserContext';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import AdminRoute from './AdminRoute/AdminRoute';
 
 export const App = () => {
   return (
-    <UserProvider>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -73,6 +71,5 @@ export const App = () => {
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </BrowserRouter>
-    </UserProvider>
   );
 };
