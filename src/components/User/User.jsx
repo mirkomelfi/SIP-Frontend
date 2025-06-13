@@ -10,7 +10,7 @@ export const User = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const { token, rol } = useUser(); 
+  const { tokenState, rol } = useUser(); 
   const isAdmin = rol === "ROL_ADMIN";
 
   const ejecutarFetch = async () => {
@@ -22,7 +22,7 @@ export const User = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${tokenState}`,
       },
     });
 
@@ -46,7 +46,7 @@ export const User = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenState}`,
         },
       }
     );

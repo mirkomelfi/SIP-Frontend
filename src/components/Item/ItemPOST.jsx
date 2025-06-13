@@ -5,7 +5,7 @@ import { useUser } from "../../context/UserContext";
 import "./Item.css";
 
 export const ItemPost = ({ fromFilter }) => {
-  const { token } = useUser();
+  const { tokenState } = useUser();
   const { idCont } = useParams();
   const navigate = useNavigate();
   const datForm = useRef();
@@ -25,7 +25,7 @@ export const ItemPost = ({ fromFilter }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenState}`,
         },
         body: JSON.stringify(item),
       });

@@ -6,7 +6,7 @@ import "./Item.css";
 
 export const ItemPut = () => {
   const { idSec, idCont, idItem } = useParams();
-  const { token } = useUser();
+  const { tokenState } = useUser();
 
   const [item, setItem] = useState([]);
   const [mensaje, setMensaje] = useState(null);
@@ -20,7 +20,7 @@ export const ItemPut = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${tokenState}`,
           },
         });
         const data = await response.json();
@@ -36,7 +36,7 @@ export const ItemPut = () => {
     };
 
     fetchItem();
-  }, [idItem, token]);
+  }, [idItem, tokenState]);
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ export const ItemPut = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenState}`,
         },
         body: JSON.stringify(itemUpdate),
       });

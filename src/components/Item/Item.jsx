@@ -8,7 +8,7 @@ import { CodigoQR } from "../CodigoQR/CodigoQR";
 
 const Item = ({ fromSector, id }) => {
   const { idSec, idCont, idItem } = useParams();
-  const { token, rol } = useUser();
+  const { tokenState, rol } = useUser();
   const [item, setItem] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mensaje, setMensaje] = useState(null);
@@ -23,7 +23,7 @@ const Item = ({ fromSector, id }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${tokenState}`,
       },
     });
     const data = await response.json();
@@ -36,7 +36,7 @@ const Item = ({ fromSector, id }) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${tokenState}`,
       },
     });
     const data = await response.json();

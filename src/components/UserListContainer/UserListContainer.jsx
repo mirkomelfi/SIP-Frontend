@@ -12,7 +12,7 @@ const UserListContainer = ({ greeting }) => {
   const [mensaje, setMensaje] = useState(null);
 
   const navigate = useNavigate();
-  const { token, rol } = useUser();
+  const { tokenState, rol } = useUser();
   const isAdmin = rol === "ROL_ADMIN";
 
   const ejecutarFetch = async () => {
@@ -21,7 +21,7 @@ const UserListContainer = ({ greeting }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenState}`,
         },
       });
 
@@ -45,13 +45,8 @@ const UserListContainer = ({ greeting }) => {
   };
 
   useEffect(() => {
-    if (isAdmin) {
       ejecutarFetch();
-    } else {
-      setMensaje("No posee los permisos necesarios");
-      setLoading(false);
-    }
-  }, [isAdmin]);
+  }, []);
 
   const navigateTo = (url) => navigate(url);
 

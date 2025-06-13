@@ -8,7 +8,7 @@ export const SectorPost = () => {
   const datForm = useRef();
   const navigate = useNavigate();
 
-  const { token, rol } = useUser();
+  const { tokenState, rol } = useUser();
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ export const SectorPost = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenState}`,
         },
         body: JSON.stringify(sector),
       });
@@ -56,7 +56,7 @@ export const SectorPost = () => {
       ) : (
         <Mensaje msj={mensaje} />
       )}
-      <button className="button btnPrimary" onClick={() => navigate("/sectors")}>
+      <button className="button btnPrimary" onClick={() => navigate(-1)}>
         <span className="btnText">Volver</span>
       </button>
     </div>

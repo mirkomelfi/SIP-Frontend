@@ -16,7 +16,7 @@ const ItemListContainer = ({ greeting, filter }) => {
   const [goBack, setGoBack] = useState(false);
 
   const navigate = useNavigate();
-  const { token } = useUser();
+  const { tokenState } = useUser();
 
   const returnToItem = () => {
     setGoBack(true);
@@ -36,7 +36,7 @@ const ItemListContainer = ({ greeting, filter }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenState}`,
         },
       });
 

@@ -9,7 +9,7 @@ export const UserPut = ({ fromPerfil }) => {
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState(null);
 
-  const { token, rol } = useUser(); 
+  const { tokenState, rol,clearAuthData } = useUser(); 
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ export const UserPut = ({ fromPerfil }) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${tokenState}`,
       },
       body: JSON.stringify(cliente),
     });
@@ -50,7 +50,7 @@ export const UserPut = ({ fromPerfil }) => {
 
     if (fromPerfil && cliente.username != null) {
       alert("Se modificó el username. Debe volver a iniciar sesión.");
-      localStorage.removeItem("token");
+      clearAuthData()
       navigate("/login");
       return;
     }
@@ -127,14 +127,14 @@ export const UserPut = ({ fromPerfil }) => {
       {idUser ? (
         <button
           className="button btnPrimary"
-          onClick={() => navigateTo("/users")}
+          onClick={() => navigate(-1)}
         >
           <span className="btnText">Volver</span>
         </button>
       ) : (
         <button
           className="button btnPrimary"
-          onClick={() => navigateTo("/user/current")}
+          onClick={() => navigate(-1)}
         >
           <span className="btnText">Volver</span>
         </button>

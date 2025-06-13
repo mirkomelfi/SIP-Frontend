@@ -12,7 +12,7 @@ const Sector = ({ fromContainer }) => {
   const [sector, setSector] = useState();
   const [qr, setQr] = useState(undefined);
   const navigate = useNavigate();
-  const { token, user,rol } = useUser();
+  const { tokenState, user,rol } = useUser();
   const isAdmin = rol === "ROL_ADMIN";
 
   const generarQr = () => {
@@ -24,7 +24,7 @@ const Sector = ({ fromContainer }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${tokenState}`,
       },
     });
     const data = await response.json();
@@ -40,7 +40,7 @@ const Sector = ({ fromContainer }) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${tokenState}`,
       },
     });
     const data = await response.json();
