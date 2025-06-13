@@ -1,14 +1,14 @@
 // Item.jsx
 import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
+import { useUser } from "../../context/UserContext";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { Location } from "../Location/Location";
 import { CodigoQR } from "../CodigoQR/CodigoQR";
 
 const Item = ({ fromSector, id }) => {
   const { idSec, idCont, idItem } = useParams();
-  const { token, rol } = useContext(UserContext);
+  const { token, rol } = useUser;
   const [item, setItem] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mensaje, setMensaje] = useState(null);

@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
-import { UserContext } from "../../context/UserContext";
+import {UserContext, useUser} from "../../context/UserContext"
 
 const ImagenPost = () => {
   const { idItem } = useParams();
@@ -9,7 +9,7 @@ const ImagenPost = () => {
   const navigate = useNavigate();
   const datForm = useRef();
 
-  const { tokenState, clearAuthData } = useContext(UserContext);
+  const { tokenState, clearAuthData } = useUser()
 
   const consultarForm = async (e) => {
     e.preventDefault();
