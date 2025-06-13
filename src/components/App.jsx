@@ -23,6 +23,7 @@ import { Logout } from './Logout/Logout';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import AdminRoute from './AdminRoute/AdminRoute';
 import { useUser } from "../context/UserContext";
+import { ContainerPost } from './Container/ContainerPOST';
 export const App = () => {
   const { loading } = useUser();
 
@@ -41,6 +42,7 @@ export const App = () => {
           <Route element={<AdminRoute />}>
             <Route path="/users" element={<UserListContainer greeting="Listado de Usuarios" />} />
             <Route path="/register" element={<Register/>} />
+            <Route path="/sectors/:idSec/containers/:idCont/updateContainer" element={<ContainerPut />} />
           </Route>
 
 
@@ -67,7 +69,6 @@ export const App = () => {
             <Route path="/addImage/:idItem" element={<ImagenPost />} />
             <Route path="/sectors/:idSec/containers/:idCont/items/:idItem/updateItem" element={<ItemPut />} />
             <Route path="/items/:idItem/updateItem" element={<ItemPut />} />
-            <Route path="/sectors/:idSec/containers/:idCont/updateContainer" element={<ContainerPut />} />
             <Route path="/user/current" element={<User />} />
             <Route path="/updateUser" element={<UserPut fromPerfil={true} />} />
           </Route>
