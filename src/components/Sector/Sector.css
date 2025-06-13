@@ -1,20 +1,59 @@
-.contenedorProductos{
-    display: flex;
-    background-color: rgb(255, 255, 255);
+.tarjetaProducto-sec {
+  background-color: #fff;
+  border: 2px solid #ffd500;
+  border-radius: 16px;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 50rem;
+  height: 20rem;
+  margin: 2rem auto;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
 
+.titulo-sec {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1rem;
 }
-.tarjetaProducto{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 15px;
-    padding: 10px;
-    text-align: center;
+
+.detalleSector-sec p {
+  font-size: 1rem;
+  margin: 0.4rem 0;
+  color: #444;
 }
-div .tarjetaProducto{
-    background-color: #FFFF00;
+
+.accionesGrid-sec {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
 }
-header h1,h2 {
-   color:azure
+
+.button-sec.btnPrimary-sec{
+  background-color: #000;
+  color: white;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
+
+.button-sec.btnPrimary-sec:hover {
+  background-color: #333;
+}
+
+.button-sec.danger-sec {
+  color: #c62828;
+  font-size: 1.2rem;
+  background-color: transparent;
+}
+
+.button-sec.danger-sec:hover {
+  background-color: #a21818;
+  color: #fff;
+}
+

@@ -1,5 +1,6 @@
 
 import "../Sector/Sector.css";
+import "./SectorList.css";
 import { Link } from "react-router-dom";
 import { SectorDetail } from "../SectorDetail/SectorDetail";
 

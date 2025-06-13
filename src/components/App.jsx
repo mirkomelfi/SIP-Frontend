@@ -40,7 +40,7 @@ export const App = () => {
           {/* Vista exclusiva del admin */}
           <Route element={<AdminRoute />}>
             <Route path="/users" element={<UserListContainer greeting="Listado de Usuarios" />} />
-            <Route path="/users/register" element={<Register/>} />
+            <Route path="/register" element={<Register/>} />
           </Route>
 
 

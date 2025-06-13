@@ -1,26 +1,39 @@
+/* SectorDetail.css */
 .tarjetaProducto {
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
+  background-color: #fffbe6;
+  border: 2px solid #ffd500;
+  border-radius: 16px;
   padding: 1.5rem;
-  margin: 1rem;
-  border-radius: 12px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-  max-width: 400px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
 
-.tarjetaProducto h1,
+.tarjetaProducto:hover {
+  transform: scale(1.02);
+}
+
+.tarjetaProducto h1 {
+  font-size: 1.4rem;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
 .tarjetaProducto h2 {
-  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 0.25rem;
 }
 
 .button.btnPrimary {
   background-color: #000;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 10px;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
   font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  margin-top: 1rem;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 

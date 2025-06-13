@@ -92,27 +92,47 @@ const Sector =({fromContainer})=>{
         <>
         
             {!qr?
-            <div className="tarjetaProducto">
-                <h1>Sector N°{idSec}</h1>
-                {!mensaje?(  <>
-                    {sector&&<><h2>Nombre: {sector.name}</h2>
-                <h2>Descripcion: {sector.description}</h2></>}
-                {!fromContainer&&  <>
-                <button class="button btnPrimary" onClick={()=>navigateTo("containers")}><span class="btnText">Ver Contenedores</span></button>
-                {!rol&&
-                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateSector/${idSec}`)}><span class="btnText">Modificar sector</span></button>
-                }
-                <button class="button btnPrimary" onClick={()=>generarQr()}><span class="btnText">Generar QR</span></button>
-                {!rol&&<button class="button btnPrimary" onClick={()=>eliminar()}><span class="btnText">Eliminar</span></button>}
-                
-                </>
-                } </>
-                ):(<Mensaje msj={mensaje} />)}
-            </div> :<CodigoQR url={window.location.href} />}
+            <div className="tarjetaProducto-sec">
+                <h1 className="titulo-sec">Sector N°{idSec}</h1>
+                {!mensaje ? (
+                    <>
+                    {sector && (
+                        <div className="detalleSector-sec">
+                        <p><strong>Nombre:</strong> {sector.name}</p>
+                        <p><strong>Descripción:</strong> {sector.description}</p>
+                        </div>
+                    )}
+
+                    {!fromContainer && (
+                        <div className="accionesGrid-sec">
+                        <button className="button-sec btnPrimary-sec" onClick={() => navigateTo("containers")}>
+                            <span className="btnText-sec">Ver Contenedores</span>
+                        </button>
+                        {!rol && (
+                            <button className="button-sec btnPrimary-sec" onClick={() => navigateTo(`/updateSector/${idSec}`)}>
+                            <span className="btnText-sec">Modificar sector</span>
+                            </button>
+                        )}
+                        <button className="button-sec btnPrimary-sec" onClick={generarQr}>
+                            <span className="btnText-sec">Generar QR</span>
+                        </button>
+                        {!rol && (
+                            <button className="button-sec btnPrimary-sec danger-sec" onClick={eliminar}>
+                            <span className="btnText-sec">Eliminar</span>
+                            </button>
+                        )}
+                        </div>
+                    )}
+                    </>
+                ) : (
+                    <Mensaje msj={mensaje} />
+                )}
+                </div>
+                :<CodigoQR url={window.location.href} />}
             {!fromContainer? 
-            <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors`)}><span class="btnText">Volver</span></button>
+            <button className="button btnPrimary" onClick={()=>navigateTo(`/sectors`)}><span className="btnText">Volver</span></button>
             :
-            <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}/containers/${idCont}`)}><span class="btnText">Volver</span></button>
+            <button className="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}/containers/${idCont}`)}><span className="btnText">Volver</span></button>
             }
            
             
