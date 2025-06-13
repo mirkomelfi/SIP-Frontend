@@ -80,7 +80,6 @@ const ItemListContainer = ({greeting,filter}) =>{
       navigate(url)
   }
 
-
     useEffect(() => { 
       ejecutarFetch()
       .catch(error => console.error(error))
@@ -97,13 +96,11 @@ const ItemListContainer = ({greeting,filter}) =>{
           : 
           !error ?
             !goBack ?
-              !add ?
               (<>
                 <h1 className="greeting">{greeting}</h1>
-                <CreateButton onClick={()=> navigate("/items/create")}/>
+                <CreateButton onClick={()=> navigate(`/items/create/${idCont}`)}/>
                 {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
               </>)
-              :(<ItemPost />)
             :<ItemFilter />
           : <Mensaje msj={mensaje} />
         }
@@ -113,9 +110,6 @@ const ItemListContainer = ({greeting,filter}) =>{
           {!goBack&&!idSec&&
           <button class="button btnPrimary" onClick={()=>returnToItem()}><span class="btnText">Volver</span></button>
           }
-          
-          
-
         </>
     );
   } 

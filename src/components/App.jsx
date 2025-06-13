@@ -61,6 +61,7 @@ export const App = () => {
             <Route path="/sectors/:idSec/containers/:idCont/items/:idItem" element={<Item fromSector={true} />} />
             <Route path="/items" element={<ItemFilter />} />
             <Route path="/items/create" element={<ItemPost />} />
+            <Route path="/items/create/:idCont" element={<ItemPost />} />
             <Route path="/items/:idItem" element={<Item />} />
             <Route path="/items/:idItem/locationChange" element={<ItemLocation />} />
             <Route path="/items/:idItem/locationChange/:idCont" element={<Container fromLocation={true} />} />
