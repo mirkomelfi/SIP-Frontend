@@ -49,6 +49,7 @@ export const UserProvider = ({ children }) => {
 
         if (response.ok) {
           const data = await response.json();
+          setAuthData(storedToken,data)
         } else {
           clearAuthData(); // token expirado o inválido
         }

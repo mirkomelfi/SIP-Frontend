@@ -22,8 +22,13 @@ import ImagenPost from './Imagen/ImagenPOST';
 import { Logout } from './Logout/Logout';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import AdminRoute from './AdminRoute/AdminRoute';
-
+import { useUser } from "../context/UserContext";
 export const App = () => {
+  const { loading } = useUser();
+
+  if (loading) {
+    return <div className="loader">Cargando sesión...</div>; // Podés usar un spinner lindo
+  }
   return (
       <BrowserRouter>
         <Navbar />
