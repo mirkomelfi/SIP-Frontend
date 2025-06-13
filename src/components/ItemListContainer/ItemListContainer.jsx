@@ -7,6 +7,7 @@ import { ItemPost } from "../Item/ItemPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { ItemLocation } from "../Item/ItemLocation";
 import { ItemFilter } from "../Item/ItemFilter";
+import CreateButton from "../../utils/CreateButton/CreateButton";
 
 
 const ItemListContainer = ({greeting,filter}) =>{
@@ -99,7 +100,7 @@ const ItemListContainer = ({greeting,filter}) =>{
               !add ?
               (<>
                 <h1 className="greeting">{greeting}</h1>
-                <button class="button btnPrimary" onClick={()=>agregar()}>Agregar Item</button>
+                <CreateButton onClick={()=> navigate("/items/create")}/>
                 {listaItems.length!=0?<ItemList listaItems={listaItems}/>:<Mensaje msj={mensaje} />}
               </>)
               :(<ItemPost />)

@@ -6,6 +6,7 @@ import { getToken } from "../../utils/auth-utils"
 import ItemListContainer from "../ItemListContainer/ItemListContainer"
 import { ItemPost } from "./ItemPOST"
 import "./Item.css";
+import CreateButton from "../../utils/CreateButton/CreateButton"
 
 export const ItemFilter = () => {
 
@@ -42,11 +43,6 @@ export const ItemFilter = () => {
             {
                  !itemName?(
             <>
-
-                <div>
-                    <button class="button btnPrimary" onClick={() => navigate('/items/create')} >Agregar Item</button>
-                </div >
-
                 <div className="container divForm" >
                     <h2>Listado de Items</h2>
                     <form onSubmit={consultarForm} ref={datForm}>
@@ -61,6 +57,7 @@ export const ItemFilter = () => {
 
                 </div>
                 <button class="button btnPrimary" onClick={() => navigateTo(`/`)}><span class="btnText">Volver</span></button>
+                <CreateButton onClick={() => navigate("/items/create")}/>
             </>
             ):    <ItemListContainer filter={itemName} greeting="Listado de Items" />
             }

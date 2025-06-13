@@ -68,8 +68,11 @@ export const ItemPost = ({ fromFilter }) => {
                     <label htmlFor="description" className="form-label">Descripcion</label>
                     <input type="text" className="form-control" name="description" required />
                 </div>
+                <div className="flex-div">
+                    <button type="button" class="button btnPrimary" onClick={() => navigate(-1)} ><span class="btnText">Cancelar</span></button>
+                    <button type="submit" class="button btnPrimary"><span class="btnText">Crear</span></button>
+                </div>
 
-                <button type="submit" class="button btnPrimary"><span class="btnText">Crear</span></button>
             </form>
         </div>
 
