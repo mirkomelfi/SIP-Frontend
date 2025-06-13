@@ -1,93 +1,90 @@
-import { useRef } from "react"
-import { Mensaje } from "../Mensaje/Mensaje"
-import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils"
+import { useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Mensaje } from "../Mensaje/Mensaje";
+import { useUser } from "../../context/UserContext";
 
 export const SectorPut = () => {
+  const { idSec } = useParams();
+  const [mensaje, setMensaje] = useState(null);
+  const datForm = useRef();
+  const navigate = useNavigate();
 
-    const {idSec}= useParams();
+  const { token, rol } = useUser();
 
-    const [mensaje,setMensaje]=useState(null)
-    const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
-    const navigate= useNavigate()
+  const consultarForm = async (e) => {
+    e.preventDefault();
 
-    const consultarForm = async(e) => {
-        //Consultar los datos del formulario
-        e.preventDefault()
+    const datosFormulario = new FormData(datForm.current);
+    const sector = Object.fromEntries(datosFormulario);
 
-        const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
-        const sector = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (sector.name==""){sector.name=null;}
-        if (sector.description==""){sector.description=null;}
-        
-        if (!sector.name&&!sector.description){ setMensaje("No se ingresaron valores para actualizar")}
-        else{
+    // Convertir campos vacíos a null
+    if (sector.name === "") sector.name = null;
+    if (sector.description === "") sector.description = null;
 
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/sectors/${idSec}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${getToken()}`
-                },
-                body: JSON.stringify(sector)
-            })
+    if (!sector.name && !sector.description) {
+      setMensaje("No se ingresaron valores para actualizar");
+      return;
+    }
 
-           
-            const rol=validateRol(response)
-            if (!rol){
-                if (isRolUser(getToken())){
-                  console.log("rol user")
-                    setMensaje("No posee los permisos necesarios")
-                }else{
-                    deleteToken()
-                    navigate("/login")
-                }
-            }else{
-            const data = await response.json()
-            if (data.msj){
-                setMensaje(data.msj)
-            }
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_DOMINIO_BACK}/admin/sectors/${idSec}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(sector),
         }
-                
-            e.target.reset() //Reset form
-                
-            }
-        }
+      );
 
+      const data = await response.json();
+      setMensaje(data.msj || "Sector actualizado correctamente");
+    } catch (error) {
+      setMensaje("Error al conectar con el servidor.");
+    }
 
-        const navigateTo=(url)=>{
-            navigate(url)
-          }
+    e.target.reset();
+  };
 
-    return (
-
-        <div>
-            {!mensaje?(
-                
-                <div className="container divForm" >
-                    <h2>Cambio en los datos del Sector</h2>
-                    <h3>Ingrese solo los campos que desea modificar</h3>
-                    <form onSubmit={consultarForm} ref={datForm}>
-                    <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="name" placeholder="Ingrese el nuevo nombre" />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="description" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="description" placeholder="Ingrese la nueva descripcion" />
-                        </div>
-
-                        <button type="submit" class="button btnPrimary"><span class="btnText">Actualizar</span></button>
-                        </form>
-
-                    </div>
-                ):    <Mensaje msj={mensaje} />
-                    
-        }
-         <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors`)}><span class="btnText">Volver</span></button>
+  return (
+    <div>
+      {!mensaje ? (
+        <div className="container divForm">
+          <h2>Cambio en los datos del Sector</h2>
+          <h3>Ingrese solo los campos que desea modificar</h3>
+          <form onSubmit={consultarForm} ref={datForm}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">Nombre</label>
+              <input
+                type="text"
+                className="form-control"
+                name="name"
+                placeholder="Ingrese el nuevo nombre"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">Descripción</label>
+              <input
+                type="text"
+                className="form-control"
+                name="description"
+                placeholder="Ingrese la nueva descripción"
+              />
+            </div>
+            <button type="submit" className="button btnPrimary">
+              <span className="btnText">Actualizar</span>
+            </button>
+          </form>
         </div>
-        
-    )
-}
+      ) : (
+        <Mensaje msj={mensaje} />
+      )}
+
+      <button className="button btnPrimary" onClick={() => navigate("/sectors")}>
+        <span className="btnText">Volver</span>
+      </button>
+    </div>
+  );
+};

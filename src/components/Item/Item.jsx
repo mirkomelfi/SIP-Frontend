@@ -8,7 +8,7 @@ import { CodigoQR } from "../CodigoQR/CodigoQR";
 
 const Item = ({ fromSector, id }) => {
   const { idSec, idCont, idItem } = useParams();
-  const { token, rol } = useUser;
+  const { token, rol } = useUser();
   const [item, setItem] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mensaje, setMensaje] = useState(null);

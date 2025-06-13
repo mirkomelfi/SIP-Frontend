@@ -1,81 +1,77 @@
-import { useRef } from "react"
-import { Mensaje } from "../Mensaje/Mensaje"
-import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { deleteToken, getToken, validateRol } from "../../utils/auth-utils"
-import { ItemFilter } from "./ItemFilter"
-import { Item } from "./Item"
+import { useRef, useContext } from "react";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
+import "./Item.css";
 
 export const ItemPost = ({ fromFilter }) => {
+  const { token } = useUser();
+  const { idCont } = useParams();
+  const navigate = useNavigate();
+  const datForm = useRef();
 
-    const { idItem, idCont } = useParams();
-    const navigate = useNavigate()
-    const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
+  const consultarForm = async (e) => {
+    e.preventDefault();
 
-    const consultarForm = async (e) => {
-        //Consultar los datos del formulario
-        e.preventDefault()
+    const datosFormulario = new FormData(datForm.current);
+    const item = Object.fromEntries(datosFormulario);
 
-        const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
-        const item = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
+    const url = idCont
+      ? `${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}/addItem`
+      : `${process.env.REACT_APP_DOMINIO_BACK}/items`;
 
-        let url = ``
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(item),
+      });
 
-        if (idCont) {
-            url = `${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}/addItem`;
-        } else {
-            url = `${process.env.REACT_APP_DOMINIO_BACK}/items`;
-        }
+      const data = await response.json();
 
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getToken()}`
-            },
-            body: JSON.stringify(item)
-        })
-        const rol = validateRol(response)
-        if (!rol) {
-            deleteToken()
-            navigate("/login")
-        } else {
-            const data = await response.json()
-            if (data.msj) {
-                alert('No se pudo crear el item')
-            } else {
-                alert('Item creado')
-                navigate(-1)
-            }
-        }
-
-
-        e.target.reset() //Reset form
-
+      if (data.msj) {
+        alert("No se pudo crear el item");
+      } else {
+        alert("Item creado");
+        navigate(-1);
+      }
+    } catch (error) {
+      console.error("Error al crear el item:", error);
     }
 
-    return (
-        <div className="container divForm" >
-            <h2>Creacion de Item</h2>
-            <form onSubmit={consultarForm} ref={datForm}>
-                <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Nombre</label>
-                    <input type="text" className="form-control" name="name" required />
-                </div>
+    e.target.reset();
+  };
 
-                <div className="mb-3">
-                    <label htmlFor="description" className="form-label">Descripcion</label>
-                    <input type="text" className="form-control" name="description" required />
-                </div>
-                <div className="flex-div">
-                    <button type="button" class="button btnPrimary" onClick={() => navigate(-1)} ><span class="btnText">Cancelar</span></button>
-                    <button type="submit" class="button btnPrimary"><span class="btnText">Crear</span></button>
-                </div>
-
-            </form>
+  return (
+    <div className="container divForm">
+      <h2>Creación de Item</h2>
+      <form onSubmit={consultarForm} ref={datForm}>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Nombre</label>
+          <input type="text" className="form-control" name="name" required />
         </div>
 
+        <div className="mb-3">
+          <label htmlFor="description" className="form-label">Descripción</label>
+          <input type="text" className="form-control" name="description" required />
+        </div>
 
-    )
-}
+        <div className="flex-div">
+          <button
+            type="button"
+            className="button btnPrimary"
+            onClick={() => navigate(-1)}
+          >
+            <span className="btnText">Cancelar</span>
+          </button>
+          <button type="submit" className="button btnPrimary">
+            <span className="btnText">Crear</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};

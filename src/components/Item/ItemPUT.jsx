@@ -1,122 +1,120 @@
-import { useRef } from "react"
-import { Mensaje } from "../Mensaje/Mensaje"
-import { useState,useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { deleteToken, getToken, validateRol } from "../../utils/auth-utils"
+import { useRef, useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Mensaje } from "../Mensaje/Mensaje";
+import { useUser } from "../../context/UserContext";
+import "./Item.css";
 
 export const ItemPut = () => {
+  const { idSec, idCont, idItem } = useParams();
+  const { token } = useUser();
 
-    const {idSec,idCont,idItem}= useParams();
+  const [item, setItem] = useState([]);
+  const [mensaje, setMensaje] = useState(null);
+  const navigate = useNavigate();
+  const datForm = useRef();
 
-    const [item,setItem]= useState([]);
-
-    const [mensaje,setMensaje]=useState(null)
-    const navigate= useNavigate()
-    const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
-
-
-    const ejecutarFetch=async () =>{ 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getToken()}`
-                
-            }
-            
-        })
-        const rol=validateRol(response)
-        if (!rol){
-            deleteToken()
-            navigate("/login")
-        }else{
-            const data = await response.json()
-            if (data.msj){
-              setMensaje(data.msj)
-            }else{
-              setItem(data)
-            }
+  useEffect(() => {
+    const fetchItem = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (data.msj) {
+          setMensaje(data.msj);
+        } else {
+          setItem(data);
         }
-  
+      } catch (error) {
+        console.error("Error al obtener el item:", error);
+        setMensaje("No se pudo cargar el item.");
+      }
+    };
+
+    fetchItem();
+  }, [idItem, token]);
+
+  const consultarForm = async (e) => {
+    e.preventDefault();
+
+    const datosFormulario = new FormData(datForm.current);
+    const itemUpdate = Object.fromEntries(datosFormulario);
+
+    if (!itemUpdate.name && !itemUpdate.description) {
+      setMensaje("No se ingresaron valores para actualizar");
+      return;
     }
 
+    // Si los campos vienen vacíos, los pasamos como null
+    if (itemUpdate.name === "") itemUpdate.name = null;
+    if (itemUpdate.description === "") itemUpdate.description = null;
 
-    useEffect(() => { 
-        ejecutarFetch()
-        .catch(error => console.error(error))
-        .finally(()=>{
-        })
-    },[])
+    try {
+      const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(itemUpdate),
+      });
 
-    const consultarForm = async(e) => {
-        //Consultar los datos del formulario
-        e.preventDefault()
+      const data = await response.json();
+      if (data.msj) {
+        setMensaje(data.msj);
+      } else {
+        alert("Item actualizado correctamente");
+        navigate(-1);
+      }
+    } catch (error) {
+      console.error("Error al actualizar el item:", error);
+      setMensaje("Error al actualizar el item.");
+    }
 
-        const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
-        const item = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        
-        if (item.description==""){item.description=null;}
-        if (item.name==""){item.name=null;}
-        if (!item.description&&!item.name){ setMensaje("No se ingresaron valores para actualizar")}
-        else{
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${getToken()}`
-                },
-                body: JSON.stringify(item)
-            })
-            const rol=validateRol(response)
-            if (!rol){
-                navigate("/login")
-            }else{
-                const data = await response.json()
-                if (data.msj){
-                    setMensaje(data.msj)
-                }
-            }
-                
-            e.target.reset() //Reset form
-                
-            }
-        }
-    
-        const navigateTo=(url)=>{
-            navigate(url)
-          }
-    return (
+    e.target.reset();
+  };
 
-        <div>
-            {!mensaje?(
-                
-                <div className="container divForm" >
-                    <h2>Cambio en los datos del Item</h2>
-                    <h3>Ingrese solo los campos que desea modificar</h3>
-                    <form onSubmit={consultarForm} ref={datForm}>
-                        <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="name" placeholder={item.name}/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="description" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="description" placeholder={item.description}/>
-                        </div>
+  const handleVolver = () => {
+    if (!idSec) {
+      navigate(`/items/${idItem}`);
+    } else {
+      navigate(`/sectors/${idSec}/containers/${idCont}/items/${idItem}`);
+    }
+  };
 
-                        <button type="submit" className="btn-red">Actualizar</button>
-                        </form>
+  return (
+    <div>
+      {!mensaje ? (
+        <div className="container divForm">
+          <h2>Cambio en los datos del Item</h2>
+          <h3>Ingrese solo los campos que desea modificar</h3>
+          <form onSubmit={consultarForm} ref={datForm}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">Nombre</label>
+              <input type="text" className="form-control" name="name" placeholder={item.name} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">Descripción</label>
+              <input type="text" className="form-control" name="description" placeholder={item.description} />
+            </div>
 
-                    </div>
-                ):    <Mensaje msj={mensaje} />
-                    
-        }
-       { !idSec?
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/items/${idItem}`)}><span class="btnText">Volver</span></button>
-       :
-       <button class="button btnPrimary" onClick={()=>navigateTo(`/sectors/${idSec}/containers/${idCont}/items/${idItem}`)}><span class="btnText">Volver</span></button>
-       }
+            <div className="flex-div">
+              <button type="button" className="button btnPrimary" onClick={handleVolver}>
+                <span className="btnText">Volver</span>
+              </button>
+              <button type="submit" className="btn-red">
+                Actualizar
+              </button>
+            </div>
+          </form>
         </div>
-        
-    )
-}
+      ) : (
+        <Mensaje msj={mensaje} />
+      )}
+    </div>
+  );
+};

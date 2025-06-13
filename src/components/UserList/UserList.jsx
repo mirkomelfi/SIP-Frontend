@@ -1,17 +1,12 @@
-import { UserDetail } from "../UserDetail/UserDetail"
-import { Link } from "react-router-dom"
+import { UserDetail } from "../UserDetail/UserDetail";
 
-const UserList = ({listaUsers})=>{
-    console.log("userlist",listaUsers)
-    return (
-        <> 
-           {// <Link to={``}>Agregar User</Link>
-            }
+const UserList = ({ listaUsers }) => {
+  return (
+    <div className="contenedorProductos">
+      {listaUsers &&
+        listaUsers.map((user) => <UserDetail key={user.id} user={user} />)}
+    </div>
+  );
+};
 
-            <div className="contenedorProductos">
-                {listaUsers&&listaUsers.map(user => <UserDetail key={user.dni} user={user}/>)}
-            </div>
-        </> 
-    )
-}
-export  {UserList}
+export { UserList };

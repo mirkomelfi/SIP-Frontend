@@ -8,11 +8,13 @@ const SectorList = ({listaSectors})=>{
 
     return (
         <>
-        {listaSectors&&
-        <div className="contenedorProductos">
-            {listaSectors.map(sector => <SectorDetail key={sector.id} sector={sector}/>)}
-        </div>
-        }
+            {listaSectors?.length > 0 &&
+            <div className="contenedorProductos">
+                {listaSectors.map(sector => (
+                <SectorDetail key={sector.id} sector={sector} />
+                ))}
+            </div>
+            }
         </>
     )
 }

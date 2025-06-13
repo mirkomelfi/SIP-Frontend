@@ -44,6 +44,8 @@ export const App = () => {
             <Route path="/users" element={<UserListContainer greeting="Listado de Usuarios" />} />
             <Route path="/register" element={<Register/>} />
             <Route path="/sectors/:idSec/containers/:idCont/updateContainer" element={<ContainerPut />} />
+            <Route path="/updateSector/:idSec" element={<SectorPut />} />
+            <Route path="/addSector" element={<SectorPost />} />
           </Route>
 
 
@@ -67,8 +69,6 @@ export const App = () => {
             <Route path="/items/:idItem/locationChange/:idCont" element={<Container fromLocation={true} />} />
             <Route path="/users/:idUser" element={<User />} />
             <Route path="/updateUser/:idUser" element={<UserPut />} />
-            <Route path="/updateSector/:idSec" element={<SectorPut />} />
-            <Route path="/addSector" element={<SectorPost />} />
             <Route path="/addImage/:idItem" element={<ImagenPost />} />
             <Route path="/sectors/:idSec/containers/:idCont/items/:idItem/updateItem" element={<ItemPut />} />
             <Route path="/items/:idItem/updateItem" element={<ItemPut />} />
