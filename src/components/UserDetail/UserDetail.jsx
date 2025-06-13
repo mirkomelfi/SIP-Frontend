@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom";
-
+import styles from "./UserDetail.module.css"
 const UserDetail =({user})=>{
     console.log("vUserDetail",user)
 const navigate=useNavigate()
@@ -10,10 +10,9 @@ const navigate=useNavigate()
 
     return(
         <>
-            <div className="tarjetaProducto">
+            <div className={`tarjetaProducto ${styles.tarjetaPorudcto}`} onClick={()=>navigateTo(`${user.id}`)}>
                 <h1>Usuario N°: {user.id}</h1>
-                <h2>Nombre de usuario: {user.username}</h2>
-                <button class="button btnPrimary" onClick={()=>navigateTo(`${user.id}`)}><span class="btnText">Ver usuario</span></button>
+                <h2>Nombre de usuario: {user.username}</h2>              
             </div>
         </>
     )

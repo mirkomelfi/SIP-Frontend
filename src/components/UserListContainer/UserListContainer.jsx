@@ -5,6 +5,7 @@ import { UserList } from "../UserList/UserList";
 import { Link } from "react-router-dom";
 import { deleteToken, getToken, isRolUser, validateRol } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
+import CreateButton from "../../utils/CreateButton/CreateButton";
 
 
 const UserListContainer = ({greeting}) =>{
@@ -60,7 +61,7 @@ const UserListContainer = ({greeting}) =>{
           ?
           <>
           <h1 className="greeting">{greeting}</h1>
-          <button class="button btnPrimary" onClick={()=>navigateTo("/register")}><span class="btnText">Registrar usuario</span></button>
+          <CreateButton onClick={()=>navigateTo("/register")}/>
           {loading ? <p>Cargando...</p> : <UserList pid={idUser} listaUsers={listaUsers}/>}
           <button class="button btnPrimary" onClick={()=>navigateTo("/")}><span class="btnText">Volver</span></button>
           </>
