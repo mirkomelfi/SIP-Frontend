@@ -1,14 +1,14 @@
 .createButton{
     position: fixed;
-    right: 2rem;
-    bottom: 2rem;
+    right: clamp(1.054rem, -0.0015rem + 1.2509vw, 2rem);
+    bottom: clamp(1.054rem, -0.0015rem + 1.2509vw, 2rem);
     z-index: 1000;
-    padding: 1.5rem 2.2rem;
+    padding: clamp(0.7905rem, -0.0011rem + 0.9382vw, 1.5rem) clamp(1.594rem, 0.9179rem + 0.8013vw, 2.2rem);
     border-radius: 3rem;
     background-color: black;
     color: white;
     transition: 0.3s ease;
-    font-size: 1.5rem;
+    font-size: clamp(0.7905rem, -0.0011rem + 0.9382vw, 1.5rem);
 }
 .createButton:hover{
     transform: scale(1.1);

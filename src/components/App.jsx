@@ -24,6 +24,7 @@ import PrivateRoute from './PrivateRoute/PrivateRoute';
 import AdminRoute from './AdminRoute/AdminRoute';
 import { useUser } from "../context/UserContext";
 import { ContainerPost } from './Container/ContainerPOST';
+import { ItemPost } from './Item/ItemPOST';
 export const App = () => {
   const { loading } = useUser();
 
@@ -59,6 +60,7 @@ export const App = () => {
             <Route path="/sectors/:idSec/containers/:idCont/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado" />} />
             <Route path="/sectors/:idSec/containers/:idCont/items/:idItem" element={<Item fromSector={true} />} />
             <Route path="/items" element={<ItemFilter />} />
+            <Route path="/items/create" element={<ItemPost />} />
             <Route path="/items/:idItem" element={<Item />} />
             <Route path="/items/:idItem/locationChange" element={<ItemLocation />} />
             <Route path="/items/:idItem/locationChange/:idCont" element={<Container fromLocation={true} />} />
