@@ -1,15 +1,15 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
+import { useAlert } from "../../context/AlertContext"; // ✅
 import "./Item.css";
 
 export const ItemPut = () => {
   const { idSec, idCont, idItem } = useParams();
   const { tokenState } = useUser();
+  const { showAlert } = useAlert(); // ✅
 
   const [item, setItem] = useState([]);
-  const [mensaje, setMensaje] = useState(null);
   const navigate = useNavigate();
   const datForm = useRef();
 
@@ -23,20 +23,22 @@ export const ItemPut = () => {
             Authorization: `Bearer ${tokenState}`,
           },
         });
+
         const data = await response.json();
+
         if (data.msj) {
-          setMensaje(data.msj);
+          showAlert(data.msj, "error"); // ✅
         } else {
           setItem(data);
         }
       } catch (error) {
-        console.error("Error al obtener el item:", error);
-        setMensaje("No se pudo cargar el item.");
+        console.error("Error al obtener el ítem:", error);
+        showAlert("No se pudo cargar el ítem", "error"); // ✅
       }
     };
 
     fetchItem();
-  }, [idItem, tokenState]);
+  }, [idItem, tokenState, showAlert]);
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -45,11 +47,10 @@ export const ItemPut = () => {
     const itemUpdate = Object.fromEntries(datosFormulario);
 
     if (!itemUpdate.name && !itemUpdate.description) {
-      setMensaje("No se ingresaron valores para actualizar");
+      showAlert("No se ingresaron valores para actualizar", "warning"); // ✅
       return;
     }
 
-    // Si los campos vienen vacíos, los pasamos como null
     if (itemUpdate.name === "") itemUpdate.name = null;
     if (itemUpdate.description === "") itemUpdate.description = null;
 
@@ -64,15 +65,16 @@ export const ItemPut = () => {
       });
 
       const data = await response.json();
+
       if (data.msj) {
-        setMensaje(data.msj);
+        showAlert(data.msj, "error"); // ✅
       } else {
-        alert("Item actualizado correctamente");
+        showAlert("Ítem actualizado correctamente", "success"); // ✅
         navigate(-1);
       }
     } catch (error) {
-      console.error("Error al actualizar el item:", error);
-      setMensaje("Error al actualizar el item.");
+      console.error("Error al actualizar el ítem:", error);
+      showAlert("Error al conectar con el servidor", "error"); // ✅
     }
 
     e.target.reset();
@@ -87,34 +89,28 @@ export const ItemPut = () => {
   };
 
   return (
-    <div>
-      {!mensaje ? (
-        <div className="container divForm">
-          <h2>Cambio en los datos del Item</h2>
-          <h3>Ingrese solo los campos que desea modificar</h3>
-          <form onSubmit={consultarForm} ref={datForm}>
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label">Nombre</label>
-              <input type="text" className="form-control" name="name" placeholder={item.name} />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="description" className="form-label">Descripción</label>
-              <input type="text" className="form-control" name="description" placeholder={item.description} />
-            </div>
-
-            <div className="flex-div">
-              <button type="button" className="button btnPrimary" onClick={handleVolver}>
-                <span className="btnText">Volver</span>
-              </button>
-              <button type="submit" className="btn-red">
-                Actualizar
-              </button>
-            </div>
-          </form>
+    <div className="container divForm">
+      <h2>Cambio en los datos del Ítem</h2>
+      <h3>Ingrese solo los campos que desea modificar</h3>
+      <form onSubmit={consultarForm} ref={datForm}>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Nombre</label>
+          <input type="text" className="form-control" name="name" placeholder={item.name} />
         </div>
-      ) : (
-        <Mensaje msj={mensaje} />
-      )}
+        <div className="mb-3">
+          <label htmlFor="description" className="form-label">Descripción</label>
+          <input type="text" className="form-control" name="description" placeholder={item.description} />
+        </div>
+
+        <div className="flex-div">
+          <button type="button" className="button btnPrimary" onClick={handleVolver}>
+            <span className="btnText">Volver</span>
+          </button>
+          <button type="submit" className="btn-red">
+            Actualizar
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

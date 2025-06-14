@@ -1,7 +1,7 @@
-import { useRef, useContext } from "react";
-import { useState } from "react";
+import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import { useAlert } from "../../context/AlertContext"; // ✅
 import "./Item.css";
 
 export const ItemPost = ({ fromFilter }) => {
@@ -9,6 +9,7 @@ export const ItemPost = ({ fromFilter }) => {
   const { idCont } = useParams();
   const navigate = useNavigate();
   const datForm = useRef();
+  const { showAlert } = useAlert(); // ✅
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -19,6 +20,7 @@ export const ItemPost = ({ fromFilter }) => {
     const url = idCont
       ? `${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}/addItem`
       : `${process.env.REACT_APP_DOMINIO_BACK}/items`;
+
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -31,14 +33,15 @@ export const ItemPost = ({ fromFilter }) => {
 
       const data = await response.json();
 
-      if (data.msj) {
-        alert("No se pudo crear el item");
+      if (!response.ok || data.msj) {
+        showAlert(data.msj || "No se pudo crear el ítem", "error"); // ✅
       } else {
-        alert("Item creado");
-        navigate(-1);
+        showAlert("Ítem creado exitosamente", "success"); // ✅
+        navigate(-1); // volver inmediatamente
       }
     } catch (error) {
-      console.error("Error al crear el item:", error);
+      console.error("Error al crear el ítem:", error);
+      showAlert("Error al conectar con el servidor", "error"); // ✅
     }
 
     e.target.reset();
@@ -46,7 +49,7 @@ export const ItemPost = ({ fromFilter }) => {
 
   return (
     <div className="container divForm">
-      <h2>Creación de Item</h2>
+      <h2>Creación de Ítem</h2>
       <form onSubmit={consultarForm} ref={datForm}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Nombre</label>

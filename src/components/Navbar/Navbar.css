@@ -20,12 +20,24 @@
   justify-content: center;
   height: 100%;
   gap: 1rem;
-  width: 90%;
+  width: 100%;
+}
+.navbar__logo-container {
+  display: flex;
+  height: 70px;
+  width: 120px;
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  padding-left: 1rem;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
 .navbar__logo {
-  height: 60px;
-  object-fit: contain;
+  height: 100%;
+  width: auto;
 }
 
 .navbar__link {
@@ -54,6 +66,7 @@
   position: absolute;
   right: 0.5rem;
   padding: 0.5rem 1rem;
+  margin-right: 1rem;
 }
 
 .navbar__link:hover,

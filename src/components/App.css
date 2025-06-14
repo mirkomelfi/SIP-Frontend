@@ -19,3 +19,29 @@ body {
 }
 
 
+/* Toast base */
+.alert-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  animation: fadeInOut 3s ease forwards;
+}
+
+/* Tipos */
+.alert-toast.success { background-color: #4caf50; }
+.alert-toast.error   { background-color: #f44336; }
+.alert-toast.info    { background-color: #2196f3; }
+
+/* Animación de entrada/salida */
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: translateY(10px); }
+  10%  { opacity: 1; transform: translateY(0); }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(10px); }
+}

@@ -1,14 +1,13 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
+import { useAlert } from "../../context/AlertContext";
 
 export const SectorPost = () => {
-  const [mensaje, setMensaje] = useState(null);
   const datForm = useRef();
   const navigate = useNavigate();
-
   const { tokenState, rol } = useUser();
+  const { showAlert } = useAlert();
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -25,10 +24,16 @@ export const SectorPost = () => {
         body: JSON.stringify(sector),
       });
 
+      if (!response.ok) {
+        const data = await response.json();
+        showAlert(data.msj || "Error al crear el sector", "error");
+        return;
+      }
+
       const data = await response.json();
-      setMensaje(data.msj || "Sector creado con éxito.");
+      showAlert(data.msj || "Sector creado con éxito.", "success");
     } catch (error) {
-      setMensaje("Error al conectar con el servidor.");
+      showAlert("Error al conectar con el servidor.", "error");
     }
 
     e.target.reset();
@@ -36,26 +41,23 @@ export const SectorPost = () => {
 
   return (
     <div>
-      {!mensaje ? (
-        <div className="container divForm">
-          <h2>Creación de Sector</h2>
-          <form onSubmit={consultarForm} ref={datForm}>
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label">Nombre</label>
-              <input type="text" className="form-control" name="name" required />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="description" className="form-label">Descripción</label>
-              <input type="text" className="form-control" name="description" required />
-            </div>
-            <button type="submit" className="button btnPrimary">
-              <span className="btnText">Crear</span>
-            </button>
-          </form>
-        </div>
-      ) : (
-        <Mensaje msj={mensaje} />
-      )}
+      <div className="container divForm">
+        <h2>Creación de Sector</h2>
+        <form onSubmit={consultarForm} ref={datForm}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">Nombre</label>
+            <input type="text" className="form-control" name="name" required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">Descripción</label>
+            <input type="text" className="form-control" name="description" required />
+          </div>
+          <button type="submit" className="button btnPrimary">
+            <span className="btnText">Crear</span>
+          </button>
+        </form>
+      </div>
+
       <button className="button btnPrimary" onClick={() => navigate(-1)}>
         <span className="btnText">Volver</span>
       </button>

@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import "./SectorListContainer.css";
 import { SectorList } from "../SectorList/SectorList";
 import { useNavigate } from "react-router-dom";
-import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
 import CreateButton from "../../utils/CreateButton/CreateButton";
+import { useAlert } from "../../context/AlertContext";
 
 export const SectorListContainer = ({ greeting }) => {
   const [listaSectors, setListaSectors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [mensaje, setMensaje] = useState(null);
   const navigate = useNavigate();
 
   const { tokenState, rol, clearAuthData } = useUser();
+  const { showAlert } = useAlert();
   const isAdmin = rol === "ROL_ADMIN";
 
   const ejecutarFetch = async () => {
@@ -34,21 +34,16 @@ export const SectorListContainer = ({ greeting }) => {
       const data = await response.json();
 
       if (data.msj) {
-        setMensaje(data.msj);
+        showAlert(data.msj, "error");
       } else {
         setListaSectors(data);
-        setMensaje(null);
       }
     } catch (error) {
       console.error("Error al obtener sectores:", error);
-      setMensaje("No se pudieron cargar los sectores.");
+      showAlert("No se pudieron cargar los sectores.", "error");
     } finally {
       setLoading(false);
     }
-  };
-
-  const navigateTo = (url) => {
-    navigate(url);
   };
 
   useEffect(() => {
@@ -60,18 +55,16 @@ export const SectorListContainer = ({ greeting }) => {
       <h1 className="greeting">{greeting}</h1>
 
       {isAdmin && (
-        <CreateButton onClick={() => navigate("/addSector")}/>
+        <CreateButton onClick={() => navigate("/addSector")} />
       )}
 
-      {!mensaje ? (
-        <div>
-          {loading ? <p>cargando...</p> : <SectorList listaSectors={listaSectors} />}
-        </div>
+      {loading ? (
+        <p>cargando...</p>
       ) : (
-        <Mensaje msj={mensaje} />
+        <SectorList listaSectors={listaSectors} />
       )}
 
-      <button className="button btnPrimary" onClick={() => navigateTo("/")}>
+      <button className="button btnPrimary" onClick={() => navigate("/")}>
         <span className="btnText">Volver</span>
       </button>
     </>

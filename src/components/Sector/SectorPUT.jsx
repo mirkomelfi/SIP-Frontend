@@ -1,15 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
+import { useAlert } from "../../context/AlertContext";
 
 export const SectorPut = () => {
   const { idSec } = useParams();
-  const [mensaje, setMensaje] = useState(null);
   const datForm = useRef();
   const navigate = useNavigate();
 
   const { tokenState, rol } = useUser();
+  const { showAlert } = useAlert();
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ export const SectorPut = () => {
     if (sector.description === "") sector.description = null;
 
     if (!sector.name && !sector.description) {
-      setMensaje("No se ingresaron valores para actualizar");
+      showAlert("No se ingresaron valores para actualizar", "info");
       return;
     }
 
@@ -39,10 +39,16 @@ export const SectorPut = () => {
         }
       );
 
+      if (!response.ok) {
+        const data = await response.json();
+        showAlert(data.msj || "Error al actualizar el sector", "error");
+        return;
+      }
+
       const data = await response.json();
-      setMensaje(data.msj || "Sector actualizado correctamente");
+      showAlert(data.msj || "Sector actualizado correctamente", "success");
     } catch (error) {
-      setMensaje("Error al conectar con el servidor.");
+      showAlert("Error al conectar con el servidor.", "error");
     }
 
     e.target.reset();
@@ -50,37 +56,33 @@ export const SectorPut = () => {
 
   return (
     <div>
-      {!mensaje ? (
-        <div className="container divForm">
-          <h2>Cambio en los datos del Sector</h2>
-          <h3>Ingrese solo los campos que desea modificar</h3>
-          <form onSubmit={consultarForm} ref={datForm}>
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label">Nombre</label>
-              <input
-                type="text"
-                className="form-control"
-                name="name"
-                placeholder="Ingrese el nuevo nombre"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="description" className="form-label">Descripción</label>
-              <input
-                type="text"
-                className="form-control"
-                name="description"
-                placeholder="Ingrese la nueva descripción"
-              />
-            </div>
-            <button type="submit" className="button btnPrimary">
-              <span className="btnText">Actualizar</span>
-            </button>
-          </form>
-        </div>
-      ) : (
-        <Mensaje msj={mensaje} />
-      )}
+      <div className="container divForm">
+        <h2>Cambio en los datos del Sector</h2>
+        <h3>Ingrese solo los campos que desea modificar</h3>
+        <form onSubmit={consultarForm} ref={datForm}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">Nombre</label>
+            <input
+              type="text"
+              className="form-control"
+              name="name"
+              placeholder="Ingrese el nuevo nombre"
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">Descripción</label>
+            <input
+              type="text"
+              className="form-control"
+              name="description"
+              placeholder="Ingrese la nueva descripción"
+            />
+          </div>
+          <button type="submit" className="button btnPrimary">
+            <span className="btnText">Actualizar</span>
+          </button>
+        </form>
+      </div>
 
       <button className="button btnPrimary" onClick={() => navigate(-1)}>
         <span className="btnText">Volver</span>

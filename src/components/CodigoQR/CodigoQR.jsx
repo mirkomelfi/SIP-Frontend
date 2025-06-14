@@ -1,20 +1,16 @@
-import { useRef } from "react"
-import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { deleteToken, extractUrl, getToken, isRolUser, validateRol } from "../../utils/auth-utils"
 import { useEffect } from "react"
+import { useUser } from "../../context/UserContext"
 
 export const CodigoQR = ({url}) => {
-
+    const {tokenState}=useUser()
     const [image,setImage]=useState()
     const ejecutarFetch=async () => {
         let urlToCode=url;
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/generateQRCode?text=${urlToCode}`, {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${getToken()}`
+                "Authorization": `Bearer ${tokenState}`
             }
         })
         const data = await response.blob()
