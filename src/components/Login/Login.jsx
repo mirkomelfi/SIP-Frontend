@@ -35,7 +35,7 @@ export const Login = () => {
         setError(false);
         setAuthData(data.token, data.user); // Guarda en localStorage + contexto
         showAlert("Inicio de sesión exitoso", "success");
-        navigate(state?.from ? extractUrl(state.from) : "/");
+        navigate(state?.from || "/", { replace: true });
       } else {
         setError(true);
         showAlert("Credenciales inválidas", "error");

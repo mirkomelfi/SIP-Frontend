@@ -1,25 +1,28 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAlert } from "../../context/AlertContext"; // ✅
+import { useAlert } from "../../context/AlertContext";
 import CreateButton from "../../utils/CreateButton/CreateButton";
 import "./Item.css";
 
 export const ItemFilter = () => {
   const datForm = useRef();
   const navigate = useNavigate();
-  const { showAlert } = useAlert(); // ✅
+  const { showAlert } = useAlert();
 
   const consultarForm = (e) => {
     e.preventDefault();
     const datosFormulario = new FormData(datForm.current);
     const item = Object.fromEntries(datosFormulario);
+    const query = item.query?.trim();
 
-    if (!item.query || item.query.trim() === "") {
-      showAlert("Debe ingresar un nombre o descripción para buscar", "error"); // ✅
-      return;
+    // Si no hay nada ingresado, se busca igual con un espacio, como en la versión original
+    if (!query) {
+      showAlert("Buscando todos los items...", "info"); // opcional: podés comentar esta línea si no querés mostrar nada
+      navigate("/search", { state: { from: "/", query: " " } });
+    } else {
+      navigate("/search", { state: { from: "/", query } });
     }
 
-    navigate("/search", { state: { from: "/", query: item.query.trim() } });
     e.target.reset();
   };
 

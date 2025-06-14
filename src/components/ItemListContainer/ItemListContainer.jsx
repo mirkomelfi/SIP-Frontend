@@ -4,7 +4,7 @@ import { ItemList } from "../ItemList/ItemList";
 import CreateButton from "../../utils/CreateButton/CreateButton";
 import { useUser } from "../../context/UserContext";
 import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
-import { useAlert } from "../../context/AlertContext"; // <- Importante
+import { useAlert } from "../../context/AlertContext"; // ✅
 
 const ItemListContainer = ({ greeting }) => {
   const { idSec, idCont } = useParams();
@@ -13,12 +13,16 @@ const ItemListContainer = ({ greeting }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { tokenState } = useUser();
-  const { showAlert } = useAlert(); // <- Hook del contexto de alertas
+  const { showAlert } = useAlert(); // ✅
 
   const ejecutarFetch = async () => {
-    let url = idCont
-      ? `${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`
-      : `${process.env.REACT_APP_DOMINIO_BACK}/items/filter?query=${location.state?.query || ""}`;
+    let url = "";
+
+    if (idCont) {
+      url = `${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`;
+    } else {
+      url = `${process.env.REACT_APP_DOMINIO_BACK}/items/filter?query=${location.state?.query || ""}`;
+    }
 
     try {
       const response = await fetch(url, {
@@ -28,12 +32,6 @@ const ItemListContainer = ({ greeting }) => {
           Authorization: `Bearer ${tokenState}`,
         },
       });
-
-      if (!response.ok) {
-        const data = await response.json();
-        showAlert(data.msj || "Error inesperado al obtener los ítems", "error");
-        return;
-      }
 
       const data = await response.json();
 
