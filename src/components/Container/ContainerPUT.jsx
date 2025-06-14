@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 
 export const ContainerPut = () => {
@@ -71,9 +72,7 @@ export const ContainerPut = () => {
       ) : (
         <Mensaje msj={mensaje} />
       )}
-      <button className="button btnPrimary" onClick={() => navigateTo(`/sectors/${idSec}/containers/${idCont}`)}>
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton/>
     </div>
   );
 };

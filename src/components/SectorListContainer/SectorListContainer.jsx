@@ -4,6 +4,7 @@ import { SectorList } from "../SectorList/SectorList";
 import { useNavigate } from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
+import CreateButton from "../../utils/CreateButton/CreateButton";
 
 export const SectorListContainer = ({ greeting }) => {
   const [listaSectors, setListaSectors] = useState([]);
@@ -59,9 +60,7 @@ export const SectorListContainer = ({ greeting }) => {
       <h1 className="greeting">{greeting}</h1>
 
       {isAdmin && (
-        <button className="button btnPrimary" onClick={() => navigateTo("/addSector")}>
-          <span className="btnText">Agregar Sector</span>
-        </button>
+        <CreateButton onClick={() => navigate("/addSector")}/>
       )}
 
       {!mensaje ? (

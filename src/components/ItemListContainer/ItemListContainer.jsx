@@ -1,26 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { ItemList } from "../ItemList/ItemList";
 import { ItemPost } from "../Item/ItemPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { ItemFilter } from "../Item/ItemFilter";
 import CreateButton from "../../utils/CreateButton/CreateButton";
 import { useUser } from "../../context/UserContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
-const ItemListContainer = ({ greeting, filter }) => {
+const ItemListContainer = ({ greeting }) => {
   const { idSec, idCont } = useParams();
   const [listaItems, setListaItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mensaje, setMensaje] = useState(null);
   const [error, setError] = useState(null);
-  const [goBack, setGoBack] = useState(false);
-
+  const location = useLocation();
   const navigate = useNavigate();
   const { tokenState } = useUser();
-
-  const returnToItem = () => {
-    setGoBack(true);
-  };
 
   const ejecutarFetch = async () => {
     let url = "";
@@ -28,7 +24,7 @@ const ItemListContainer = ({ greeting, filter }) => {
     if (idCont) {
       url = `${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}`;
     } else {
-      url = `${process.env.REACT_APP_DOMINIO_BACK}/items/filter?query=${filter}`;
+      url = `${process.env.REACT_APP_DOMINIO_BACK}/items/filter?query=${location.state?.query || ""}`;
     }
 
     try {
@@ -75,8 +71,9 @@ const ItemListContainer = ({ greeting, filter }) => {
       {loading ? (
         <p>Cargando...</p>
       ) : !error ? (
-        !goBack ? (
+       
           <>
+            <NavigateBackButton/>
             <h1 className="greeting">{greeting}</h1>
             <CreateButton onClick={() => navigate(`/items/create/${idCont}`)} />
             {listaItems.length !== 0 ? (
@@ -85,27 +82,10 @@ const ItemListContainer = ({ greeting, filter }) => {
               <Mensaje msj={mensaje} />
             )}
           </>
-        ) : (
-          <ItemFilter />
-        )
       ) : (
         <Mensaje msj={mensaje} />
       )}
 
-      {idSec && (
-        <button
-          className="button btnPrimary"
-          onClick={() => navigate(`/sectors/${idSec}/containers/${idCont}`)}
-        >
-          <span className="btnText">Volver</span>
-        </button>
-      )}
-
-      {!goBack && !idSec && (
-        <button className="button btnPrimary" onClick={returnToItem}>
-          <span className="btnText">Volver</span>
-        </button>
-      )}
     </>
   );
 };

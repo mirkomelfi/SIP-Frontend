@@ -90,10 +90,6 @@ const Container = ({ fromItem, fromLocation }) => {
     setMensaje(data.msj);
   };
 
-  const navigateTo = (url) => {
-    navigate(url);
-  };
-
   useEffect(() => {
     ejecutarFetch();
   }, []);
@@ -112,12 +108,12 @@ const Container = ({ fromItem, fromLocation }) => {
               {!fromLocation ? (
                 idSec ? (
                   <>
-                    <button className="button btnPrimary" onClick={() => navigateTo(`items`)}>
+                    <button className="button btnPrimary" onClick={() => navigate(`items`,{state:{from:`/sectors/${idSec}/containers/${idCont}`}})}>
                       <span className="btnText">Ver items</span>
                     </button>
                     {rol === "ROL_ADMIN" && (
                       <>
-                        <button className="button btnPrimary" onClick={() => navigateTo(`updateContainer`)}>
+                        <button className="button btnPrimary" onClick={() => navigate(`updateContainer`,{state:{from:`/sectors/${idSec}/containers/${idCont}`}})}>
                           <span className="btnText">Modificar</span>
                         </button>
                         <button className="button btnPrimary danger" onClick={eliminar}>
@@ -130,7 +126,7 @@ const Container = ({ fromItem, fromLocation }) => {
                     </button>
                   </>
                 ) : (
-                  <button className="button btnPrimary" onClick={() => navigateTo(`sectors/${container.sectorID}`)}>
+                  <button className="button btnPrimary" onClick={() => navigate(`sectors/${container.sectorID}`,{state:{from:`/sectors/${idSec}/containers/${idCont}`}})}>
                     <span className="btnText">Ver sector</span>
                   </button>
                 )
@@ -151,14 +147,14 @@ const Container = ({ fromItem, fromLocation }) => {
       {!fromItem && !fromLocation ? (
         <button
           className="button btnPrimary"
-          onClick={() => navigateTo(`/sectors/${container.sectorID}/containers`)}
+          onClick={() => navigate(`/sectors/${container.sectorID}/containers`,{state:{from:`/sectors/${idSec}/containers/${idCont}`}})}
         >
           <span className="btnText">Volver</span>
         </button>
       ) : (
         <button
           className="button btnPrimary"
-          onClick={() => navigateTo(`/items/${idItem}/locationChange`)}
+          onClick={() => navigate(`/items/${idItem}/locationChange`,{state:{from:`/sectors/${idSec}/containers/${idCont}`}})}
         >
           <span className="btnText">Volver</span>
         </button>

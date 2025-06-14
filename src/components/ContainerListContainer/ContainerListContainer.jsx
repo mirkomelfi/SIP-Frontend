@@ -4,6 +4,7 @@ import { ContainerList } from "../ContainerList/ContainerList";
 import { ContainerPost } from "../Container/ContainerPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
+import CreateButton from "../../utils/CreateButton/CreateButton";
 
 const ContainerListContainer = ({ fromLoc, greeting, idContainer, idItem }) => {
   const { idSec } = useParams();
@@ -80,17 +81,13 @@ const ContainerListContainer = ({ fromLoc, greeting, idContainer, idItem }) => {
         <p>Cargando...</p>
       ) : error ? (
         <Mensaje msj={mensaje} />
-      ) : add ? (
-        <ContainerPost />
       ) : !mensaje ? (
         <>
           <h1 className="greeting">{greeting}</h1>
           {idSec ? (
             <>
               {rol !== "ROL_USER" && (
-                <button className="button btnPrimary" onClick={agregar}>
-                  <span className="btnText">Agregar contenedor</span>
-                </button>
+                <CreateButton onClick={()=>navigate(`/sectors/${idSec}/createContainer`,{state:{from:`/sectors/${idSec}/containers`}})}/>
               )}
               <ContainerList listaContainers={listaContainers} isInSector={true} />
             </>

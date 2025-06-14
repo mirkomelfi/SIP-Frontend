@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 export const ContainerPost = () => {
   const { idSec } = useParams();
-  const [mensaje, setMensaje] = useState(null);
   const datForm = useRef();
   const navigate = useNavigate();
   const { tokenState, rol, clearAuthData } = useUser();
-
+  const location = useLocation();
   const consultarForm = async (e) => {
     e.preventDefault();
 
@@ -34,7 +34,8 @@ export const ContainerPost = () => {
     const data = await response.json();
 
     if (data.msj) {
-      setMensaje(data.msj);
+      alert(data.msj)
+      navigate(location.state?.from || "/")
     }
 
     e.target.reset();
@@ -46,8 +47,7 @@ export const ContainerPost = () => {
 
   return (
     <div className="container divForm">
-      {!mensaje ? (
-        <>
+          <NavigateBackButton/>
           <h2>Creación de Contenedor</h2>
           <form onSubmit={consultarForm} ref={datForm}>
             <div className="mb-3">
@@ -62,10 +62,6 @@ export const ContainerPost = () => {
               <span className="btnText">Crear</span>
             </button>
           </form>
-        </>
-      ) : (
-        <Mensaje msj={mensaje} />
-      )}
     </div>
   );
 };

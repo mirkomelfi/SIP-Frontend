@@ -5,7 +5,6 @@ import CreateButton from "../../utils/CreateButton/CreateButton";
 import "./Item.css";
 
 export const ItemFilter = () => {
-  const [itemName, setItemName] = useState(null);
   const datForm = useRef();
   const navigate = useNavigate();
 
@@ -15,22 +14,16 @@ export const ItemFilter = () => {
     const item = Object.fromEntries(datosFormulario);
 
     if (item.query === "") {
-      setItemName(" ");
+      navigate("/search",{state:{from:"/",query:" "}})
     } else {
-      setItemName(item.query);
+      navigate("/search",{state:{from:"/",query:item.query}})
     }
 
     e.target.reset();
   };
 
-  const navigateTo = (url) => {
-    navigate(url);
-  };
-
   return (
     <div>
-      {!itemName ? (
-        <>
           <div className="container divForm">
             <h2>Listado de Items</h2>
             <form onSubmit={consultarForm} ref={datForm}>
@@ -43,14 +36,7 @@ export const ItemFilter = () => {
               </button>
             </form>
           </div>
-          <button className="button btnPrimary" onClick={() => navigateTo(`/`)}>
-            <span className="btnText">Volver</span>
-          </button>
-          <CreateButton onClick={() => navigate("/items/create")} />
-        </>
-      ) : (
-        <ItemListContainer filter={itemName} greeting="Listado de Items" />
-      )}
+          <CreateButton onClick={() => navigate("/items/create",{state:{from:"/"}})} />
     </div>
   );
 };
