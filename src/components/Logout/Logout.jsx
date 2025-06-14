@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
-import "./Logout.css";
+import styles from "./Logout.module.css"
 
 export const Logout = () => {
   const [mensaje, setMensaje] = useState("No se encontraba logueado");
@@ -17,10 +17,10 @@ export const Logout = () => {
   }, [user, clearAuthData]);
 
   return (
-    <div className="tarjetaProducto">
+    <div className={styles.tarjetaProducto}>
       <Mensaje msj={mensaje} />
-      <button className="button btnPrimary" onClick={() => navigate("/login")}>
-        <span className="btnText">Inicio de Sesión</span>
+      <button className={styles.button /*styles.btnPrimary*/}onClick={() => navigate("/login")}>
+        <span className={styles.btnText}>Inicio de Sesión</span>
       </button>
     </div>
   );

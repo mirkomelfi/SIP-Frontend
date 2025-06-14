@@ -58,25 +58,25 @@ const Sector = ({ fromContainer }) => {
   return (
     <>
       {!qr ? (
-        <div className="tarjetaProducto-sec">
-          <h1 className="titulo-sec">Sector N°{idSec}</h1>
+        <div className="tarjetaProducto">
+          <h1 className="titulo">Sector N°{idSec}</h1>
           {!mensaje ? (
             <>
               {sector && (
-                <div className="detalleSector-sec">
+                <div className="detalleSector">
                   <p><strong>Nombre:</strong> {sector.name}</p>
                   <p><strong>Descripción:</strong> {sector.description}</p>
                 </div>
               )}
               {!fromContainer && (
-                <div className="accionesGrid-sec">
-                  <button className="button-sec btnPrimary-sec" onClick={() => navigateTo("containers")}>Ver Contenedores</button>
+                <div className="accionesGrid">
+                  <button className="button btnPrimary" onClick={() => navigateTo("containers")}>Ver Contenedores</button>
                   {isAdmin && (
-                    <button className="button-sec btnPrimary-sec" onClick={() => navigateTo(`/updateSector/${idSec}`)}>Modificar sector</button>
+                    <button className="button btnPrimary" onClick={() => navigateTo(`/updateSector/${idSec}`)}>Modificar sector</button>
                   )}
-                  <button className="button-sec btnPrimary-sec" onClick={generarQr}>Generar QR</button>
+                  <button className="button btnPrimary" onClick={generarQr}>Generar QR</button>
                   {isAdmin && (
-                    <button className="button-sec btnPrimary-sec danger-sec" onClick={eliminar}>Eliminar</button>
+                    <button className="button btnPrimary danger" onClick={eliminar}>Eliminar</button>
                   )}
                 </div>
               )}
