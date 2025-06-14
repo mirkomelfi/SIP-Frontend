@@ -19,7 +19,6 @@ export const ItemPost = ({ fromFilter }) => {
     const url = idCont
       ? `${process.env.REACT_APP_DOMINIO_BACK}/containers/${idCont}/addItem`
       : `${process.env.REACT_APP_DOMINIO_BACK}/items`;
-
     try {
       const response = await fetch(url, {
         method: "POST",

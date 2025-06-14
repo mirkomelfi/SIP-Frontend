@@ -20,7 +20,7 @@ const ItemDetail = ({ item }) => {
         <h2>Se encuentra en contenedor: {item.containerID}</h2>
       )}
 
-      <button className="button btnPrimary" onClick={() => navigate(`${item.id}`)}>
+      <button className="button btnPrimary" onClick={() => navigate(`/items/${item.id}`)}>
         <span className="btnText">Ver item</span>
       </button>
     </div>
