@@ -1,15 +1,14 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Mensaje } from "../Mensaje/Mensaje";
-import {UserContext, useUser} from "../../context/UserContext"
+import { useUser } from "../../context/UserContext";
+import { useAlert } from "../../context/AlertContext"; 
 
 const ImagenPost = () => {
   const { idItem } = useParams();
-  const [mensaje, setMensaje] = useState(null);
-  const navigate = useNavigate();
   const datForm = useRef();
-
-  const { tokenState, clearAuthData } = useUser()
+  const navigate = useNavigate();
+  const { tokenState, clearAuthData } = useUser();
+  const { showAlert } = useAlert(); 
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -17,67 +16,61 @@ const ImagenPost = () => {
     const datosFormulario = new FormData(datForm.current);
     const imagen = Object.fromEntries(datosFormulario);
 
-    let img = new FormData();
-    img.append("archivo", imagen.imagen);
+    const formData = new FormData();
+    formData.append("archivo", imagen.imagen);
 
-    const response = await fetch(
-      `${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}/updateImage`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${tokenState}`,
-        },
-        body: img,
-      }
-    );
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_DOMINIO_BACK}/items/${idItem}/updateImage`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${tokenState}`,
+          },
+          body: formData,
+        }
+      );
 
-    if (response.status === 401 || response.status === 403) {
-      clearAuthData();
-      navigate("/login");
-    } else {
       const data = await response.json();
-      if (data.msj) {
-        setMensaje(data.msj);
+
+      if (response.status === 401 || response.status === 403) {
+        clearAuthData();
+        showAlert("Sesión expirada. Inicie sesión nuevamente.", "error"); 
+        navigate("/login");
+      } else if (data.msj) {
+        showAlert(data.msj, "success"); 
+        navigate(`/items/${idItem}`);
+      } else {
+        showAlert("Imagen cargada exitosamente", "success"); 
+        navigate(`/items/${idItem}`);
       }
+    } catch (error) {
+      console.error("Error al cargar imagen:", error);
+      showAlert("Error al conectar con el servidor", "error"); 
     }
 
     e.target.reset();
   };
 
-  const navigateTo = (url) => {
-    navigate(url);
-  };
-
   return (
-    <div>
-      {!mensaje ? (
-        <div className="container divForm">
-          <h2>Cargado de Imagen</h2>
-          <form onSubmit={consultarForm} ref={datForm}>
-            <div className="mb-3">
-              <label htmlFor="imagen" className="form-label">
-                Imagen
-              </label>
-              <input
-                type="file"
-                className="form-control"
-                name="imagen"
-                required
-              />
-            </div>
-
-            <button type="submit" className="btn-red">
-              Cargar imagen
-            </button>
-          </form>
+    <div className="container divForm">
+      <h2>Cargado de Imagen</h2>
+      <form onSubmit={consultarForm} ref={datForm}>
+        <div className="mb-3">
+          <label htmlFor="imagen" className="form-label">
+            Imagen
+          </label>
+          <input type="file" className="form-control" name="imagen" required />
         </div>
-      ) : (
-        <Mensaje msj={mensaje} />
-      )}
+
+        <button type="submit" className="btn-red">
+          Cargar imagen
+        </button>
+      </form>
 
       <button
         className="button btnPrimary"
-        onClick={() => navigateTo(`/items/${idItem}`)}
+        onClick={() => navigate(`/items/${idItem}`)}
       >
         <span className="btnText">Volver</span>
       </button>
