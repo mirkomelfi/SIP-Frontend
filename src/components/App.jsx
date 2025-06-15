@@ -55,12 +55,12 @@ export const App = () => {
             <Route path="/" element={<ItemFilter />} />
             <Route path="/sectors" element={<SectorListContainer greeting="Listado de Sectores" />} />
             <Route path="/sectors/:idSec" element={<Sector />} />
-            <Route path="/sectors/:idSec/containers" element={<ContainerListContainer greeting="Listado de Contenedores del Sector seleccionado" />} />
+            <Route path="/sectors/:idSec/containers" element={<ContainerListContainer greeting="Listado de Contenedores del Sector " />} />
             <Route path="/sectors/:idSec/containers/:idCont" element={<Container />} />
             <Route path="/items/:idItem/containers/:idCont" element={<Container fromItem={true} />} />
             <Route path="/items/:idItem/changeLocation/:idCont" element={<Container />} />
             <Route path="/items/:idItem/containers/:idCont/sectors/:idSec" element={<Sector fromContainer={true} />} />
-            <Route path="/sectors/:idSec/containers/:idCont/items" element={<ItemListContainer greeting="Listado de Items del Contenedor seleccionado" />} />
+            <Route path="/sectors/:idSec/containers/:idCont/items" element={<ItemListContainer greeting="Listado de Items del Contenedor " />} />
             <Route path="/sectors/:idSec/containers/:idCont/items/:idItem" element={<Item fromSector={true} />} />
             <Route path="/items" element={<ItemFilter />} />
             <Route path="/search" element={<ItemListContainer/>} />

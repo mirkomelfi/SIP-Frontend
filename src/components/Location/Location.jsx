@@ -16,7 +16,7 @@ const Location = ({ item }) => {
   return (
     <>
       {!goBack ? (
-        <div className="tarjetaProducto">
+        <div className="tarjetaProducto tarjetaById">
           {locations.length !== 0 ? (
             locations.map((location, index) => (
               <div key={index}>

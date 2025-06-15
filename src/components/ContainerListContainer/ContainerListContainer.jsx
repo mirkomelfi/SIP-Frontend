@@ -79,7 +79,7 @@ const ContainerListContainer = ({ fromLoc, greeting, idContainer, idItem }) => {
         <p>Cargando...</p>
       ) : (
         <>
-          <h1 className="greeting">{greeting}</h1>
+          <h1 className="greeting">{greeting} {idSec}</h1>
 
           {idSec && rol !== "ROL_USER" && (
             <CreateButton

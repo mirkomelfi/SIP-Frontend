@@ -1,4 +1,3 @@
-import "./Container.css";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { CodigoQR } from "../CodigoQR/CodigoQR";

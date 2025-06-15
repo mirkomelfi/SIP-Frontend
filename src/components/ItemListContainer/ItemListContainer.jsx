@@ -68,7 +68,9 @@ const ItemListContainer = ({ greeting }) => {
       ) : (
         <>
           <NavigateBackButton />
-          <h1 className="greeting">{greeting}</h1>
+          <h1 className="greeting">
+            {greeting?greeting+idCont:""}
+          </h1>
           <CreateButton onClick={() => navigate(idCont ? `/items/create/${idCont}` : "/items/create")} />
           {listaItems.length !== 0 && <ItemList listaItems={listaItems} />}
         </>

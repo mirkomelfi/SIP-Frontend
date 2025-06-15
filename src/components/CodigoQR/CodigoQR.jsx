@@ -30,7 +30,7 @@ export const CodigoQR = ({url}) => {
 
     return (
 
-        <div className="tarjetaProducto">
+        <div className="tarjetaProducto tarjetaById">
             <h2>Codigo QR Generado</h2>
            {image!=undefined&&image!=null&&<img className="qr" src={`data:image/jpeg;base64,${image}`} alt="" />
            }

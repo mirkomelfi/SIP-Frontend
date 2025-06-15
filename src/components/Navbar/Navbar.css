@@ -24,11 +24,11 @@
 }
 .navbar__logo-container {
   display: flex;
-  height: 70px;
-  width: 120px;
+  height: 60px;
+  width: 100px;
   position: absolute;
-  left: 0.5rem;
-  top: 0;
+  left: 1rem;
+  top: 0.5rem;
   padding-left: 1rem;
   align-items: center;
   justify-content: center;
@@ -72,9 +72,4 @@
 .navbar__link:hover,
 .session-button:hover {
   background-color: #f2f2f2;
-}
-
-.not-logged{
-  justify-content:flex-end;
-  padding: 0 2rem;
 }
