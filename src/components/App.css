@@ -18,6 +18,39 @@ body {
   cursor: pointer;
 }
 
+.tarjetaProducto{
+    cursor: pointer;
+}
+.divForm {
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.divForm h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+input.form-control,
+select.form-control,
+textarea.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
 
 /* Toast base */
 .alert-toast {
@@ -53,6 +86,23 @@ body {
 }
 
 
+.greeting {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.titulo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+
+
 /*LISTADOS*/
 
 .contenedorProductos {
@@ -64,6 +114,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 
 .tarjetaProducto {
   background-color: #fffbe6;
@@ -118,9 +169,10 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1.5rem;
 }
 
-.button.btnPrimary:hover {
+.btnPrimary:hover {
   background-color: #333;
 }
 
@@ -130,9 +182,13 @@ body {
   background-color: transparent;
 }
 
-.button.danger:hover {
+.danger:hover {
   background-color: #a21818;
   color: #fff;
 }
+
+
+
+
 
 

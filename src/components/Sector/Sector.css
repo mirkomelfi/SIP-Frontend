@@ -43,7 +43,7 @@
   background-color: transparent;
 }
 
-.button.danger:hover {
+.danger:hover {
   background-color: #a21818;
   color: #fff;
 }

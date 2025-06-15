@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./UserDetail.module.css";
 
 const UserDetail = ({ user }) => {
   const navigate = useNavigate();
@@ -10,7 +9,7 @@ const UserDetail = ({ user }) => {
 
   return (
     <div
-      className={`tarjetaProducto ${styles.tarjetaProducto}`} // corregí el nombre del estilo importado
+      className={`tarjetaProducto`} // corregí el nombre del estilo importado
       onClick={() => navigateTo(`${user.id}`)}
     >
       <h1>Usuario N°: {user.id}</h1>

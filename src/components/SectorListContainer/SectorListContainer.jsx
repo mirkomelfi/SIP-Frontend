@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./SectorListContainer.css";
 import { SectorList } from "../SectorList/SectorList";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";

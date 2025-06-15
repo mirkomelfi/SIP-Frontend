@@ -1,5 +1,4 @@
-import "./SectorDetail.css";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const SectorDetail =({sector})=>{
     const navigate=useNavigate()

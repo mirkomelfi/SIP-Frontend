@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { extractUrl } from "../../utils/auth-utils";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
-import "./Login.css";
 import LoginUI from "./LoginUI/LoginUI";
 
 export const Login = () => {
