@@ -1,12 +1,11 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 export const SectorPost = () => {
   const datForm = useRef();
-  const navigate = useNavigate();
-  const { tokenState, rol } = useUser();
+  const { tokenState } = useUser();
   const { showAlert } = useAlert();
 
   const consultarForm = async (e) => {
@@ -58,9 +57,7 @@ export const SectorPost = () => {
         </form>
       </div>
 
-      <button className="button btnPrimary" onClick={() => navigate(-1)}>
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton />
     </div>
   );
 };

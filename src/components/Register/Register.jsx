@@ -1,11 +1,10 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 export const Register = () => {
   const datForm = useRef();
-  const navigate = useNavigate();
   const { tokenState } = useUser(); 
   const { showAlert } = useAlert();
 
@@ -71,9 +70,7 @@ export const Register = () => {
         </form>
       </div>
 
-      <button className="button btnPrimary" onClick={() => navigate("/users")}>
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton />
     </div>
   );
 };

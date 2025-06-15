@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 export const User = () => {
   const { idUser } = useParams();
@@ -31,7 +32,6 @@ export const User = () => {
       return;
     }
 
-
     const data = await response.json();
     if (data.msj) {
       showAlert(data.msj, "error");
@@ -55,16 +55,16 @@ export const User = () => {
     if (response.status === 403 || response.status === 401) {
       showAlert("No posee los permisos necesarios", "error");
       return;
-    }    
-    else if(!response.ok){
-      const data = await response.json();
-      showAlert(`${data.msj}`, "error");
     }
 
-
     const data = await response.json();
-    showAlert(data.msj, "success");
-    navigate("/users");
+
+    if (!response.ok) {
+      showAlert(data.msj || "Error al eliminar el usuario", "error");
+    } else {
+      showAlert(data.msj, "success");
+      navigate("/users");
+    }
   };
 
   const navigateTo = (url) => {
@@ -98,18 +98,13 @@ export const User = () => {
         </button>
 
         {idUser && isAdmin && (
-          <button className="button btnPrimary" onClick={eliminar}>
+          <button className="button btnPrimary danger" onClick={eliminar}>
             <span className="btnText">Eliminar</span>
           </button>
         )}
       </div>
 
-      <button
-        className="button btnPrimary"
-        onClick={() => navigateTo(idUser ? "/users" : "/")}
-      >
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton />
     </>
   );
 };

@@ -4,6 +4,7 @@ import { SectorList } from "../SectorList/SectorList";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import CreateButton from "../../utils/CreateButton/CreateButton";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 import { useAlert } from "../../context/AlertContext";
 
 export const SectorListContainer = ({ greeting }) => {
@@ -21,7 +22,7 @@ export const SectorListContainer = ({ greeting }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${tokenState}`
+          Authorization: `Bearer ${tokenState}`
         }
       });
 
@@ -64,9 +65,7 @@ export const SectorListContainer = ({ greeting }) => {
         <SectorList listaSectors={listaSectors} />
       )}
 
-      <button className="button btnPrimary" onClick={() => navigate("/")}>
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton />
     </>
   );
 };

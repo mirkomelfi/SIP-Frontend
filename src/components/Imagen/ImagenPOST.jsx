@@ -1,14 +1,15 @@
 import React, { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import { useAlert } from "../../context/AlertContext"; 
+import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 const ImagenPost = () => {
   const { idItem } = useParams();
   const datForm = useRef();
   const navigate = useNavigate();
   const { tokenState, clearAuthData } = useUser();
-  const { showAlert } = useAlert(); 
+  const { showAlert } = useAlert();
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -35,18 +36,18 @@ const ImagenPost = () => {
 
       if (response.status === 401 || response.status === 403) {
         clearAuthData();
-        showAlert("Sesión expirada. Inicie sesión nuevamente.", "error"); 
+        showAlert("Sesión expirada. Inicie sesión nuevamente.", "error");
         navigate("/login");
       } else if (data.msj) {
-        showAlert(data.msj, "success"); 
+        showAlert(data.msj, "success");
         navigate(`/items/${idItem}`);
       } else {
-        showAlert("Imagen cargada exitosamente", "success"); 
+        showAlert("Imagen cargada exitosamente", "success");
         navigate(`/items/${idItem}`);
       }
     } catch (error) {
       console.error("Error al cargar imagen:", error);
-      showAlert("Error al conectar con el servidor", "error"); 
+      showAlert("Error al conectar con el servidor", "error");
     }
 
     e.target.reset();
@@ -68,12 +69,7 @@ const ImagenPost = () => {
         </button>
       </form>
 
-      <button
-        className="button btnPrimary"
-        onClick={() => navigate(`/items/${idItem}`)}
-      >
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton />
     </div>
   );
 };

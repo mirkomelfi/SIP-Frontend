@@ -1,7 +1,8 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 const Imagen = () => {
   const { id } = useParams();
@@ -9,7 +10,7 @@ const Imagen = () => {
   const [num, setNum] = useState(1);
 
   const { tokenState, clearAuthData } = useUser();
-  const { showAlert } = useAlert(); 
+  const { showAlert } = useAlert();
 
   const siguienteImg = () => {
     setNum((prev) => prev + 1);
@@ -30,14 +31,14 @@ const Imagen = () => {
 
       const data = await response.json();
       if (!response.ok) {
-        showAlert(data.msj || "Error al eliminar imagen", "error"); 
+        showAlert(data.msj || "Error al eliminar imagen", "error");
       } else {
-        showAlert(data.msj || "Imagen eliminada", "success"); 
+        showAlert(data.msj || "Imagen eliminada", "success");
         setBytes(null);
       }
     } catch (error) {
       console.error("Error al eliminar imagen:", error);
-      showAlert("Error al conectar con el servidor", "error"); 
+      showAlert("Error al conectar con el servidor", "error");
     }
   };
 
@@ -54,7 +55,7 @@ const Imagen = () => {
 
         if (response.status === 401 || response.status === 403) {
           clearAuthData();
-          showAlert("Sesión expirada o sin permisos", "error"); 
+          showAlert("Sesión expirada o sin permisos", "error");
           return;
         }
 
@@ -62,13 +63,13 @@ const Imagen = () => {
 
         if (data.msj) {
           setBytes(null);
-          showAlert(data.msj, "info"); 
+          showAlert(data.msj, "info");
         } else {
           setBytes(data.datosImagen);
         }
       } catch (error) {
         console.error("Error al obtener imagen:", error);
-        showAlert("No se pudo cargar la imagen", "error"); 
+        showAlert("No se pudo cargar la imagen", "error");
       }
     };
 
@@ -88,9 +89,7 @@ const Imagen = () => {
       <button onClick={eliminarImg} className="btn-red">Eliminar imagen</button>
       <button onClick={siguienteImg} className="btn-red">Siguiente imagen</button>
 
-      <Link to="/reclamos" className="button btnPrimary">
-        <span className="btnText">Volver</span>
-      </Link>
+      <NavigateBackButton />
     </div>
   );
 };

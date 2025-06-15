@@ -1,16 +1,17 @@
-import "./Sector.css"; 
+import "./Sector.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { CodigoQR } from "../CodigoQR/CodigoQR";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 const Sector = ({ fromContainer }) => {
-  const { idSec, idCont, idItem } = useParams();
+  const { idSec } = useParams();
   const [sector, setSector] = useState();
   const [qr, setQr] = useState(undefined);
   const navigate = useNavigate();
-  const { tokenState, user, rol } = useUser();
+  const { tokenState, rol } = useUser();
   const { showAlert } = useAlert();
   const isAdmin = rol === "ROL_ADMIN";
 
@@ -24,7 +25,7 @@ const Sector = ({ fromContainer }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${tokenState}`,
+          Authorization: `Bearer ${tokenState}`,
         },
       });
 
@@ -46,7 +47,7 @@ const Sector = ({ fromContainer }) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${tokenState}`,
+          Authorization: `Bearer ${tokenState}`,
         },
       });
 
@@ -63,10 +64,6 @@ const Sector = ({ fromContainer }) => {
       console.error("Error al eliminar sector:", error);
       showAlert("Error al conectar con el servidor", "error");
     }
-  };
-
-  const navigateTo = (url) => {
-    navigate(url);
   };
 
   useEffect(() => {
@@ -90,9 +87,9 @@ const Sector = ({ fromContainer }) => {
 
               {!fromContainer && (
                 <div className="accionesGrid">
-                  <button className="button btnPrimary" onClick={() => navigateTo("containers")}>Ver Contenedores</button>
+                  <button className="button btnPrimary" onClick={() => navigate("containers")}>Ver Contenedores</button>
                   {isAdmin && (
-                    <button className="button btnPrimary" onClick={() => navigateTo(`/updateSector/${idSec}`)}>Modificar sector</button>
+                    <button className="button btnPrimary" onClick={() => navigate(`/updateSector/${idSec}`)}>Modificar sector</button>
                   )}
                   <button className="button btnPrimary" onClick={generarQr}>Generar QR</button>
                   {isAdmin && (
@@ -107,15 +104,7 @@ const Sector = ({ fromContainer }) => {
         <CodigoQR url={window.location.href} />
       )}
 
-      {!fromContainer ? (
-        <button className="button btnPrimary" onClick={() => navigateTo(`/sectors`)}>
-          <span className="btnText">Volver</span>
-        </button>
-      ) : (
-        <button className="button btnPrimary" onClick={() => navigateTo(`/items/${idItem}/containers/${idCont}`)}>
-          <span className="btnText">Volver</span>
-        </button>
-      )}
+      <NavigateBackButton />
     </>
   );
 };

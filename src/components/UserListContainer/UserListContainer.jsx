@@ -4,6 +4,7 @@ import { UserList } from "../UserList/UserList";
 import CreateButton from "../../utils/CreateButton/CreateButton";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 const UserListContainer = ({ greeting }) => {
   const { idUser } = useParams();
@@ -59,9 +60,7 @@ const UserListContainer = ({ greeting }) => {
       ) : (
         <UserList pid={idUser} listaUsers={listaUsers} />
       )}
-      <button className="button btnPrimary" onClick={() => navigateTo("/")}>
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton />
     </>
   );
 };

@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ContainerList } from "../ContainerList/ContainerList";
 import CreateButton from "../../utils/CreateButton/CreateButton";
 import { useUser } from "../../context/UserContext";
-import { useAlert } from "../../context/AlertContext"; // <-- nuevo
+import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton"; // ✅
 
 const ContainerListContainer = ({ fromLoc, greeting, idContainer, idItem }) => {
   const { idSec } = useParams();
@@ -13,7 +14,7 @@ const ContainerListContainer = ({ fromLoc, greeting, idContainer, idItem }) => {
   const navigate = useNavigate();
 
   const { tokenState, rol, clearAuthData } = useUser();
-  const { showAlert } = useAlert(); // <-- usamos el contexto de alertas
+  const { showAlert } = useAlert();
 
   const agregar = () => setAdd(true);
 
@@ -72,8 +73,6 @@ const ContainerListContainer = ({ fromLoc, greeting, idContainer, idItem }) => {
     ejecutarFetch();
   }, []);
 
-  const navigateTo = (url) => navigate(url);
-
   return (
     <>
       {loading ? (
@@ -108,19 +107,15 @@ const ContainerListContainer = ({ fromLoc, greeting, idContainer, idItem }) => {
         </>
       )}
 
-      {idSec ? (
-        <button className="button btnPrimary" onClick={() => navigateTo(`/sectors/${idSec}`)}>
-          <span className="btnText">Volver</span>
-        </button>
-      ) : fromLoc ? (
-        <button className="button btnPrimary" onClick={() => navigateTo(`/items/${idItem}`)}>
-          <span className="btnText">Volver</span>
-        </button>
-      ) : (
-        <button className="button btnPrimary" onClick={() => navigateTo(`/`)}>
-          <span className="btnText">Volver</span>
-        </button>
-      )}
+      <NavigateBackButton
+        fallback={
+          idSec
+            ? `/sectors/${idSec}`
+            : fromLoc
+            ? `/items/${idItem}`
+            : `/`
+        }
+      />
     </>
   );
 };

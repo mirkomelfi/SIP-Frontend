@@ -24,7 +24,7 @@ const ItemDetail = ({ item }) => {
       <h2>Descripción: {item.description}</h2>
 
       {item.containerID === 0 || !item.containerID ? (
-        <h2>No se encuentra en ningún contenedor</h2>
+        <h2>No se encuentra en contenedor</h2>
       ) : (
         <h2>Se encuentra en contenedor: {item.containerID}</h2>
       )}

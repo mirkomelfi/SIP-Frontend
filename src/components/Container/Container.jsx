@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { CodigoQR } from "../CodigoQR/CodigoQR";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 const Container = ({ fromItem, fromLocation }) => {
   const { idSec, idCont, idItem } = useParams();
@@ -131,7 +132,7 @@ const Container = ({ fromItem, fromLocation }) => {
                 </button>
                 {rol === "ROL_ADMIN" && (
                   <button className="button btnPrimary danger" onClick={eliminar}>
-                      <span className="btnText">Eliminar</span>
+                    <span className="btnText">Eliminar</span>
                   </button>
                 )}
               </div>
@@ -150,20 +151,15 @@ const Container = ({ fromItem, fromLocation }) => {
         <CodigoQR url={window.location.href} />
       )}
 
-      {fromItem ? (
-        <button className="button btnPrimary" onClick={() => navigate(`/items/${idItem}`)}>
-          <span className="btnText">Volver</span>
-        </button>
-      ) : fromLocation ? (
-        <button className="button btnPrimary" onClick={() => navigate(`/items/${idItem}/locationChange`)}>
-          <span className="btnText">Volver</span>
-        </button>
-      ) : (
-        <button className="button btnPrimary" onClick={() => navigate(`/sectors/${container.sectorID}/containers`)}>
-          <span className="btnText">Volver</span>
-        </button>
-      )}
-
+      <NavigateBackButton
+        fallback={
+          fromItem
+            ? `/items/${idItem}`
+            : fromLocation
+            ? `/items/${idItem}/locationChange`
+            : `/sectors/${container.sectorID}/containers`
+        }
+      />
     </>
   );
 };

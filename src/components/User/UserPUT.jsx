@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 export const UserPut = ({ fromPerfil }) => {
   const { idUser } = useParams();
@@ -16,7 +17,6 @@ export const UserPut = ({ fromPerfil }) => {
     const datosFormulario = new FormData(datForm.current);
     const cliente = Object.fromEntries(datosFormulario);
 
-    // Convertimos campos vacíos en null
     Object.keys(cliente).forEach((key) => {
       if (cliente[key] === "") cliente[key] = null;
     });
@@ -43,8 +43,7 @@ export const UserPut = ({ fromPerfil }) => {
     if (response.status === 403 || response.status === 401) {
       showAlert("No posee los permisos necesarios", "error");
       return;
-    }
-    else if(!response.ok){
+    } else if (!response.ok) {
       const data = await response.json();
       showAlert(`${data.msj}`, "error");
     }
@@ -87,16 +86,12 @@ export const UserPut = ({ fromPerfil }) => {
             <label htmlFor="password" className="form-label">Contraseña</label>
             <input type="password" className="form-control" name="password" placeholder="Ingrese la nueva contraseña" />
           </div>
-
           <button type="submit" className="button btnPrimary">
             <span className="btnText">Actualizar</span>
           </button>
         </form>
       </div>
-
-      <button className="button btnPrimary" onClick={() => navigate(-1)}>
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton />
     </div>
   );
 };

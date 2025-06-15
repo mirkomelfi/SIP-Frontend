@@ -4,9 +4,6 @@ import {Link, useNavigate} from "react-router-dom";
 const SectorDetail =({sector})=>{
     const navigate=useNavigate()
 
-    const navigateTo=(url)=>{
-        navigate(url)
-      }
     return(
 
             <div className="tarjetaProducto">

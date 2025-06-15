@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
 import { Location } from "../Location/Location";
 import { CodigoQR } from "../CodigoQR/CodigoQR";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 const Item = ({ fromSector }) => {
   const { idSec, idCont, idItem } = useParams();
@@ -15,6 +16,7 @@ const Item = ({ fromSector }) => {
   const [locations, setLocations] = useState(null);
   const [qr, setQr] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const tieneContenedor = Number(item.containerID) > 0;
 
@@ -139,13 +141,13 @@ const Item = ({ fromSector }) => {
         <Location item={item} />
       )}
 
-      <button className="button btnPrimary" onClick={() =>
-        idSec
-          ? navigateTo(`/sectors/${idSec}/containers/${idCont}/items`)
-          : navigateTo(`/items`)
-      }>
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton
+        to={
+          idSec
+            ? `/sectors/${idSec}/containers/${idCont}/items`
+            : "/items"
+        }
+      />
     </>
   );
 };

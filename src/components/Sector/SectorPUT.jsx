@@ -1,14 +1,13 @@
 import { useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 export const SectorPut = () => {
   const { idSec } = useParams();
   const datForm = useRef();
-  const navigate = useNavigate();
-
-  const { tokenState, rol } = useUser();
+  const { tokenState } = useUser();
   const { showAlert } = useAlert();
 
   const consultarForm = async (e) => {
@@ -17,7 +16,6 @@ export const SectorPut = () => {
     const datosFormulario = new FormData(datForm.current);
     const sector = Object.fromEntries(datosFormulario);
 
-    // Convertir campos vacíos a null
     if (sector.name === "") sector.name = null;
     if (sector.description === "") sector.description = null;
 
@@ -84,9 +82,7 @@ export const SectorPut = () => {
         </form>
       </div>
 
-      <button className="button btnPrimary" onClick={() => navigate(-1)}>
-        <span className="btnText">Volver</span>
-      </button>
+      <NavigateBackButton />
     </div>
   );
 };

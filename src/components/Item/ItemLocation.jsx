@@ -2,7 +2,8 @@ import "./Item.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useRef } from "react";
 import ContainerListContainer from "../ContainerListContainer/ContainerListContainer";
-import { useAlert } from "../../context/AlertContext"; // ✅
+import { useAlert } from "../../context/AlertContext";
+import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButton";
 
 const ItemLocation = () => {
   const { idItem } = useParams();
@@ -10,26 +11,22 @@ const ItemLocation = () => {
   const [verContainers, setVerContainers] = useState(false);
   const datForm = useRef();
   const navigate = useNavigate();
-  const { showAlert } = useAlert(); // ✅
+  const { showAlert } = useAlert();
 
   const consultarForm = (e) => {
     e.preventDefault();
     const datosFormulario = new FormData(datForm.current);
     const item = Object.fromEntries(datosFormulario);
-
     const idContInput = item.idCont?.trim();
 
-    // ✅ Solo validar si no está vacío
     if (idContInput && isNaN(idContInput)) {
       showAlert("El ID del contenedor debe ser numérico", "error");
       return;
     }
 
-    setIdCont(idContInput); // puede ser "" o un número válido
+    setIdCont(idContInput);
     setVerContainers(true);
   };
-
-  const navigateTo = (url) => navigate(url);
 
   return (
     <div>
@@ -51,9 +48,8 @@ const ItemLocation = () => {
               <span className="btnText">Ver contenedor/es</span>
             </button>
           </form>
-          <button className="button btnPrimary" onClick={() => navigateTo(`/items/${idItem}`)}>
-            <span className="btnText">Volver</span>
-          </button>
+
+          <NavigateBackButton />
         </div>
       ) : (
         <ContainerListContainer fromLoc={true} idContainer={idCont} idItem={idItem} />
