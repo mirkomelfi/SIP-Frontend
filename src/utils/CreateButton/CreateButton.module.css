@@ -1,15 +1,27 @@
-.createButton{
-    position: fixed;
-    right: clamp(1.054rem, -0.0015rem + 1.2509vw, 2rem);
-    bottom: clamp(1.054rem, -0.0015rem + 1.2509vw, 2rem);
-    z-index: 1000;
-    padding: clamp(0.7905rem, -0.0011rem + 0.9382vw, 1.5rem) clamp(1.594rem, 0.9179rem + 0.8013vw, 2.2rem);
-    border-radius: 3rem;
-    background-color: black;
-    color: white;
-    transition: 0.3s ease;
-    font-size: clamp(0.7905rem, -0.0011rem + 0.9382vw, 1.5rem);
+.createButton {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background-color: #222; /* Gris oscuro elegante */
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 1000;
 }
-.createButton:hover{
-    transform: scale(1.1);
+
+.createButton:hover {
+    color: #222;
+  background-color: #f4f4f4;
+  border: 1px solid #222;
+  transform: scale(1.08);
 }

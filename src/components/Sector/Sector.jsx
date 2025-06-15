@@ -79,7 +79,7 @@ const Sector = ({ fromContainer }) => {
   return (
     <>
       {!qr ? (
-        <div className="tarjetaProducto">
+        <div className="tarjetaProducto tarjetaById">
           <h1 className="titulo">Sector N°{idSec}</h1>
           {sector && (
             <>

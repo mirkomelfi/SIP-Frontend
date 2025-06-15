@@ -1,7 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ItemDetail = ({ item }) => {
   const navigate = useNavigate();
+  const { idSec, idCont } = useParams(); // <-- detecta si estás en un sector
+
+  const verItem = () => {
+    if (idSec && idCont) {
+      navigate(`/sectors/${idSec}/containers/${idCont}/items/${item.id}`);
+    } else {
+      navigate(`/items/${item.id}`);
+    }
+  };
 
   return (
     <div className="tarjetaProducto">
@@ -20,7 +29,7 @@ const ItemDetail = ({ item }) => {
         <h2>Se encuentra en contenedor: {item.containerID}</h2>
       )}
 
-      <button className="button btnPrimary" onClick={() => navigate(`/items/${item.id}`)}>
+      <button className="button btnPrimary" onClick={verItem}>
         <span className="btnText">Ver item</span>
       </button>
     </div>

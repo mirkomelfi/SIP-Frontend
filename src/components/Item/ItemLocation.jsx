@@ -17,12 +17,15 @@ const ItemLocation = () => {
     const datosFormulario = new FormData(datForm.current);
     const item = Object.fromEntries(datosFormulario);
 
-    if (item.idCont && isNaN(item.idCont)) {
-      showAlert("El ID del contenedor debe ser numérico", "error"); // ✅ validación adicional
+    const idContInput = item.idCont?.trim();
+
+    // ✅ Solo validar si no está vacío
+    if (idContInput && isNaN(idContInput)) {
+      showAlert("El ID del contenedor debe ser numérico", "error");
       return;
     }
 
-    setIdCont(item.idCont || null); // si viene vacío, busca todos
+    setIdCont(idContInput); // puede ser "" o un número válido
     setVerContainers(true);
   };
 

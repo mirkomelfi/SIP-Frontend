@@ -107,7 +107,7 @@ const Container = ({ fromItem, fromLocation }) => {
   return (
     <>
       {!qr ? (
-        <div className="tarjetaProducto">
+        <div className="tarjetaProducto tarjetaById">
           <h1>Container N°{container.id}</h1>
           <h2>Nombre: {container.name}</h2>
           <h2>Descripción: {container.description}</h2>
@@ -115,7 +115,7 @@ const Container = ({ fromItem, fromLocation }) => {
 
           {!fromLocation ? (
             idSec ? (
-              <>
+              <div className="accionesGrid">
                 <button className="button btnPrimary" onClick={() => navigate("items", { state: { from: location.pathname } })}>
                   <span className="btnText">Ver items</span>
                 </button>
@@ -124,17 +124,19 @@ const Container = ({ fromItem, fromLocation }) => {
                     <button className="button btnPrimary" onClick={() => navigate("updateContainer", { state: { from: location.pathname } })}>
                       <span className="btnText">Modificar</span>
                     </button>
-                    <button className="button btnPrimary danger" onClick={eliminar}>
-                      <span className="btnText">Eliminar</span>
-                    </button>
                   </>
                 )}
                 <button className="button btnPrimary" onClick={generarQr}>
                   <span className="btnText">Generar QR</span>
                 </button>
-              </>
+                {rol === "ROL_ADMIN" && (
+                  <button className="button btnPrimary danger" onClick={eliminar}>
+                      <span className="btnText">Eliminar</span>
+                  </button>
+                )}
+              </div>
             ) : (
-              <button className="button btnPrimary" onClick={() => navigate(`/sectors/${container.sectorID}`, { state: { from: location.pathname } })}>
+              <button className="button btnPrimary" onClick={() => navigate(`sectors/${container.sectorID}`, { state: { from: location.pathname } })}>
                 <span className="btnText">Ver sector</span>
               </button>
             )
@@ -148,15 +150,20 @@ const Container = ({ fromItem, fromLocation }) => {
         <CodigoQR url={window.location.href} />
       )}
 
-      {!fromItem && !fromLocation ? (
-        <button className="button btnPrimary" onClick={() => navigate(`/sectors/${container.sectorID}/containers`, { state: { from: location.pathname } })}>
+      {fromItem ? (
+        <button className="button btnPrimary" onClick={() => navigate(`/items/${idItem}`)}>
+          <span className="btnText">Volver</span>
+        </button>
+      ) : fromLocation ? (
+        <button className="button btnPrimary" onClick={() => navigate(`/items/${idItem}/locationChange`)}>
           <span className="btnText">Volver</span>
         </button>
       ) : (
-        <button className="button btnPrimary" onClick={() => navigate(`/items/${idItem}/locationChange`, { state: { from: location.pathname } })}>
+        <button className="button btnPrimary" onClick={() => navigate(`/sectors/${container.sectorID}/containers`)}>
           <span className="btnText">Volver</span>
         </button>
       )}
+
     </>
   );
 };

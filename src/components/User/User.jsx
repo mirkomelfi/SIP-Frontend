@@ -82,7 +82,7 @@ export const User = () => {
 
   return (
     <>
-      <div className="tarjetaProducto">
+      <div className="tarjetaProducto tarjetaById">
         <h1>Numero de usuario: {userData.id}</h1>
         <h2>Nombre de usuario: {userData.username}</h2>
         <h2>Nombre: {userData.name}</h2>
