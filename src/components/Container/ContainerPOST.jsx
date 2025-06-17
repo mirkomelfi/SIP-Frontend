@@ -10,7 +10,7 @@ export const ContainerPost = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { tokenState, rol, clearAuthData } = useUser();
-  const { showSuccess, showError } = useAlert();
+  const { showAlert } = useAlert();
 
   const consultarForm = async (e) => {
     e.preventDefault();
@@ -37,23 +37,23 @@ export const ContainerPost = () => {
           navigate("/login", { state: { from: location.pathname } });
         } else {
           const errorData = await response.json();
-          showError(errorData.msj || "Error al crear el contenedor.");
+          showAlert(errorData.msj || "Error al crear el contenedor.","error");
         }
         return;
       }
 
-      showSuccess("Contenedor creado exitosamente.");
+      showAlert("Contenedor creado exitosamente.","success");
       navigate(location.state?.from || "/");
     } catch (error) {
       console.error("Error al crear el contenedor:", error);
-      showError("Error al conectar con el servidor.");
+      showAlert("Error al conectar con el servidor.","error");
     }
 
     e.target.reset();
   };
 
   if (rol === "ROL_USER") {
-    showError("No tiene permisos para crear contenedores.");
+    showAlert("No tiene permisos para crear contenedores.","error");
     navigate(location.state?.from || "/");
     return null;
   }

@@ -91,12 +91,6 @@ const ContainerListContainer = ({ fromLoc, greeting, idContainer, idItem }) => {
             />
           )}
 
-          {!idSec && rol !== "ROL_USER" && (
-            <button className="button btnPrimary" onClick={agregar}>
-              <span className="btnText">Agregar contenedor</span>
-            </button>
-          )}
-
           {listaContainers.length > 0 && (
             <ContainerList
               listaContainers={listaContainers}

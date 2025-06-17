@@ -8,7 +8,7 @@ import NavigateBackButton from "../../utils/NavigateBackButton/NavigateBackButto
 
 const Item = ({ fromSector }) => {
   const { idSec, idCont, idItem } = useParams();
-  const { tokenState } = useUser();
+  const { tokenState,rol } = useUser();
   const { showAlert } = useAlert();
 
   const [item, setItem] = useState({});
@@ -62,6 +62,7 @@ const Item = ({ fromSector }) => {
 
       const data = await response.json();
       showAlert(data.msj || "Item eliminado correctamente", "success");
+      navigate(-1)
     } catch (error) {
       showAlert("Error al intentar eliminar el item", "error");
     }
@@ -127,9 +128,10 @@ const Item = ({ fromSector }) => {
                     <span className="btnText">Generar QR</span>
                   </button>
 
+                  {rol!=="ROL_USER"&&
                   <button className="button btnPrimary danger" onClick={eliminar}>
                     <span className="btnText">Eliminar</span>
-                  </button>
+                  </button>}
                 </div>
               </>
             )}

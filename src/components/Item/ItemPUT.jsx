@@ -67,11 +67,8 @@ export const ItemPut = () => {
       const data = await response.json();
 
       if (data.msj) {
-        showAlert(data.msj, "error"); // ✅
-      } else {
-        showAlert("Ítem actualizado correctamente", "success"); // ✅
-        navigate(-1);
-      }
+        showAlert(data.msj, "success"); // ✅
+      } 
     } catch (error) {
       console.error("Error al actualizar el ítem:", error);
       showAlert("Error al conectar con el servidor", "error"); // ✅

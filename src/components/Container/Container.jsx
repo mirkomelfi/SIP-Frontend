@@ -73,6 +73,7 @@ const Container = ({ fromItem, fromLocation }) => {
 
     const data = await response.json();
     if (data.msj) showAlert(data.msj, "success");
+    navigate(-1)
   };
 
   const changeLocation = async () => {
@@ -96,6 +97,7 @@ const Container = ({ fromItem, fromLocation }) => {
 
     const data = await response.json();
     showAlert(data.msj, "success");
+    navigate(-2)
   };
 
   useEffect(() => {
